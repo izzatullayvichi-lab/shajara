@@ -284,3 +284,22 @@ function build(node){
   const couple = el("div", "couple");
   couple.appendChild(personBox(node));
   if (node.spouse) couple.appendChild(personBox(node.spouse));
+  li.appendChild(ul);
+  }
+  return li;
+}
+const root = el("ul");
+root.appendChild(build(FAMILY));
+const tree = document.getElementById("tree");
+tree.appendChild(root);
+
+let z = 1;
+function setZoom(v){ z = Math.min(1.5, Math.max(0.3, v)); tree.style.zoom = z; }
+document.getElementById("zi").onclick = () => setZoom(z + 0.1);
+document.getElementById("zo").onclick = () => setZoom(z - 0.1);
+
+const sc = document.getElementById("scroll");
+sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) / 2;
+</script>
+</body>
+</html>
