@@ -2,8 +2,8 @@
   "name": "shajara",
   "private": true,
   "scripts": {
-    "build": "python3 build.py",
-    "dev": "wrangler dev --var ADMIN_PASSWORD:sinov123"
+    "build": "python build.py",
+    "dev": "wrangler dev --port 8788 --var ADMIN_PASSWORD:sinov123"
   },
   "devDependencies": {
     "wrangler": "4.45.0"
