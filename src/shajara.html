@@ -900,8 +900,8 @@ const L = {
   calS3:"Sozlamalarda <b>Shajara</b> kalendarini oching → «Butun kunlik tadbirlar uchun bildirishnomalar» → <b>Shu kuni, 08:00</b> qo'shing. Endi har kuni ertalab telefoningizga eslatma keladi.",
   calS4:"Xohlasangiz, o'sha joyda «Boshqa bildirishnomalar → Kunlik kun tartibi»ni <b>Elektron pochta</b>ga qo'ying — har kuni ertalab xat ham keladi.",
   calNote:"CSV fayl keyingi 20 yil uchun har bir sanani yozadi va yoshni avtomatik ko'rsatadi. Yangi insonlar qo'shganingizda Shajara kalendarini o'chirib, qayta import qiling.",
-  bkIntro:"Butun shajarani bitta faylga saqlab qo'ying. Kerak bo'lsa, shu fayldan qayta tiklash mumkin.", bkSave:"Zaxira nusxani yuklab olish (.json)",
-  bkRestore:"Fayldan tiklash", bkConfirm:"{n} kishilik zaxira topildi. Mavjud ma'lumotlar ustidan yozilsinmi?", bkYes:"Ha, tiklansin", bkDone:"Tiklandi: {n} kishi",
+  bkIntro:"Butun shajarani bitta faylga saqlab qo'ying. Fayldan tiklash mavjud shajarani to'liq almashtiradi.", bkSave:"Zaxira nusxani yuklab olish (.json)",
+  bkRestore:"Fayldan tiklash", bkConfirm:"{n} kishilik zaxira topildi. Hozirgi shajaradagi barcha odamlar zaxira bilan almashtiriladi. Davom etilsinmi?", bkYes:"Ha, almashtirilsin", bkDone:"Tiklandi: {n} kishi",
   bkBad:"Bu fayl shajara zaxirasi emas.", dlNo:"Bu ko'rinishda faylni yuklab olish mumkin emas.", dlDeclined:"Yuklab olish bekor qilindi.", dlOk:"Fayl saqlandi",
   half_f:"ota bir", half_m:"ona bir"
 };
@@ -2459,14 +2459,21 @@ function openExport(tab = "poster"){
     await saveFile(`${slug}-${r.opt.paper === "auto" ? "plakat" : r.opt.paper}.svg`, r.blob); };
   $("calCsv").onclick = () => saveFile("shajara-google-calendar.csv", buildCsv());
   $("calIcs").onclick = () => saveFile("shajara-kalendar.zip", makeZip([{ name:"shajara.ics", data:buildIcs() }]));
-  $("bkSave").onclick = () => {
-    const data = { app:"shajara", version:2, exportedAt:new Date().toISOString(), meta:S.meta, people:[...S.people.values()] };
-    saveFile(`shajara-zaxira-${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(data, null, 2));
+  $("bkSave").onclick = async () => {
+    try {
+      const data = window.SJ?.admin ? await SJ.backup() : { app:"shajara", version:2, exportedAt:new Date().toISOString(), meta:S.meta, people:[...S.people.values()] };
+      await saveFile(`shajara-zaxira-${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(data, null, 2));
+    } catch(e){ toast(t("errSave")); }
   };
   if ($("bkFile")) $("bkFile").onchange = async e => {
     const f = e.target.files[0]; e.target.value = ""; if (!f) return;
     let data; try { data = JSON.parse(await f.text()); } catch(x){ data = null; }
-    const ok = data && data.app === "shajara" && Array.isArray(data.people) && data.people.every(p => p && typeof p.id === "string" && /^[A-Za-z0-9_\-.~:@+]{1,200}$/.test(p.id) && typeof p.firstName === "string");
+    const ids = new Set();
+    const ok = data && data.app === "shajara" && Array.isArray(data.people) && data.people.every(p => {
+      if (!p || typeof p.id !== "string" || !/^[A-Za-z0-9_\-.~:@+]{1,200}$/.test(p.id) || typeof p.firstName !== "string" || ids.has(p.id)) return false;
+      ids.add(p.id); return true;
+    }) && (!data.photos || (Array.isArray(data.photos) && data.photos.every(ph =>
+      ph && /^[a-f0-9]{32}$/.test(ph.id) && ["image/jpeg","image/png","image/webp"].includes(ph.type) && typeof ph.b64 === "string")));
     const msg = $("bkMsg");
     if (!ok){ msg.innerHTML = `<p class="err">${esc(t("bkBad"))}</p>`; return; }
     msg.innerHTML = `<div class="relbox"><b style="font-size:19px">${esc(t("bkConfirm", { n:data.people.length }))}</b><div class="actions" style="margin-top:10px"><button class="btn danger armed" id="bkYes">${esc(t("bkYes"))}</button><button class="btn" id="bkNo">${esc(t("cancel"))}</button></div></div>`;
@@ -2474,7 +2481,9 @@ function openExport(tab = "poster"){
     $("bkYes").onclick = async () => {
       $("bkYes").disabled = true;
       try {
+        const oldIds = [...S.people.keys()];
         for (const p of data.people){ const { id, ...rest } = p; await ref(id).set(rest); }
+        for (const id of oldIds) if (!ids.has(id)) await ref(id).delete();
         if (data.meta && typeof data.meta === "object" && !Array.isArray(data.meta)) await S.db.doc("meta/info").set({ ...data.meta });
         msg.innerHTML = `<p class="note">${esc(t("bkDone", { n:data.people.length }))}</p>`;
       } catch(x){ msg.innerHTML = `<p class="err">${esc(t("errSave"))}</p>`; }
