@@ -52,8 +52,8 @@ src = rep(src, "/* ================= Boot ================= */", auth_js + "\n/*
 src = rep(src, "function renderChrome(){", "var renderChrome = function(){")
 src = rep(src, "function renderState(){", ";\nfunction renderState(){")
 # restore photos from a server backup
-src = rep(src, 'if (data.meta && typeof data.meta === "object" && !Array.isArray(data.meta)) await S.db.doc("meta/info")',
-  'if (Array.isArray(data.photos) && window.SJ) for (const ph of data.photos){ if (ph && /^[a-f0-9]{32}$/.test(ph.id)) await fetch("/api/photos/" + ph.id, { method:"PUT", headers:{ "x-sj":"1", "content-type":"application/json" }, body: JSON.stringify({ type:ph.type, b64:ph.b64 }) }); }\n        if (data.meta && typeof data.meta === "object" && !Array.isArray(data.meta)) await S.db.doc("meta/info")')
+src = rep(src, 'for (const id of oldIds) if (!ids.has(id)) await ref(id).delete();',
+  'if (Array.isArray(data.photos) && window.SJ) for (const ph of data.photos){ const r = await fetch("/api/photos/" + ph.id, { method:"PUT", headers:{ "x-sj":"1", "content-type":"application/json" }, body: JSON.stringify({ type:ph.type, b64:ph.b64 }) }); if (!r.ok) throw new Error("photo restore failed"); }\n        for (const id of oldIds) if (!ids.has(id)) await ref(id).delete();')
 # adapter before the main script
 src = rep(src, "<script>\n/* ================= Script conversion", '<script src="/sj-adapter.js"></script>\n<script>\n/* ================= Script conversion')
 
