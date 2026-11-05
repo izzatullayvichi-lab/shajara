@@ -440,7 +440,7 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 
 /* ---- scene: painted tree only on tree/fan; plain pages get ornamented paper ---- */
 .scene{transition:opacity .5s}
-.app[data-view="home"] .scene,.app[data-view="list"] .scene,.app[data-view="time"] .scene,.app[data-view="map"] .scene,.app[data-view="photos"] .scene{opacity:0}
+.app[data-view="home"] .scene,.app[data-view="list"] .scene,.app[data-view="time"] .scene,.app[data-view="photos"] .scene{opacity:0}
 .app[data-view="fan"] .scene{opacity:.55}
 #fx{position:absolute;inset:0;z-index:6;width:100%;height:100%;pointer-events:none}
 .app[data-view="tree"] #fx,.app[data-view="fan"] #fx{z-index:0}
@@ -658,6 +658,7 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 .pf-rel{display:grid;gap:18px}
 .tl.v{max-width:760px;margin:0}
 .story .bio{font-size:16.5px;line-height:1.7}
+.tel{color:var(--green);font-weight:600;text-decoration:none;border-bottom:1px dotted currentColor}.tel:hover{color:var(--gold)}
 @keyframes fly{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 120px))}}
 @keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
 
@@ -885,7 +886,6 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
       <button id="vTime" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-t="viewTime"></span></button>
       <button id="vBday" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 7.5h20V12H2zM12 21V7.5M12 7.5C10 3.5 6 4 6.5 6S10 7.5 12 7.5zM12 7.5c2-4 6-3.5 5.5-1.5S14 7.5 12 7.5z"/></svg><span data-t="viewBday"></span></button>
       <button id="vCircles" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c.6-3 2.7-4.8 5.5-4.8s4.9 1.8 5.5 4.8M14.5 14.4c3 0 4.7 1.7 5.2 4.6"/></svg><span data-t="viewCircles"></span></button>
-      <button id="vMap" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-t="viewMap"></span></button>
       <button id="vPhotos" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10.5" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg><span data-t="viewPhotos"></span></button>
       <button id="exportBtn" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></svg><span data-t="exportBtn"></span></button>
     </nav>
@@ -1606,7 +1606,7 @@ function evLabel(e){
 }
 function whenLabel(d){ return d === 0 ? t("today") : d === 1 ? t("tomorrow") : t("inDays", { n:d }); }
 /* ================= Pages: home · members · time machine · map · photo archive ================= */
-Object.assign(L, { ghostLbl:"Asl o'rni", ghostGo:"Bu inson o'z ota-onasi qatorida ham bor — o'sha joyga o'tish", kelin:"Kelin va kuyovlar", qudalar:"Qudalar", quda:"Quda", themeToDark:"Tungi rejimga o'tish", themeToLight:"Kunduzgi rejimga o'tish", shareT:"Ulashish", shareDone:"Havola nusxalandi", qaFan:"Doirada ko'rish", qaMe:"Bu — men", qaAdd:"Farzand qo'shish", qaLink:"Havolani nusxalash", toTop:"Yuqoriga", stLive:"Tirik", stDead:"Marhum", genLbl2:"Avlodlar", genAll:"Barcha avlod", tgFold:"Shoxni yig'ish", tgOpen:"Shoxni ochish", tgUp:"Ota-onasi tomoni — o'sha oila shajarasini ochish", viewHome:"Bosh sahifa", viewTime:"Tarixiy voqealar", viewMap:"Xarita", viewPhotos:"Fotoarxiv",
+Object.assign(L, { phone:"Telefon", errPhone:"Telefon raqami noto'g'ri: faqat raqam, +, bo'sh joy va tire yozing.", setPubP:"Telefon raqamlar hammaga ko'rinsin", setPubPh:"O'chiq bo'lsa, telefon raqamlarni faqat siz (egasi) ko'rasiz.", pdfPhoneL:"Telefon raqamlarni ham kiritish", callB:"Qo'ng'iroq", ghostLbl:"Asl o'rni", ghostGo:"Bu inson o'z ota-onasi qatorida ham bor — o'sha joyga o'tish", kelin:"Kelin va kuyovlar", qudalar:"Qudalar", quda:"Quda", themeToDark:"Tungi rejimga o'tish", themeToLight:"Kunduzgi rejimga o'tish", shareT:"Ulashish", shareDone:"Havola nusxalandi", qaFan:"Doirada ko'rish", qaMe:"Bu — men", qaAdd:"Farzand qo'shish", qaLink:"Havolani nusxalash", toTop:"Yuqoriga", stLive:"Tirik", stDead:"Marhum", genLbl2:"Avlodlar", genAll:"Barcha avlod", tgFold:"Shoxni yig'ish", tgOpen:"Shoxni ochish", tgUp:"Ota-onasi tomoni — o'sha oila shajarasini ochish", viewHome:"Bosh sahifa", viewTime:"Tarixiy voqealar", viewMap:"Xarita", viewPhotos:"Fotoarxiv",
   heroEyebrow:"Oilaviy meros", heroT1:"Bizning", heroT2:"shajara tariximiz", heroP:"Ajdodlarimizni eslash, o'zligimizni anglash va kelajak avlodlarga meros qoldirish.", heroCta:"Shajara daraxtini ochish",
   hsPhotos:"Suratlar", hsPlaces:"Joylar", recent:"Oila a'zolari", recentSub:"yangi qo'shilganlar", seeAll:"Hammasi",
   fAll:"Hammasi", fM:"Erkaklar", fF:"Ayollar", fLive:"Tirik", fDead:"Marhum", mvCards:"Kartalar", mvTable:"Jadval", noRes:"Hech narsa topilmadi.",
@@ -1615,7 +1615,7 @@ Object.assign(L, { ghostLbl:"Asl o'rni", ghostGo:"Bu inson o'z ota-onasi qatorid
   mapT:"Ajdodlar xaritasi", mapSub:"Tug'ilgan joylar va oila ko'chishlari", mapList:"Manzillar ro'yxati", mapNone:"Xaritada ko'rsatish uchun insonlarning «Tug'ilgan joyi»ni kiriting (masalan: Samarqand, Toshkent, Buxoro).", mapNote:"Xarita sxematik: joylar taxminiy koordinatalar bo'yicha qo'yilgan. Chiziqlar ota-ona tug'ilgan joydan farzand tug'ilgan joyga ko'chishni bildiradi.", mapUnk:"Xaritada topilmagan joylar: {n}", people:"kishi",
   phTitle:"Oila fotoarxivi", phNone:"Hali surat yuklanmagan. Inson kartochkasida «Tahrirlash → Surat tanlash» orqali portret qo'shing.", phHint:"Suratlar a'zolarning portretlaridan yig'iladi." });
 const GEN_ROMAN = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
-const PLAIN = new Set(["home","list","time","map","photos","bday","circles","profile"]);
+const PLAIN = new Set(["home","list","time","photos","bday","circles","profile"]);
 const ICO = {
   gens:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11M12 15l-4-3M12 13l4-3"/><path d="M7 10a5 5 0 0 1 10 0 3.5 3.5 0 0 1-2 6.3H9A3.5 3.5 0 0 1 7 10z"/></svg>',
   ppl:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.5 0 4 1.5 4.5 4"/></svg>',
@@ -1662,10 +1662,10 @@ const emptyBox = msg => `<div class="empty-box reveal"><svg width="46" height="4
 /* ---------- Home ---------- */
 function renderHome(){
   const all = famVals(); let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
-  const photos = all.filter(photoSrc).length, places = new Set(all.map(p => cityOf(p.birthPlace)?.k).filter(Boolean)).size;
+  const photos = all.filter(photoSrc).length;
   const ups = upcoming(30).slice(0, 4);
   const recent = [...all].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).slice(0, 8);
-  const hs = [[g, "genCount", "gens", "tree"], [all.length, "viewList", "ppl", "list"], [photos, "hsPhotos", "photo", "photos"], [places, "hsPlaces", "pin", "map"]];
+  const hs = [[g, "genCount", "gens", "tree"], [all.length, "viewList", "ppl", "list"], [photos, "hsPhotos", "photo", "photos"], ...(S.canEdit || S.groups.size ? [[S.groups.size, "viewCircles", "pin", "circles"]] : [])];
   $("list").innerHTML = `<div class="home">
     <section class="hero reveal" id="hero"><div class="hero-bg"></div><div class="hero-shade"></div>
       <svg class="hero-orn" viewBox="0 0 48 48" aria-hidden="true"><use href="#star"/></svg>
@@ -1799,51 +1799,6 @@ function renderTime(){
   $("simScrub").oninput = e => { SIM.y = +e.target.value; simPaint(false); };
   root.querySelectorAll("[data-sp]").forEach(b => b.onclick = () => { SIM.speed = +b.dataset.sp; root.querySelectorAll("[data-sp]").forEach(x => x.setAttribute("aria-pressed", x === b)); if (SIM.playing) simStart(); });
   reveal(root); simPaint(false); if (SIM.playing) simStart();
-}
-
-/* ---------- Map ---------- */
-const CITY_SRC = { "Samarqand":[66.96,39.65], "Samarkand":[66.96,39.65], "Urgut":[67.26,39.40], "Kattaqo'rg'on":[66.26,39.90], "Bulung'ur":[67.27,39.76], "Ishtixon":[66.49,39.97], "Jomboy":[67.10,39.70], "Payariq":[66.80,39.95],
-  "Toshkent":[69.24,41.30], "Tashkent":[69.24,41.30], "Buxoro":[64.42,39.77], "Bukhara":[64.42,39.77], "Xiva":[60.36,41.38], "Urganch":[60.63,41.55], "Nukus":[59.61,42.46], "Qarshi":[65.79,38.86], "Shahrisabz":[66.83,39.06], "Kitob":[66.88,39.08],
-  "Termiz":[67.28,37.22], "Termez":[67.28,37.22], "Jizzax":[67.84,40.12], "Guliston":[68.79,40.49], "Navoiy":[65.35,40.10], "Zarafshon":[64.20,41.57], "Andijon":[72.34,40.78], "Andijan":[72.34,40.78], "Namangan":[71.67,41.00],
-  "Farg'ona":[71.78,40.38], "Fergana":[71.78,40.38], "Qo'qon":[70.94,40.53], "Kokand":[70.94,40.53], "Marg'ilon":[71.72,40.47], "Chirchiq":[69.58,41.47], "Angren":[70.00,41.02], "Olmaliq":[69.60,40.85], "Bekobod":[69.27,40.22], "Denov":[67.90,38.27], "G'uzor":[66.25,38.62], "Xo'jand":[69.62,40.28], "Dushanbe":[68.77,38.56] };
-const CITY_N = Object.entries(CITY_SRC).map(([n, c]) => ({ k:norm(n), n:n.replace("Samarkand","Samarqand").replace("Tashkent","Toshkent").replace("Bukhara","Buxoro").replace("Termez","Termiz").replace("Andijan","Andijon").replace("Fergana","Farg'ona").replace("Kokand","Qo'qon"), lon:c[0], lat:c[1] }));
-function cityOf(place){
-  const n = norm(place || ""); if (!n) return null; let best = null;
-  for (const c of CITY_N) if (n.includes(c.k) && (!best || c.k.length > best.k.length)) best = c;
-  return best;
-}
-const UZ = [[56.0,41.3],[56.3,43.8],[58.6,45.5],[60.9,44.6],[62.0,43.6],[64.5,43.6],[65.6,42.9],[66.1,42.0],[68.0,41.2],[69.1,41.9],[70.1,42.2],[71.2,42.8],[72.0,41.6],[73.1,40.9],[72.3,40.4],[71.0,40.2],[70.4,40.1],[69.4,40.3],[68.9,39.5],[67.7,39.6],[67.4,38.5],[67.8,37.3],[66.6,37.4],[65.6,37.3],[64.3,38.9],[62.4,39.9],[61.0,41.1],[59.9,42.3],[58.6,42.7],[56.9,41.9]];
-function renderMap(){
-  const all = famVals(), by = new Map(); let unk = 0;
-  for (const p of all){ if (!p.birthPlace) continue; const c = cityOf(p.birthPlace); if (!c){ unk++; continue; } (by.get(c.k) || by.set(c.k, { c, ppl:[] }).get(c.k)).ppl.push(p); }
-  const arcs = new Map();
-  for (const p of all){ const c = cityOf(p.birthPlace); if (!c) continue; for (const par of [P(p.fatherId), P(p.motherId)]){ const pc = par && cityOf(par.birthPlace); if (pc && pc.k !== c.k){ const key = pc.k + ">" + c.k; arcs.set(key, { a:pc, b:c }); } } }
-  const pins = [...by.values()].sort((a, b) => b.ppl.length - a.ppl.length);
-  let lon0 = 56, lon1 = 73.2, lat0 = 37, lat1 = 45.6;
-  if (pins.length){ const lo = pins.map(x => x.c.lon), la = pins.map(x => x.c.lat);
-    let a = Math.min(...lo), b = Math.max(...lo), c = Math.min(...la), d = Math.max(...la);
-    const mx = Math.max(1.3, (b - a) * .3), my = Math.max(1.0, (d - c) * .35); a -= mx; b += mx; c -= my; d += my;
-    if (b - a < 9){ const m = (a + b) / 2; a = m - 4.5; b = m + 4.5; } if (d - c < 5.5){ const m = (c + d) / 2; c = m - 2.75; d = m + 2.75; }
-    lon0 = a; lon1 = b; lat0 = c; lat1 = d; }
-  const k = Math.cos(((lat0 + lat1) / 2) * Math.PI / 180), SC = 100;
-  const X = lon => (lon - lon0) * k * SC, Y = lat => (lat1 - lat) * SC, W = (lon1 - lon0) * k * SC, H = (lat1 - lat0) * SC, u = W / 110;
-  const land = UZ.map((q, i) => (i ? "L" : "M") + X(q[0]).toFixed(1) + " " + Y(q[1]).toFixed(1)).join("") + "Z";
-  let grid = ""; for (let lo = Math.ceil(lon0); lo <= lon1; lo++) grid += `<line class="grid" x1="${X(lo)}" x2="${X(lo)}" y1="0" y2="${H}"/>`; for (let la = Math.ceil(lat0); la <= lat1; la++) grid += `<line class="grid" y1="${Y(la)}" y2="${Y(la)}" x1="0" x2="${W}"/>`;
-  const arcSvg = [...arcs.values()].map(({ a, b }) => { const x1 = X(a.lon), y1 = Y(a.lat), x2 = X(b.lon), y2 = Y(b.lat), mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1, l = Math.hypot(dx, dy) || 1;
-    return `<path class="arc" d="M${x1} ${y1}Q${mx - dy / l * l * .22} ${my + dx / l * l * .22} ${x2} ${y2}"/>`; }).join("");
-  const sel = S.mapSel && by.get(S.mapSel);
-  const pinSvg = pins.map(({ c, ppl }) => { const r = u * (1.3 + Math.min(ppl.length, 12) * .16);
-    return `<g class="pin${S.mapSel === c.k ? " on" : ""}" data-k="${c.k}" transform="translate(${X(c.lon).toFixed(1)} ${Y(c.lat).toFixed(1)})"><circle class="pulse" r="${r}"/><circle class="core" r="${r}"/><text x="${r + u * 1.2}" y="${u * 1.4}" style="font-size:${u * 3.2}px">${esc(c.n)}</text></g>`; }).join("");
-  $("list").innerHTML = `<div class="lv-grid"><section><h2 class="lv-h">${esc(t("mapT"))} <small>${esc(t("mapSub"))}</small></h2>
-    ${pins.length ? "" : `<p class="note" style="margin-bottom:12px">${esc(t("mapNone"))}</p>`}
-    <div class="mapwrap reveal"><div class="map"><svg viewBox="0 0 ${W.toFixed(0)} ${H.toFixed(0)}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(t("mapT"))}">${grid}<path class="land" d="${land}"/>${arcSvg}${pinSvg}</svg></div>
-      <div class="mlist"><h3 class="sec-t" style="margin:0">${esc(t("mapList"))}</h3>
-        ${pins.map(({ c, ppl }) => `<button class="mrow${S.mapSel === c.k ? " on" : ""}" data-k="${c.k}"><span class="n">${ppl.length}</span><span><b>${esc(dn(c.n))}</b><small>${ppl.length} ${esc(t("people"))}</small></span></button>`).join("")}
-        ${sel ? `<div class="minis">${sel.ppl.map(p => `<button class="mini" data-go="${esc(p.id)}">${avatar(p)}<span class="n">${esc(first(p))}</span></button>`).join("")}</div>` : ""}
-        ${unk ? `<p class="mnote">${esc(t("mapUnk", { n:unk }))}</p>` : ""}<p class="mnote">${esc(t("mapNote"))}</p></div></div></section></div>`;
-  const root = $("list"); wireGo(root);
-  root.querySelectorAll("[data-k]").forEach(el => el.onclick = () => { S.mapSel = S.mapSel === el.dataset.k ? null : el.dataset.k; renderMap(); });
-  reveal(root);
 }
 
 /* ---------- Photo archive ---------- */
@@ -2003,6 +1958,7 @@ Object.assign(L, { tabPdf:"PDF (shaxs / oila kitobi)", pdfScope:"Nima chiqarilad
   pTitleP:"Shaxs ma'lumotlari", pBasic:"Asosiy ma'lumotlar", pFam:"Oila aloqalari", pLife:"Hayot yo'li (asosiy voqealar)", pSpouse:"Turmush o'rtog'i", pSpouses:"Turmush o'rtoqlari", pParents:"Ota-onasi", pSibs:"Aka-uka, opa-singillari", pKids:"Farzandlari", pGrand:"Nabiralari", pGreat:"Evaralari",
   pPpl:"nafar", pBoys:"o'g'il", pGirls:"qiz", pBornEv:"Tug'ilgan", pDiedEv:"Vafot etgan", pChildEv:"{n} tug'ildi", pSpDied:"{n} vafot etdi", pLiving:"hozir", pNoData:"Ma'lumot hali kiritilmagan.", pCoverT:"Oila shajarasi", pCoverS:"Ajdodlarimiz xotirasi — kelajak avlodlarga meros", pContents:"Mundarija", pBookT:"Oila kitobi", pPg:"bet", pBy:"Tuzilgan sana", pPersons:"inson", pGens:"avlod", pBranch:"shoxi", pQuda:"Qudalar" });
 const PI = {
+  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
   cal:'<rect x="3.5" y="5" width="17" height="15.5" rx="2.2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>', pin:'<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/>',
   clock:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>', grave:'<path d="M5 20h14M7 20v-8a5 5 0 0 1 10 0v8M12 8V5M10.5 6.5h3"/>', job:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 12.5h18"/>',
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>', users:'<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.5 0 4 1.5 4.5 4"/>',
@@ -2057,9 +2013,11 @@ body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#
 .logo svg{position:static;width:15mm;height:15mm}
 .logo b{display:block;font-family:"Alegreya",serif;font-weight:800;font-size:9.5mm;line-height:.95}
 .logo small{display:block;font-size:3mm;color:#3b4a40;margin-top:.6mm}
-.ttl{position:absolute;right:12mm;top:9.5mm;color:#fff;font-family:"Alegreya",serif;font-weight:700;font-size:8.4mm;letter-spacing:.2mm;text-shadow:0 .4mm 1mm rgba(0,0,0,.25)}
+.ttl{position:absolute;right:13mm;top:7.5mm;color:#fff;text-align:right;font-family:"Alegreya",serif;font-weight:700;font-size:7.4mm;line-height:1.05;letter-spacing:.2mm;text-shadow:0 .4mm 1mm rgba(0,0,0,.25)}
+.ttl::after{content:"";display:block;height:.35mm;margin-top:1.8mm;background:linear-gradient(90deg,rgba(217,178,94,0),#E5C16C)}
 .col-l{position:absolute;left:12mm;top:42mm;width:66mm}
-.col-r{position:absolute;left:84mm;top:42mm;width:114mm;display:grid;gap:4mm}
+.col-r{position:absolute;left:84mm;top:42mm;width:114mm;display:grid;gap:3.4mm;transform-origin:0 0}
+.col-l{transform-origin:0 0}
 .pcard{position:relative;border:.3mm solid var(--line);border-radius:7mm;background:linear-gradient(180deg,#FFFDF6,#FBF3E0);padding:5mm 3mm 4mm;text-align:center;box-shadow:0 1mm 3mm rgba(60,40,10,.08)}
 .frame{display:block;margin:0 auto;width:56mm;height:70mm}
 .pname{font-family:"Alegreya",serif;font-weight:700;font-size:6.6mm;line-height:1.08;margin-top:2mm;color:#1d261f;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
@@ -2072,9 +2030,9 @@ body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#
 .sec>h3 .dot{width:8mm;height:8mm;border-radius:50%;background:var(--g2);color:#fff;display:grid;place-items:center;flex:none}
 .box{position:relative;border:.3mm solid var(--line);border-radius:5mm;background:var(--card);overflow:hidden;box-shadow:0 1mm 3mm rgba(60,40,10,.06)}
 .rows{position:relative;padding:2mm 4mm;display:grid}
-.rw{display:grid;grid-template-columns:8mm 33mm 1fr;gap:2.4mm;align-items:center;padding:1.7mm 0}
+.rw{display:grid;grid-template-columns:7.4mm 31mm 1fr;gap:2.2mm;align-items:center;padding:1.3mm 0}
 .rw+.rw{border-top:.2mm solid #ece3cf}
-.rw .ib{width:7.4mm;height:7.4mm;border-radius:50%;background:#EEF3EA;color:var(--g2);display:grid;place-items:center;border:.2mm solid #d6e2d3}
+.rw .ib{width:6.8mm;height:6.8mm;border-radius:50%;background:#EEF3EA;color:var(--g2);display:grid;place-items:center;border:.2mm solid #d6e2d3}
 .rw .lb{color:#4e5a52;font-size:3.3mm}
 .rw .vl{font-weight:600;font-size:3.7mm;color:#1c2820;overflow-wrap:anywhere}
 .wm{position:absolute;right:-2mm;top:0;width:62mm;height:36mm;opacity:.3}
@@ -2084,7 +2042,7 @@ body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#
 .you b{display:block;font-family:"Alegreya",serif;font-weight:700;font-size:6.6mm;line-height:1.05;color:#1d261f}
 .you span{display:block;font-size:3.2mm;color:#665d3d}
 .ft{padding:1mm 4mm}
-.fr{display:grid;grid-template-columns:34mm 7mm 1fr;gap:2.4mm;align-items:center;padding:1.8mm 0;font-size:3.5mm}
+.fr{display:grid;grid-template-columns:34mm 7mm 1fr;gap:2.4mm;align-items:center;padding:1.4mm 0;font-size:3.5mm}
 .fr+.fr{border-top:.2mm solid #ece3cf}
 .fr b{color:var(--g);font-weight:600}.fr .ic{color:#3b4a40}
 .fr span{overflow-wrap:anywhere}
@@ -2095,7 +2053,7 @@ body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#
 .tl>div::before{content:"";position:absolute;left:50%;top:0;width:3.4mm;height:3.4mm;margin-left:-1.7mm;border-radius:50%;background:#F4F0C8;border:.5mm solid #7a9a52}
 .tl b{display:block;font-family:"Alegreya",serif;font-weight:700;font-size:4.6mm;color:#1d261f}
 .tl span{display:block;font-size:3.1mm;color:#4b564e;line-height:1.25;overflow-wrap:anywhere}
-.land{position:absolute;left:0;right:0;bottom:0;height:62mm;background:url("img/tree.jpg") 50% 96%/118% auto no-repeat}
+.land{position:absolute;left:0;right:0;bottom:0;height:54mm;background:url("img/tree.jpg") 50% 96%/118% auto no-repeat}
 .land::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--paper) 0%,rgba(251,246,234,.82) 28%,rgba(251,246,234,.15) 70%,rgba(251,246,234,0) 100%)}
 .band{position:absolute;left:0;right:0;bottom:0;height:7mm;background:linear-gradient(180deg,rgba(251,246,234,0),rgba(251,246,234,.9))}
 .band svg{position:absolute;inset:0;width:100%;height:100%}
@@ -2140,7 +2098,7 @@ const PDF_FRAME = (p, photo0) => { const f = p.gender === "f"; const photo = pho
   <g clip-path="url(#${id})">${photo ? `<image href="${esc(photo)}" x="28" y="38" width="168" height="216" preserveAspectRatio="xMidYMid slice"/>` : `<rect x="20" y="30" width="184" height="232" fill="url(#${id}b)"/><text x="112" y="170" text-anchor="middle" font-family="Alegreya,serif" font-weight="800" font-size="74" fill="rgba(255,255,255,.92)">${ini}</text>`}</g></svg>`; };
 const PDF_ORN = '<svg class="orn" viewBox="0 0 176 16" fill="none" stroke="#B8862F" stroke-width="1.2" stroke-linecap="round"><path d="M4 8h62M110 8h62"/><path d="M88 1l6 7-6 7-6-7z" fill="#F5E8C6"/><circle cx="72" cy="8" r="1.8" fill="#B8862F"/><circle cx="104" cy="8" r="1.8" fill="#B8862F"/></svg>';
 const PDF_HEAD = (sub, title) => `<div class="hd"><svg viewBox="0 0 210 38" preserveAspectRatio="none"><defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#1F6B4E"/><stop offset="1" stop-color="#0F3B2A"/></linearGradient></defs>
-  <path d="M62 0C86 1 92 15 128 19c34 4 62-2 82-9V0z" fill="url(#hg)"/><path d="M62 0C86 1 92 15 128 19c34 4 62-2 82-9" fill="none" stroke="#D9B25E" stroke-width=".7"/><path d="M58 0c24 4 30 19 70 23 34 3 62-3 82-11" fill="none" stroke="#D9B25E" stroke-width=".35" opacity=".7"/></svg>
+  <path d="M56 0C80 2 90 25 128 28c34 2.6 58-3 82-11V0z" fill="url(#hg)"/><path d="M56 0C80 2 90 25 128 28c34 2.6 58-3 82-11" fill="none" stroke="#D9B25E" stroke-width=".7"/><path d="M52 0c24 4 34 28 76 32 34 3 60-3 82-12" fill="none" stroke="#D9B25E" stroke-width=".35" opacity=".7"/></svg>
   <div class="logo"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 58V30M32 44l-9-8M32 40l9-9M32 34l-6-7M32 34l6-7M20 58h24"/><path d="M32 6c-4 4-4 9 0 13 4-4 4-9 0-13zM20 12c-1 5 1 9 6 11 1-5-1-9-6-11zM44 12c1 5-1 9-6 11-1-5 1-9 6-11zM12 24c1 5 4 8 9 8 0-5-4-8-9-8zM52 24c-1 5-4 8-9 8 0-5 4-8 9-8z"/></svg><div><b>Shajara</b><small>${esc(sub)}</small></div></div><div class="ttl">${esc(title)}</div></div>`;
 const PDF_BAND = '<div class="band"><svg viewBox="0 0 210 7" preserveAspectRatio="none"><path d="M0 6.2h210" stroke="#B8862F" stroke-width=".4"/><path d="M0 5.2h210" stroke="#D9B25E" stroke-width=".2"/></svg></div>';
 function pdfPersonPage(p, idx, total, sub){
@@ -2148,7 +2106,7 @@ function pdfPersonPage(p, idx, total, sub){
   const rel = P(S.meId) ? (S.meId === p.id ? { term:dn("Siz") } : relate(S.meId, p.id)) : null;
   const rows = [p.birthDate && ["cal", t("bdate"), fmtDate(p.birthDate)], p.birthPlace && ["pin", t("bplace"), dn(p.birthPlace)],
     dead && ["clock", t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"], !dead && age != null && ["clock", t("age"), age + " " + t("age")],
-    p.burialPlace && ["grave", t("dplace"), dn(p.burialPlace)], p.occupation && ["job", t("job"), dn(p.occupation)]].filter(Boolean);
+    p.burialPlace && ["grave", t("dplace"), dn(p.burialPlace)], p.occupation && ["job", t("job"), dn(p.occupation)], S._pdfPhone && phoneList(p).length && ["phone", t("phone"), phoneList(p).map(fmtPhone).join(", ")]].filter(Boolean);
   const nm = x => short(x) + (yrs(x) ? ` (${yrs(x)})` : "");
   const fam = [];
   if (fx.sps.length) fam.push(["user", t(fx.sps.length > 1 ? "pSpouses" : "pSpouse"), fx.sps.map(nm).join("; ")]);
@@ -2197,10 +2155,21 @@ function pdfDoc(list, withCover){
   const pages = pdfBook(list, sub, withCover);
   return { html:`<!doctype html><html lang="uz"><head><meta charset="utf-8"><title>${esc(sub)}</title><style>${pdfCss()}</style></head><body>${pages.join("")}</body></html>`, n:pages.length, sub };
 }
+/* a person with many facts must still fit above the landscape band: shrink the column proportionally (transform, so every renderer agrees) */
+function pdfFit(doc){
+  const px = 96 / 25.4, limit = (242 - 42) * px;
+  doc.querySelectorAll(".col-l,.col-r").forEach(col => {
+    if (col.dataset.fit) return; col.dataset.fit = "1"; col.style.transform = ""; col.style.width = "";
+    const h = col.offsetHeight; if (!h || h <= limit) return;
+    const k = Math.max(.72, limit / h), w0 = col.classList.contains("col-r") ? 114 : 66;
+    col.style.width = (w0 / k).toFixed(2) + "mm"; col.style.transform = `scale(${k.toFixed(4)})`;
+  });
+}
 async function pdfReady(doc){
   try { await doc.fonts.ready; } catch(e){}
   await Promise.all([...doc.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
   await new Promise(r => setTimeout(r, 120));
+  pdfFit(doc);
 }
 function loadLib(src){ return window._libs && window._libs[src] ? window._libs[src] : ((window._libs = window._libs || {})[src] = loadScript(src)); }
 async function pdfDownload(d, name, scale, prog){
@@ -2220,7 +2189,8 @@ async function pdfDownload(d, name, scale, prog){
       cv.width = cv.height = 0; await new Promise(r => setTimeout(r, 0));
     }
     prog(pages.length, pages.length);
-    pdf.save(name.replace(/[\\/:*?"<>|]+/g, "").trim() + ".pdf");
+    const fn = toLat(name).normalize("NFKD").replace(/[\u0300-\u036f\u02bb\u02bc'’`]/g, "").replace(/[^A-Za-z0-9 _.\-]+/g, " ").replace(/\s+/g, " ").trim() || "Shajara";
+    pdf.save(fn + ".pdf");
   } finally { fr.remove(); }
 }
 function pdfPrint(frame, name){
@@ -2235,6 +2205,7 @@ function pdfPane(){
     <div class="f-field"><span>${esc(t("pdfScope"))}</span><div class="pill-row" style="flex-direction:column;align-items:stretch">${[["one","pdfOne"],["branch","pdfBranch"],["book","pdfBook"]].map(([k, l], i) => `<label><input type="radio" name="pdfScope" value="${k}"${i === 0 ? " checked" : ""}>${esc(t(l))}</label>`).join("")}</div></div>
     <label class="f-field" id="pdfWhoW"><span>${esc(t("pdfWho"))}</span><select id="pdfWho">${all.map(p => `<option value="${esc(p.id)}"${p.id === def ? " selected" : ""}>${esc(short(p))}${yrs(p) ? " · " + esc(yrs(p)) : ""}</option>`).join("")}</select></label>
     <label class="check" id="pdfCoverW"><input type="checkbox" id="pdfCover" checked>${esc(t("pdfCover"))}</label>
+    ${[...S.people.values()].some(x => phoneList(x).length) ? `<label class="check"><input type="checkbox" id="pdfPhone">${esc(t("pdfPhoneL"))}</label>` : ""}
     <label class="f-field"><span>${esc(t("pdfQ"))}</span><select id="pdfQ"><option value="3">${esc(t("pdfQ3"))}</option><option value="2">${esc(t("pdfQ2"))}</option></select></label>
     <div class="actions"><button class="btn gold" id="pdfDl">${esc(t("pdfDl"))}</button><button class="btn" id="pdfSave">${esc(t("pdfSave"))}</button></div>
     <div class="progress" id="pdfProg" hidden><i></i></div>
@@ -2246,7 +2217,7 @@ function pdfWire(m){
   const pick = () => {
     const scope = m.querySelector("[name=pdfScope]:checked").value, who = $("pdfWho").value;
     $("pdfWhoW").hidden = scope === "book"; $("pdfCoverW").hidden = scope === "one";
-    const cover = scope !== "one" && $("pdfCover").checked;
+    const cover = scope !== "one" && $("pdfCover").checked; S._pdfPhone = !!($("pdfPhone") && $("pdfPhone").checked);
     const list = scope === "one" ? [P(who)].filter(Boolean) : scope === "branch" ? pdfOrder([who]) : pdfOrder(founders().map(f => f.id));
     const rest = scope === "book" ? famVals().filter(p => !list.includes(p)) : []; return { list:[...list, ...rest], cover, scope, who };
   };
@@ -2259,7 +2230,7 @@ function pdfWire(m){
     doc.documentElement.style.zoom = z; doc.body.style.padding = "12px 0";
     $("pdfMsg").textContent = t("pdfPages", { n:d.n }) + " · " + t("pdfHint");
   };
-  m.querySelectorAll("[name=pdfScope],#pdfWho,#pdfCover").forEach(el => el.onchange = build);
+  m.querySelectorAll("[name=pdfScope],#pdfWho,#pdfCover,#pdfPhone").forEach(el => el.onchange = build);
   const nameOf = () => (o => o.scope === "one" ? short(P(o.who)) : (S.meta.title ? dn(S.meta.title) : t("defTitle")))(pick());
   $("pdfSave").onclick = async () => { if (!cur) await build(); await pdfReady(frame.contentDocument); pdfPrint(frame, "Shajara - " + nameOf()); };
   $("pdfDl").onclick = async () => {
@@ -2300,6 +2271,12 @@ const kIc = (k, sz = 22) => `<svg width="${sz}" height="${sz}" viewBox="0 0 24 2
 Object.assign(ICO, { circles:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c.6-3 2.7-4.8 5.5-4.8s4.9 1.8 5.5 4.8M14.5 14.4c3 0 4.7 1.7 5.2 4.6"/></svg>' });
 
 const isCircle = p => !!(p && p.circle);
+/* phone numbers: one field, several numbers allowed (comma / semicolon / slash) */
+const phoneList = p => String(p?.phone || "").split(/[,;/]+/).map(x => x.trim()).filter(Boolean);
+function fmtPhone(x){ const d = x.replace(/\D/g, ""); if (/^998\d{9}$/.test(d)) return `+998 ${d.slice(3, 5)} ${d.slice(5, 8)} ${d.slice(8, 10)} ${d.slice(10)}`; if (/^\d{9}$/.test(d)) return `+998 ${d.slice(0, 2)} ${d.slice(2, 5)} ${d.slice(5, 7)} ${d.slice(7)}`; return x; }
+function telHref(x){ const d = x.replace(/[^\d+]/g, ""); return "tel:" + (/^\+/.test(d) ? d : /^998\d{9}$/.test(d) ? "+" + d : /^\d{9}$/.test(d) ? "+998" + d : d); }
+const phoneHtml = p => ({ html: phoneList(p).map(x => `<a class="tel" href="${esc(telHref(x))}">${esc(fmtPhone(x))}</a>`).join(" · ") });
+const fv = v => v && v.html ? v.html : esc(v);
 const famVals = () => [...S.people.values()].filter(p => !p.circle);
 const grpTitle = g => g.name || [g.inst, g.label].filter(Boolean).join(", ") || t(KCAP(g.kind));
 const grpYears = g => g.from && g.to ? t("gYears", { a:g.from, b:g.to }) : g.to ? String(g.to) : g.from ? t("gYearsFrom", { a:g.from }) : "";
@@ -2381,7 +2358,7 @@ function openGroup(id){
       ${r ? `<div><b>${r.y}</b><span>${esc(t("gSinceL"))}</span></div><div class="${r.now ? "hot" : ""}"><b>${r.now ? "🎉" : r.left}</b><span>${esc(r.now ? t("gReunionNow", { n:r.y }) : t("gReunion", { n:r.next, m:r.left }))}</span></div>` : ""}</div>
     <div class="actions">${S.canEdit ? `<button class="btn gold" id="gAdd">+ ${esc(t("gAddM"))}</button><button class="btn" id="gList">${esc(t("gAddList"))}</button><button class="btn" id="gEd">${esc(t("gEdit"))}</button><button class="btn danger" id="gDel">${esc(t("gDel"))}</button>` : ""}</div>
     ${ms.length ? `<div class="gmem">${ms.map(x => `<div class="gm"><button class="gmb" data-go="${esc(x.p.id)}">${avatar(x.p)}<span class="gmt"><b>${esc(short(x.p))}</b><small>${esc(yrs(x.p))}${x.role !== "member" ? ` · ${esc(roleLbl(x.role))}` : ""}</small>
-        <span class="tags">${isCircle(x.p) ? "" : `<i class="tg fam">${esc(t("gRel"))}</i>`}${soon.has(x.p.id) ? `<i class="tg bd">🎂 ${soon.get(x.p.id) === 0 ? esc(t("today")) : soon.get(x.p.id) + " " + esc(t("bdDays"))}</i>` : ""}</span></span></button>
+        <span class="tags">${isCircle(x.p) ? "" : `<i class="tg fam">${esc(t("gRel"))}</i>`}${S.canEdit && phoneList(x.p)[0] ? `<i class="tg">📞 ${esc(fmtPhone(phoneList(x.p)[0]))}</i>` : ""}${soon.has(x.p.id) ? `<i class="tg bd">🎂 ${soon.get(x.p.id) === 0 ? esc(t("today")) : soon.get(x.p.id) + " " + esc(t("bdDays"))}</i>` : ""}</span></span></button>
         ${S.canEdit ? `<button class="gx" data-rm="${esc(x.p.id)}" aria-label="${esc(t("gRemove"))}" title="${esc(t("gRemove"))}">✕</button>` : ""}</div>`).join("")}</div>` : `<p class="note">${esc(t("gEmptyM"))}</p>`}
   </div>`;
   m.hidden = false;
@@ -2531,10 +2508,10 @@ function wireCircTab(sh, p){
 function openSettings(){
   const m = $("modal"), sw = (id, on, lbl, hint) => `<label class="swrow"><input type="checkbox" id="${id}"${on ? " checked" : ""}><i class="sw"></i><span><b>${esc(t(lbl))}</b><small>${esc(t(hint))}</small></span></label>`;
   m.innerHTML = `<div class="form" role="dialog" aria-modal="true"><div class="gh-top"><h2>${esc(t("setT"))}</h2><button class="icon-btn" id="stX" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    ${sw("stB", !!S.meta.birthPublic, "setPubB", "setPubBh")}${sw("stC", !!S.meta.circlesPublic, "setPubC", "setPubCh")}</div>`;
+    ${sw("stB", !!S.meta.birthPublic, "setPubB", "setPubBh")}${sw("stC", !!S.meta.circlesPublic, "setPubC", "setPubCh")}${sw("stP", !!S.meta.phonesPublic, "setPubP", "setPubPh")}</div>`;
   m.hidden = false; const close = () => { m.hidden = true; m.innerHTML = ""; }; $("stX").onclick = close; m.onclick = e => { if (e.target === m) close(); };
-  const save = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:$("stB").checked, circlesPublic:$("stC").checked }); toast(t("setSaved")); } catch(e){ toast(t("errSave")); } };
-  $("stB").onchange = save; $("stC").onchange = save;
+  const save = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:$("stB").checked, circlesPublic:$("stC").checked, phonesPublic:$("stP").checked }); toast(t("setSaved")); } catch(e){ toast(t("errSave")); } };
+  $("stB").onchange = save; $("stC").onchange = save; $("stP").onchange = save;
 }
 
 /* ---------- Full profile page ---------- */
@@ -2550,11 +2527,11 @@ function renderProfile(){
   if (!tabs.some(x => x[0] === S.ptab)) S.ptab = "info";
   const facts = [p.birthDate && [ICON.cal, t("bdate"), fmtDate(p.birthDate)], p.birthPlace && [ICON.pin, t("bplace"), dn(p.birthPlace)],
     dead && [ICON.clock, t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"], !dead && age != null && [ICON.clock, t("age"), age + " " + t("age")],
-    p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)], p.occupation && [ICON.job, t("job"), dn(p.occupation)]].filter(Boolean);
+    p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)], p.occupation && [ICON.job, t("job"), dn(p.occupation)], phoneList(p).length && [ICON.phone, t("phone"), phoneHtml(p)]].filter(Boolean);
   const lab = q => { const r = relate(p.id, q.id, "third"); return r ? dn(r.term) : ""; };
   let pane = "";
   if (S.ptab === "info"){
-    pane = `<div class="pf-grid"><div>${facts.length ? `<ul class="facts big">${facts.map(([ic, k, v]) => `<li>${ic}<div><small>${esc(k)}</small><span>${esc(v)}</span></div></li>`).join("")}</ul>` : `<p class="note">${esc(t("pNoData"))}</p>`}
+    pane = `<div class="pf-grid"><div>${facts.length ? `<ul class="facts big">${facts.map(([ic, k, v]) => `<li>${ic}<div><small>${esc(k)}</small><span>${fv(v)}</span></div></li>`).join("")}</ul>` : `<p class="note">${esc(t("pNoData"))}</p>`}
       ${rel ? `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(dn(rel.term))}</b>${rel.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div>` : ""}
       ${cr ? `<div class="relbox alt"><small>${esc(t(circ ? "forYou" : "cDavra"))}</small><b>${esc(cr.term)}</b><span>${esc(cr.desc)}</span></div>` : ""}</div>
       <div>${p.bio ? `<div class="story"><p class="sec-t">${esc(t("profStory"))}</p><p class="bio">${esc(p.bio)}</p></div>` : ""}
@@ -2576,7 +2553,7 @@ function renderProfile(){
   } else pane = `<div class="pf-circ">${circTabHtml(p)}</div>`;
   const tags = [circ ? t("cFriendTag") : (p.gender === "f" ? t("female") : t("male")), g0 != null && !circ ? genLbl(g0) : "", p.occupation ? dn(p.occupation) : "", dead ? t("stDead") : t("stLive")].filter(Boolean);
   $("list").innerHTML = `<div class="prof"><div class="pf-bar"><button class="btn sm" id="pfBack">← ${esc(t("profBack"))}</button><span class="tb-spacer"></span>
-      <button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${S.canEdit ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
+      ${phoneList(p).length ? `<a class="btn sm" href="${esc(telHref(phoneList(p)[0]))}">📞 ${esc(t("callB"))}</a>` : ""}<button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${S.canEdit ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
     <section class="pf-hero reveal"><div class="portrait big">${avatar(p)}</div><div class="pf-id"><h1>${esc(full(p))}</h1><div class="psub">${esc(yrs(p))}${age != null && !dead ? ` · ${age} ${esc(t("age"))}` : ""}</div>
       <div class="pf-tags">${tags.map(x => `<i class="ptag">${esc(x)}</i>`).join("")}</div>${quote ? `<blockquote>“${esc(quote)}”</blockquote>` : ""}</div></section>
     <div class="stabs pf-tabs" role="tablist">${tabs.map(([k, l]) => `<button role="tab" data-pt="${k}" aria-selected="${S.ptab === k}">${esc(t(l))}</button>`).join("")}</div>
@@ -2633,7 +2610,7 @@ function renderChrome(){
   document.querySelectorAll("[data-t]").forEach(el => el.textContent = t(el.dataset.t));
   document.querySelectorAll("[data-tp]").forEach(el => el.placeholder = t(el.dataset.tp));
   $("scLat").setAttribute("aria-pressed", S.script === "lat"); $("scCyr").setAttribute("aria-pressed", S.script === "cyr");
-  for (const [b, v] of [["vHome","home"],["vTree","tree"],["vFan","fan"],["vList","list"],["vTime","time"],["vBday","bday"],["vCircles","circles"],["vMap","map"],["vPhotos","photos"]]) $(b).setAttribute("aria-pressed", S.view === v);
+  for (const [b, v] of [["vHome","home"],["vTree","tree"],["vFan","fan"],["vList","list"],["vTime","time"],["vBday","bday"],["vCircles","circles"],["vPhotos","photos"]]) $(b).setAttribute("aria-pressed", S.view === v);
   const ttl = S.meta.title ? dn(S.meta.title) : t("defTitle");
   if ($("title")) $("title").textContent = ttl; document.title = ttl;
   const n = famVals().length; let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
@@ -2677,7 +2654,7 @@ function render(fit){
   if (S.view !== "time") simStop();
   if (S.view !== "bday") bdayStop();
   if (S._lastView !== S.view){ S._lastView = S.view; lst.classList.remove("vin"); void lst.offsetWidth; if (plain){ lst.classList.add("vin"); lst.scrollTop = 0; } FX.refill(); }
-  ({ tree:renderTree, fan:renderFan, home:renderHome, list:renderList, time:renderTime, map:renderMap, photos:renderPhotos, bday:renderBday, circles:renderCircles, profile:renderProfile })[S.view]();
+  ({ tree:renderTree, fan:renderFan, home:renderHome, list:renderList, time:renderTime, photos:renderPhotos, bday:renderBday, circles:renderCircles, profile:renderProfile })[S.view]();
   if (!plain){
     const key = S.view + ":" + (S.view === "tree" ? S.rootId + (S.paged ? ":p" + S.page : "") : S.focusId);
     if (fit || S.fittedFor !== key){ S.fittedFor = key; requestAnimationFrame(() => PZ.fit()); stageEnter(); }
@@ -2693,6 +2670,7 @@ function setMe(id){
   render();
 }
 const ICON = {
+  phone:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>',
   cal:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
   pin:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/></svg>',
   clock:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/></svg>',
@@ -2716,7 +2694,8 @@ function renderSheet(){
     p.birthPlace && [ICON.pin, t("bplace"), dn(p.birthPlace)],
     isDead(p) && [ICON.clock, t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"],
     p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)],
-    p.occupation && [ICON.job, t("job"), dn(p.occupation)]
+    p.occupation && [ICON.job, t("job"), dn(p.occupation)],
+    phoneList(p).length && [ICON.phone, t("phone"), phoneHtml(p)]
   ].filter(Boolean);
   const relBoxF = hasMe ? (S.meId === p.id ? `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(dn("Siz"))}</b></div>`
       : `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(rel ? dn(rel.term) : t("relNone"))}</b>${rel?.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div>`)
@@ -2724,7 +2703,7 @@ function renderSheet(){
   const cr = hasMe ? circleRel(S.meId, p.id) : null;
   const relBox = (isC ? (hasMe && !cr ? "" : "") : relBoxF) + (cr ? `<div class="relbox alt"><small>${esc(t(isC ? "forYou" : "cDavra"))}</small><b>${esc(cr.term)}</b><span>${esc(cr.desc)}</span></div>` : "");
   const info0 = `${relBox}
-    ${facts.length ? `<ul class="facts">${facts.map(([ic, k, v]) => `<li>${ic}<div><small>${esc(k)}</small><span>${esc(v)}</span></div></li>`).join("")}</ul>` : ""}
+    ${facts.length ? `<ul class="facts">${facts.map(([ic, k, v]) => `<li>${ic}<div><small>${esc(k)}</small><span>${fv(v)}</span></div></li>`).join("")}</ul>` : ""}
     ${p.bio ? `<div><p class="sec-t">${esc(t("bioT"))}</p><p class="bio">${esc(p.bio)}</p></div>` : ""}
     <div class="yetti"><div class="yetti-top"><b>${esc(t("yetti"))}</b><small>${yt} / 7 · ${esc(t("yettiHint"))}</small></div>
       <div class="dots">${Array.from({length:7}, (_, i) => `<span class="${i < yt ? "on" : ""}"></span>`).join("")}</div></div>`;
@@ -2917,6 +2896,7 @@ function openForm(id, preset = {}){
     <div class="grid2">
       <div class="f-field"><span>${esc(t("gender"))}</span><div class="seg" role="group" style="justify-self:start"><button type="button" id="gM" aria-pressed="${d.gender !== "f"}">${esc(t("male"))}</button><button type="button" id="gF" aria-pressed="${d.gender === "f"}">${esc(t("female"))}</button></div></div>
       <label class="f-field"><span>${esc(t("job"))}</span><input id="fJob" value="${esc(d.occupation || "")}" placeholder="${esc(t("jobPh"))}"></label>
+      <label class="f-field"><span>${esc(t("phone"))}</span><input id="fPhone" type="tel" inputmode="tel" autocomplete="off" value="${esc(d.phone || "")}" placeholder="+998 90 123 45 67"></label>
       ${dateField("fB", t("bdate"), d.birthDate)}
       <label class="f-field"><span>${esc(t("bplace"))}</span><input id="fBp" value="${esc(d.birthPlace)}"></label>
       <div class="f-field">${dateField("fX", t("ddate"), d.deathDate)}<label class="check"><input type="checkbox" id="fDead"${isDead(d) ? " checked" : ""}>${esc(t("deceased"))}</label></div>
@@ -2968,6 +2948,7 @@ function openForm(id, preset = {}){
     const fn = $("fFirst").value.trim();
     if (!fn){ err("errName"); $("fFirst").focus(); return; }
     const bd = readDate("fB"), dd = readDate("fX");
+    if ($("fPhone").value.trim() && !/^[0-9+()\-\s,;/]{3,60}$/.test($("fPhone").value.trim())){ err("errPhone"); $("fPhone").focus(); return; }
     if (bd.err){ err(bd.err); $("fBD").focus(); return; }
     if (dd.err){ err(dd.err); $("fXD").focus(); return; }
     if (bd.o?.y && dd.o?.y){ const a = bd.o.y*1e4 + (bd.o.m||0)*100 + (bd.o.d||0), b = dd.o.y*1e4 + (dd.o.m||12)*100 + (dd.o.d||31); if (b < a){ err("errOrder"); return; } }
@@ -2983,7 +2964,7 @@ function openForm(id, preset = {}){
     } catch(x){ err("photoUpErr"); $("fSave").disabled = false; $("fSave").textContent = t("save"); return; }
     const data = { firstName:fn, lastName:$("fLast").value.trim(), patronymic:$("fPatr").value.trim(), gender:d.gender,
       birthDate:serDate(bd.o), birthPlace:$("fBp").value.trim(), deathDate:serDate(dd.o), deceased:$("fDead").checked || !!dd.o, burialPlace:$("fDp").value.trim(),
-      occupation:$("fJob").value.trim(), bio:$("fBio").value.trim(), photo, photoId, fatherId:$("fFa").value || null, motherId:$("fMo").value || null,
+      occupation:$("fJob").value.trim(), phone:$("fPhone").value.trim(), bio:$("fBio").value.trim(), photo, photoId, fatherId:$("fFa").value || null, motherId:$("fMo").value || null,
       spouses:[...new Set(d.spouses)].filter(x => x !== nid), createdAt:p?.createdAt || Date.now(), ...(circ ? { circle:true } : {}), ...($("fPriv").checked ? { privBirth:true } : {}) };
     try {
       await writePerson(nid, data, prevSp);
@@ -3369,7 +3350,7 @@ document.addEventListener("keydown", e => {
 });
 $("vFan").onclick = () => { if (S.selId) S.focusId = S.selId; setView("fan"); };
 $("vList").onclick = () => setView("list");
-$("vHome").onclick = () => setView("home"); $("vBday").onclick = () => setView("bday"); $("vCircles").onclick = () => setView("circles"); $("vTime").onclick = () => setView("time"); $("vMap").onclick = () => setView("map"); $("vPhotos").onclick = () => setView("photos");
+$("vHome").onclick = () => setView("home"); $("vBday").onclick = () => setView("bday"); $("vCircles").onclick = () => setView("circles"); $("vTime").onclick = () => setView("time"); $("vPhotos").onclick = () => setView("photos");
 $("scLat").onclick = () => { S.script = "lat"; store.set("shajara.script", "lat"); render(); };
 $("scCyr").onclick = () => { S.script = "cyr"; store.set("shajara.script", "cyr"); render(); };
 $("genSel").onchange = e => { S.maxGen = +e.target.value || 0; store.set("shajara.maxgen", S.maxGen ? String(S.maxGen) : null); S.page = 0; render(true); };
@@ -3400,14 +3381,14 @@ window.addEventListener("resize", () => { clearTimeout(window._rz); window._rz =
 function setMenu(open){ const app = document.querySelector(".app"); app.classList.toggle("menu-open", open); $("scrim").hidden = !open; $("menuBtn").setAttribute("aria-expanded", open); }
 $("menuBtn").onclick = () => setMenu(!document.querySelector(".app").classList.contains("menu-open"));
 $("scrim").onclick = () => setMenu(false);
-["vHome","vTree","vFan","vList","vTime","vBday","vCircles","vMap","vPhotos","exportBtn","todayBtn","meChip"].forEach(id => $(id).addEventListener("click", () => setMenu(false)));
+["vHome","vTree","vFan","vList","vTime","vBday","vCircles","vPhotos","exportBtn","todayBtn","meChip"].forEach(id => $(id).addEventListener("click", () => setMenu(false)));
 document.querySelector(".app").addEventListener("wheel", e => { if (e.ctrlKey && !PZ.vp.contains(e.target)) e.preventDefault(); }, { passive:false });
 ["gesturestart", "gesturechange"].forEach(n => document.addEventListener(n, e => { if (e.target.closest && e.target.closest(".app")) e.preventDefault(); }, { passive:false }));
 document.addEventListener("keydown", e => { if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")){ e.preventDefault(); $("q").focus(); } });
 
 /* ================= Boot ================= */
 S.script = store.get("shajara.script") === "cyr" ? "cyr" : "lat";
-S.view = ["home","tree","fan","list","time","bday","circles","map","photos"].includes(store.get("shajara.view")) ? store.get("shajara.view") : "home";
+S.view = ["home","tree","fan","list","time","bday","circles","photos"].includes(store.get("shajara.view")) ? store.get("shajara.view") : "home";
 S.paged = store.get("shajara.paged") ? store.get("shajara.paged") === "1" : window.innerWidth < 700; S.page = 0;
 Theme.init(); renderChrome(); FX.start();
 (async () => {
