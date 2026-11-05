@@ -22,6 +22,7 @@ function init(env) {
     await env.DB.batch([
       env.DB.prepare("CREATE TABLE IF NOT EXISTS people (id TEXT PRIMARY KEY, data TEXT NOT NULL, updated INTEGER NOT NULL)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, data TEXT NOT NULL)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS groups (id TEXT PRIMARY KEY, data TEXT NOT NULL, updated INTEGER NOT NULL)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS photos (id TEXT PRIMARY KEY, type TEXT NOT NULL, b64 TEXT NOT NULL, created INTEGER NOT NULL)"),
     ]);
     const seeded = await env.DB.prepare("SELECT k FROM meta WHERE k = 'seeded'").first();
@@ -63,9 +64,10 @@ const secureFlag = req => new URL(req.url).protocol === "https:" ? "; Secure" : 
 
 /* ---------- privacy: viewers see only the birth year of living people ---------- */
 function yearOnly(s) { const m = String(s || "").match(/(\d{4})/); return m ? m[1] : ""; }
-function forViewer(p) {
+// meta.birthPublic = egasi tirik qarindoshlarning kun va oyini hammaga ochgan; p.privBirth = shu odam uchun baribir yashirin.
+function forViewer(p, pub) {
   const living = !p.deceased && !p.deathDate;
-  if (!living) return p;
+  if (!living || (pub && !p.privBirth)) return p;
   return { ...p, birthDate: yearOnly(p.birthDate) };
 }
 
@@ -110,14 +112,21 @@ export async function onRequest(ctx) {
       return json({ admin: false }, 200, { "set-cookie": `${COOKIE}=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${secureFlag(req)}` });
 
     // GET /api/data
+    // Egasi: hammasi. Mehmon: tirik odamlarning kun/oyi yashirin (meta.birthPublic bo'lmasa); do'stlar davrasi faqat meta.circlesPublic bo'lsa.
     if (seg[0] === "data" && method === "GET") {
       const rows = (await env.DB.prepare("SELECT id, data, updated FROM people").all()).results || [];
+      const grows = (await env.DB.prepare("SELECT id, data, updated FROM groups").all()).results || [];
       const m = await env.DB.prepare("SELECT data FROM meta WHERE k = 'info'").first();
-      let rev = 0;
-      const people = rows.map(r => { rev = Math.max(rev, r.updated); const p = { id: r.id, ...JSON.parse(r.data) }; return admin ? p : forViewer(p); });
       const meta = m ? JSON.parse(m.data) : {};
-      if (!admin) delete meta.meId;
-      return json({ people, meta, rev, admin });
+      let upd = 0;
+      let people = rows.map(r => { upd = Math.max(upd, r.updated); return { id: r.id, ...JSON.parse(r.data) }; });
+      let groups = grows.map(r => { upd = Math.max(upd, r.updated); return { id: r.id, ...JSON.parse(r.data) }; });
+      if (!admin) {
+        if (!meta.circlesPublic) { people = people.filter(p => !p.circle); groups = []; }
+        people = people.map(p => forViewer(p, !!meta.birthPublic));
+        delete meta.meId;
+      }
+      return json({ people, groups, meta, rev: upd + ":" + people.length + ":" + groups.length + ":" + JSON.stringify(meta).length, admin });
     }
 
     // GET /api/backup — to'liq zaxira (GitHub Actions haftalik oladi). Authorization: Bearer <BACKUP_TOKEN>
@@ -128,27 +137,28 @@ export async function onRequest(ctx) {
       const rows = (await env.DB.prepare("SELECT id, data FROM people ORDER BY id").all()).results || [];
       const m = await env.DB.prepare("SELECT data FROM meta WHERE k = 'info'").first();
       const ph = (await env.DB.prepare("SELECT id, type, b64 FROM photos ORDER BY id").all()).results || [];
-      return json({ app: "shajara", version: 2, exportedAt: new Date().toISOString(), meta: m ? JSON.parse(m.data) : {},
-        people: rows.map(r => ({ id: r.id, ...JSON.parse(r.data) })), photos: ph });
+      const gr = (await env.DB.prepare("SELECT id, data FROM groups ORDER BY id").all()).results || [];
+      return json({ app: "shajara", version: 3, exportedAt: new Date().toISOString(), meta: m ? JSON.parse(m.data) : {},
+        people: rows.map(r => ({ id: r.id, ...JSON.parse(r.data) })), groups: gr.map(r => ({ id: r.id, ...JSON.parse(r.data) })), photos: ph });
     }
 
     if (!mutating) return fail(404, "Not found");
     if (!admin) return fail(403, "Tahrirlash uchun kiring");
 
-    // PUT/PATCH/DELETE /api/people/:id
-    if (seg[0] === "people" && seg[1] && ID_RE.test(seg[1]) && seg.length === 2) {
-      const id = seg[1], now = Date.now();
-      if (method === "DELETE") { await env.DB.prepare("DELETE FROM people WHERE id = ?").bind(id).run(); return json({ ok: true }); }
+    // PUT/PATCH/DELETE /api/people/:id  va  /api/groups/:id
+    if ((seg[0] === "people" || seg[0] === "groups") && seg[1] && ID_RE.test(seg[1]) && seg.length === 2) {
+      const tbl = seg[0] === "groups" ? "groups" : "people", id = seg[1], now = Date.now();
+      if (method === "DELETE") { await env.DB.prepare(`DELETE FROM ${tbl} WHERE id = ?`).bind(id).run(); return json({ ok: true }); }
       const body = await readBodyJson(req); delete body.id;
       if (method === "PUT") {
-        await env.DB.prepare("INSERT INTO people (id, data, updated) VALUES (?1, ?2, ?3) ON CONFLICT(id) DO UPDATE SET data = ?2, updated = ?3").bind(id, JSON.stringify(body), now).run();
+        await env.DB.prepare(`INSERT INTO ${tbl} (id, data, updated) VALUES (?1, ?2, ?3) ON CONFLICT(id) DO UPDATE SET data = ?2, updated = ?3`).bind(id, JSON.stringify(body), now).run();
         return json({ ok: true });
       }
       if (method === "PATCH") {
-        const cur = await env.DB.prepare("SELECT data FROM people WHERE id = ?").bind(id).first();
+        const cur = await env.DB.prepare(`SELECT data FROM ${tbl} WHERE id = ?`).bind(id).first();
         if (!cur) return fail(404, "Topilmadi");
         const merged = { ...JSON.parse(cur.data), ...body };
-        await env.DB.prepare("UPDATE people SET data = ?, updated = ? WHERE id = ?").bind(JSON.stringify(merged), now, id).run();
+        await env.DB.prepare(`UPDATE ${tbl} SET data = ?, updated = ? WHERE id = ?`).bind(JSON.stringify(merged), now, id).run();
         return json({ ok: true });
       }
     }

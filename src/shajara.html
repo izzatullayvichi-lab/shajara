@@ -539,6 +539,7 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 .bd-who{display:flex;gap:16px;align-items:center;margin-top:10px}
 .bd-who .av{width:88px;height:88px;font-size:28px}
 .bd-who>div{display:grid;gap:4px;align-content:center}
+.bd-who p{margin:0}
 .bd-who h2{font-family:var(--serif);font-size:34px;line-height:1.05;color:#FBF4DF}
 .bd-who p{margin-top:4px;color:#A8C2B4;font-size:16px}
 .bd-clock{display:flex;gap:10px}
@@ -569,6 +570,94 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 .pdfg .pill-row label{justify-content:flex-start;white-space:normal}
 .pdfprev{padding:0;min-height:62vh;display:block}
 .pdfprev iframe{width:100%;height:68vh;border:0;border-radius:16px;background:#d9d3c2;display:block}
+/* circles (classmates / coursemates) */
+.gwrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(270px,100%),1fr));gap:14px}
+.gk{display:inline-flex;align-items:center;gap:7px;color:var(--k,var(--gold));font-weight:600;font-size:13px;letter-spacing:.04em}
+.gk.big{font-size:15px}
+.gcard{position:relative;display:grid;gap:6px;text-align:left;border:1px solid var(--line);border-radius:22px;padding:16px 18px;background:linear-gradient(170deg,var(--card),color-mix(in srgb,var(--card) 90%,var(--sunk)));overflow:hidden;min-width:0;transition:transform .35s var(--ease),box-shadow .35s,border-color .25s}
+.gcard::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--k)}
+.gcard::after{content:"";position:absolute;right:-30px;top:-30px;width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--k) 22%,transparent),transparent 70%)}
+.gcard:hover{transform:perspective(700px) translateY(-5px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));border-color:var(--k);box-shadow:0 26px 40px -22px rgba(50,36,10,.6)}
+.gcard h3{font-family:var(--serif);font-size:21px;line-height:1.15;margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.gcard p{margin:0;color:var(--muted);font-size:14px}
+.gav{display:flex;align-items:center;margin-top:6px}
+.gav .av{width:36px;height:36px;font-size:12px;margin-left:-8px;box-shadow:0 0 0 2px var(--card)}
+.gav .av:first-child{margin-left:0}
+.gav .more{margin-left:6px;font-style:normal;font-size:13px;font-weight:600;color:var(--muted)}
+.gfoot{display:flex;align-items:baseline;gap:6px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.gfoot b{font:600 20px var(--sans);color:var(--ink)}
+.gfoot em{margin-left:auto;font-style:normal;font-size:12.5px;color:var(--k);font-weight:600}
+.gdlg{--k:var(--gold)}
+.gh-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.gstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.gstats>div{border:1px solid var(--line);border-radius:16px;padding:10px 14px;background:var(--card)}
+.gstats b{display:block;font:600 28px/1 var(--sans);font-variant-numeric:tabular-nums}
+.gstats span{font-size:13px;color:var(--muted)}
+.gstats .hot{border-color:var(--gold);background:var(--gold-soft)}
+.gmem{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr));gap:10px}
+.gm{position:relative}
+.gmb{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--line);border-radius:16px;padding:9px 12px;background:var(--card);transition:transform .25s var(--ease),border-color .2s}
+.gmb:hover{border-color:var(--k);transform:translateY(-2px)}
+.gmb .av{width:46px;height:46px;font-size:15px;flex:none}
+.gmt{min-width:0;display:grid}
+.gmt b{font-family:var(--serif);font-size:17px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gmt small{color:var(--muted);font-size:13px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+.tg{font-style:normal;font-size:11.5px;font-weight:600;border-radius:999px;padding:1px 8px;border:1px solid var(--line);color:var(--muted)}
+.tg.fam{color:var(--green);border-color:color-mix(in srgb,var(--green) 40%,var(--line));background:var(--green-soft)}
+.tg.bd{color:var(--gold);border-color:var(--gold);background:var(--gold-soft)}
+.gx{position:absolute;right:6px;top:6px;width:24px;height:24px;border-radius:50%;border:0;background:transparent;color:var(--muted);font-size:12px;opacity:0;transition:opacity .2s}
+.gm:hover .gx,.gx:focus-visible{opacity:1}.gx:hover{background:color-mix(in srgb,var(--danger) 18%,transparent);color:var(--danger)}
+.gline{margin-bottom:8px}
+.gl{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:1px solid var(--line);border-left:4px solid var(--k);border-radius:14px;padding:9px 12px;background:var(--card)}
+.gl:hover{border-color:var(--k)}.gl .gk{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--k) 14%,transparent);flex:none}
+.gl b{display:block;font-family:var(--serif);font-size:16px}.gl small{color:var(--muted);font-size:13px}
+.gl i{margin-left:auto;font-style:normal;font:600 15px var(--sans);color:var(--k)}
+.amq{width:100%;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 14px;font-size:16px;box-sizing:border-box}
+.amr{display:grid;gap:6px;max-height:44vh;overflow:auto;margin:10px 0}
+.amp{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:14px;padding:7px 12px;background:var(--card);cursor:pointer}
+.amp:has(input:checked){border-color:var(--green);background:var(--green-soft)}
+.amp .av{width:40px;height:40px;font-size:14px}.amp span{display:grid}.amp small{color:var(--muted)}
+.amp input,.amrow input{width:18px;height:18px;accent-color:var(--green)}
+.amta{width:100%;min-height:180px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px;font:15px/1.6 var(--sans);box-sizing:border-box;resize:vertical}
+.amtb{display:grid;gap:6px;max-height:36vh;overflow:auto}
+.amrow{display:grid;grid-template-columns:22px minmax(0,1fr) 46px auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:7px 12px;background:var(--card)}
+.amrow.off{opacity:.45}.amrow b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}.amrow span{color:var(--muted);font-size:13px}
+.amrow .ex{font-style:normal;color:var(--green);font-size:13px;font-weight:600}
+.seg.sm button{padding:3px 10px;font-size:13px}
+.swrow{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:12px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.swrow:last-child{border-bottom:0}
+.swrow input{position:absolute;opacity:0}
+.sw{position:relative;width:46px;height:26px;border-radius:999px;background:var(--line);transition:background .25s;flex:none;margin-top:2px}
+.sw::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.3);transition:transform .3s var(--ease)}
+.swrow input:checked+.sw{background:var(--green)}.swrow input:checked+.sw::after{transform:translateX(20px)}
+.swrow input:focus-visible+.sw{outline:2px solid var(--gold);outline-offset:2px}
+.swrow b{display:block;font-size:16px}.swrow small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px;line-height:1.45}
+.bd-fill{margin-top:18px;border:1px dashed var(--gold);border-radius:18px;padding:12px 16px;background:var(--gold-soft)}
+.bd-fill summary{cursor:pointer;font-weight:600;color:var(--gold)}
+.bd-fill .minis{margin-top:10px}
+.bd-ban{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:14px;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:14px;padding:10px 14px;background:var(--card);font-size:14.5px;color:var(--muted)}
+.relbox.alt{background:linear-gradient(120deg,var(--green-soft),transparent);border:1px solid color-mix(in srgb,var(--green) 30%,var(--line))}
+.relbox.alt small{color:var(--green)}
+/* full profile */
+.prof{display:grid;gap:18px;max-width:1100px;margin:0 auto}
+.pf-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pf-hero{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center;border:1px solid var(--line);border-radius:28px;padding:26px 30px;background:linear-gradient(160deg,var(--card),color-mix(in srgb,var(--card) 85%,var(--gold-soft)));box-shadow:var(--shadow-s);position:relative;overflow:hidden}
+.pf-hero::after{content:"";position:absolute;right:-40px;top:-40px;width:240px;height:240px;background:var(--orn) center/90px;opacity:.12;transform:rotate(14deg)}
+.portrait.big{width:190px;height:190px;margin:0}.portrait.big .av{font-size:60px}
+.pf-id h1{font-family:var(--serif);font-size:clamp(28px,4vw,42px);line-height:1.05;margin:0;font-weight:800;overflow-wrap:anywhere}
+.pf-id .psub{font-size:19px;margin-top:6px}
+.pf-id{min-width:0;max-width:100%}.pf-id blockquote{overflow-wrap:anywhere}
+.pf-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ptag{font-style:normal;font-weight:500;font-size:14px;padding:4px 14px;border-radius:999px;background:var(--green-soft);color:var(--green);border:1px solid color-mix(in srgb,var(--green) 25%,transparent)}
+.pf-id blockquote{margin:14px 0 0;font-family:var(--serif);font-style:italic;font-size:19px;color:var(--muted);line-height:1.4;max-width:60ch}
+.pf-tabs{margin:0}.pf-tabs button{font-size:16px;padding:10px 16px}
+.pf-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px;align-items:start}
+.facts.big li{padding:2px 0}.facts.big span{font-size:17px}
+.pf-grid>div{display:grid;gap:14px;min-width:0}
+.pf-rel{display:grid;gap:18px}
+.tl.v{max-width:760px;margin:0}
+.story .bio{font-size:16.5px;line-height:1.7}
 @keyframes fly{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 120px))}}
 @keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
 
@@ -747,6 +836,8 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
   .hgrid,.mapwrap{grid-template-columns:minmax(0,1fr)}
   .hero-orn{display:none}
   #shareBtn,#genWrap{display:none}
+  .pf-hero{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;padding:20px}.portrait.big{width:140px;height:140px}.pf-tags{justify-content:center}.pf-grid{grid-template-columns:minmax(0,1fr)}.pf-tabs{overflow-x:auto;flex-wrap:nowrap}.pf-tabs button{white-space:nowrap}
+  .amrow{grid-template-columns:22px minmax(0,1fr) auto}.amrow>span:nth-of-type(1){display:none}
   .bd-hero{grid-template-columns:minmax(0,1fr);padding:18px}.bd-who h2{font-size:26px}.bd-who .av{width:68px;height:68px}.bd-clock{gap:6px}.bd-u{min-width:0;flex:1;padding:10px 4px}.bd-u b{font-size:28px}
   .bd-row{grid-template-columns:44px minmax(0,1fr) auto;gap:10px;padding:10px 12px}.bd-rk{display:none}.bd-row .av{width:44px;height:44px}.bd-c{min-width:62px}.bd-c b{font-size:22px}
   .pdfg{grid-template-columns:minmax(0,1fr)}.pdfprev iframe{height:56vh}
@@ -793,6 +884,7 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
       <button id="vList" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.5 0 4 1.5 4.5 4"/></svg><span data-t="viewList"></span></button>
       <button id="vTime" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-t="viewTime"></span></button>
       <button id="vBday" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 7.5h20V12H2zM12 21V7.5M12 7.5C10 3.5 6 4 6.5 6S10 7.5 12 7.5zM12 7.5c2-4 6-3.5 5.5-1.5S14 7.5 12 7.5z"/></svg><span data-t="viewBday"></span></button>
+      <button id="vCircles" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c.6-3 2.7-4.8 5.5-4.8s4.9 1.8 5.5 4.8M14.5 14.4c3 0 4.7 1.7 5.2 4.6"/></svg><span data-t="viewCircles"></span></button>
       <button id="vMap" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-t="viewMap"></span></button>
       <button id="vPhotos" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10.5" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg><span data-t="viewPhotos"></span></button>
       <button id="exportBtn" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></svg><span data-t="exportBtn"></span></button>
@@ -804,6 +896,7 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
       <div class="seg" role="group" aria-label="Yozuv"><button id="scLat" aria-pressed="true">Lotin</button><button id="scCyr" aria-pressed="false">Кирилл</button></div>
       <div class="side-foot">
         <button class="me-chip" id="meChip" hidden></button>
+        <button class="side-btn" id="setBtn" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span data-t="setT"></span></button>
       </div>
     </div>
   </aside>
@@ -1014,6 +1107,7 @@ function ancCount(id, g = 0){ const p = P(id); if (!p || g > 6) return 0; let n 
 function founders(){
   const arr = [];
   for (const p of S.people.values()){
+    if (p.circle) continue;
     if (P(p.fatherId) || P(p.motherId)) continue;
     const marriedIn = spousesOf(p).some(s => P(s.fatherId) || P(s.motherId) || descCount(s.id) > descCount(p.id) || (descCount(s.id) === descCount(p.id) && s.gender === "m" && p.gender === "f"));
     if (!marriedIn || !spousesOf(p).length) arr.push(p);
@@ -1290,7 +1384,7 @@ const PZ = { x:0, y:0, k:1, vp:$("vp"), st:$("stage"), dragged:false,
 })();
 
 /* ================= Tree view ================= */
-S.collapsed = new Set(); S.maxGen = +store.get("shajara.maxgen") || 0;
+S.groups = new Map(); S.collapsed = new Set(); S.maxGen = +store.get("shajara.maxgen") || 0;
 const TD = { w:166, h:196, coupleGap:62, gap:40, rowGap:100, knotY:62, busStep:10 };
 function unitKids(id){ const p = P(id), m = new Map(); if (!p) return []; for (const x of [p, ...spousesOf(p)]) for (const k of kidsOf(x.id)) m.set(k.id, k); return [...m.values()].sort((a,b) => bKey(a) - bKey(b)); }
 function treePages(){
@@ -1441,7 +1535,7 @@ function arc(r, a0, a1, rev){ const [x1,y1] = pt(r, rev ? a1 : a0), [x2,y2] = pt
 const clip = (s, n) => s.length > n ? s.slice(0, n - 1) + "…" : s;
 function renderFan(){
   if (!P(S.focusId)){ S.focusId = (P(S.meId) && S.meId) || null;
-    if (!S.focusId){ let best = null, bc = -1; for (const p of S.people.values()){ const c = ancCount(p.id); if (c > bc || (c === bc && bKey(p) > bKey(best))){ bc = c; best = p; } } S.focusId = best ? best.id : null; } }
+    if (!S.focusId){ let best = null, bc = -1; for (const p of famVals()){ const c = ancCount(p.id); if (c > bc || (c === bc && bKey(p) > bKey(best))){ bc = c; best = p; } } S.focusId = best ? best.id : null; } }
   const F = P(S.focusId); if (!F){ PZ.st.innerHTML = ""; return; }
   const GN = 6, anc = []; anc[1] = F.id;
   for (let i = 1; i < 2 ** GN; i++){ const p = P(anc[i]); if (!p) continue; if (P(p.fatherId)) anc[2*i] = p.fatherId; if (P(p.motherId)) anc[2*i+1] = p.motherId; }
@@ -1492,7 +1586,7 @@ function renderFan(){
 const isLeap = y => (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
 function upcoming(days = 30){
   const now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), out = [];
-  for (const p of S.people.values()){
+  for (const p of famVals()){
     const evs = [];
     const b = parseDate(p.birthDate); if (b?.d && b?.m) evs.push(["birth", b]);
     const d = parseDate(p.deathDate); if (d?.d && d?.m) evs.push(["death", d]);
@@ -1521,7 +1615,7 @@ Object.assign(L, { ghostLbl:"Asl o'rni", ghostGo:"Bu inson o'z ota-onasi qatorid
   mapT:"Ajdodlar xaritasi", mapSub:"Tug'ilgan joylar va oila ko'chishlari", mapList:"Manzillar ro'yxati", mapNone:"Xaritada ko'rsatish uchun insonlarning «Tug'ilgan joyi»ni kiriting (masalan: Samarqand, Toshkent, Buxoro).", mapNote:"Xarita sxematik: joylar taxminiy koordinatalar bo'yicha qo'yilgan. Chiziqlar ota-ona tug'ilgan joydan farzand tug'ilgan joyga ko'chishni bildiradi.", mapUnk:"Xaritada topilmagan joylar: {n}", people:"kishi",
   phTitle:"Oila fotoarxivi", phNone:"Hali surat yuklanmagan. Inson kartochkasida «Tahrirlash → Surat tanlash» orqali portret qo'shing.", phHint:"Suratlar a'zolarning portretlaridan yig'iladi." });
 const GEN_ROMAN = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
-const PLAIN = new Set(["home","list","time","map","photos","bday"]);
+const PLAIN = new Set(["home","list","time","map","photos","bday","circles","profile"]);
 const ICO = {
   gens:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11M12 15l-4-3M12 13l4-3"/><path d="M7 10a5 5 0 0 1 10 0 3.5 3.5 0 0 1-2 6.3H9A3.5 3.5 0 0 1 7 10z"/></svg>',
   ppl:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.5 0 4 1.5 4.5 4"/></svg>',
@@ -1567,7 +1661,7 @@ const emptyBox = msg => `<div class="empty-box reveal"><svg width="46" height="4
 
 /* ---------- Home ---------- */
 function renderHome(){
-  const all = [...S.people.values()]; let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
+  const all = famVals(); let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
   const photos = all.filter(photoSrc).length, places = new Set(all.map(p => cityOf(p.birthPlace)?.k).filter(Boolean)).size;
   const ups = upcoming(30).slice(0, 4);
   const recent = [...all].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).slice(0, 8);
@@ -1601,18 +1695,18 @@ function renderHome(){
 /* ---------- Members (cards / table) ---------- */
 S.mf = "all"; S.mv = "cards";
 function renderList(){
-  const all = [...S.people.values()], gm = genMap();
+  const gm = genMap(), allP = [...S.people.values()], all = S.mf === "friends" ? allP.filter(isCircle) : allP.filter(p => !isCircle(p));
   const qv = norm($("q").value.trim());
-  const flt = { all:() => true, m:p => p.gender !== "f", f:p => p.gender === "f", live:p => !isDead(p), dead:isDead };
-  const cnt = k => all.filter(flt[k]).length;
+  const flt = { all:() => true, m:p => p.gender !== "f", f:p => p.gender === "f", live:p => !isDead(p), dead:isDead, friends:() => true };
+  const famAll = allP.filter(p => !isCircle(p)), friAll = allP.filter(isCircle), cnt = k => k === "friends" ? friAll.length : famAll.filter(flt[k]).length;
   const rows = all.filter(p => flt[S.mf](p) && (!qv || norm([p.firstName, p.lastName, p.patronymic].join(" ")).includes(qv)));
   const showRel = !!P(S.meId);
-  const chips = [["all","fAll"],["m","fM"],["f","fF"],["live","fLive"],["dead","fDead"]].map(([k, l]) => `<button class="chipb" data-f="${k}" aria-pressed="${S.mf === k}">${esc(t(l))} · ${cnt(k)}</button>`).join("");
+  const chips = [["all","fAll"],["m","fM"],["f","fF"],["live","fLive"],["dead","fDead"],...(friAll.length ? [["friends","bdFriends"]] : [])].map(([k, l]) => `<button class="chipb" data-f="${k}" aria-pressed="${S.mf === k}">${esc(t(l))} · ${cnt(k)}</button>`).join("");
   let body;
   if (!rows.length) body = emptyBox(t("noRes"));
   else if (S.mv === "cards"){
     rows.sort((a, b) => bKey(a) - bKey(b));
-    body = `<div class="mgrid">${rows.map(p => { const rel = showRel ? relOf(p.id) : null; return `<button class="mcard reveal ${p.gender === "f" ? "f" : "m"}" data-go="${esc(p.id)}">
+    body = `<div class="mgrid">${rows.map(p => { const rel = showRel ? (isCircle(p) ? (circleRel(S.meId, p.id) ? { term:circleRel(S.meId, p.id).term } : null) : relOf(p.id)) : null; return `<button class="mcard reveal ${p.gender === "f" ? "f" : "m"}" data-go="${esc(p.id)}">
       <i class="st${isDead(p) ? " d" : ""}" title="${esc(t(isDead(p) ? "stDead" : "stLive"))}"></i>${avatar(p)}<b>${esc(short(p))}</b><small>${esc(yrs(p) || fmtDate(p.birthDate) || "")}${ageOf(p) != null && !isDead(p) ? " · " + ageOf(p) + " " + esc(t("age")) : ""}</small><span class="pl">${esc(dn(p.birthPlace || ""))}</span>
       ${rel ? `<span class="rl">${esc(dn(rel.term))}</span>` : ""}${gm.has(p.id) ? `<span class="tag">${esc(genLbl(gm.get(p.id)))}</span>` : ""}</button>`; }).join("")}</div>`;
   } else {
@@ -1647,7 +1741,7 @@ function simStart(){
 }
 function simData(){
   const nowY = new Date().getFullYear(), people = [];
-  for (const p of S.people.values()){ const by = +year(p.birthDate) || 0; if (by) people.push({ p, by, dy: +year(p.deathDate) || (isDead(p) ? nowY : null) }); }
+  for (const p of famVals()){ const by = +year(p.birthDate) || 0; if (by) people.push({ p, by, dy: +year(p.deathDate) || (isDead(p) ? nowY : null) }); }
   if (!people.length) return null;
   people.sort((a, b) => a.by - b.by);
   const minY = people[0].by, maxY = Math.max(nowY, minY + 1), gm = genMap();
@@ -1720,7 +1814,7 @@ function cityOf(place){
 }
 const UZ = [[56.0,41.3],[56.3,43.8],[58.6,45.5],[60.9,44.6],[62.0,43.6],[64.5,43.6],[65.6,42.9],[66.1,42.0],[68.0,41.2],[69.1,41.9],[70.1,42.2],[71.2,42.8],[72.0,41.6],[73.1,40.9],[72.3,40.4],[71.0,40.2],[70.4,40.1],[69.4,40.3],[68.9,39.5],[67.7,39.6],[67.4,38.5],[67.8,37.3],[66.6,37.4],[65.6,37.3],[64.3,38.9],[62.4,39.9],[61.0,41.1],[59.9,42.3],[58.6,42.7],[56.9,41.9]];
 function renderMap(){
-  const all = [...S.people.values()], by = new Map(); let unk = 0;
+  const all = famVals(), by = new Map(); let unk = 0;
   for (const p of all){ if (!p.birthPlace) continue; const c = cityOf(p.birthPlace); if (!c){ unk++; continue; } (by.get(c.k) || by.set(c.k, { c, ppl:[] }).get(c.k)).ppl.push(p); }
   const arcs = new Map();
   for (const p of all){ const c = cityOf(p.birthPlace); if (!c) continue; for (const par of [P(p.fatherId), P(p.motherId)]){ const pc = par && cityOf(par.birthPlace); if (pc && pc.k !== c.k){ const key = pc.k + ">" + c.k; arcs.set(key, { a:pc, b:c }); } } }
@@ -1755,7 +1849,7 @@ function renderMap(){
 /* ---------- Photo archive ---------- */
 S.pf = "all";
 function renderPhotos(){
-  const all = [...S.people.values()], withPh = all.filter(photoSrc).sort((a, b) => bKey(a) - bKey(b));
+  const all = famVals(), withPh = all.filter(photoSrc).sort((a, b) => bKey(a) - bKey(b));
   const flt = { all:() => true, m:p => p.gender !== "f", f:p => p.gender === "f", dead:isDead };
   const rows = withPh.filter(flt[S.pf]);
   const chips = [["all","fAll"],["m","fM"],["f","fF"],["dead","fDead"]].map(([k, l]) => `<button class="chipb" data-f="${k}" aria-pressed="${S.pf === k}">${esc(t(l))} · ${withPh.filter(flt[k]).length}</button>`).join("");
@@ -1846,24 +1940,26 @@ Object.assign(L, { viewBday:"Tug'ilgan kunlar", bdTitle:"Tug'ilgan kunlargacha",
   bdLive:"Tirik", bdDead:"Marhumlar tavalludi", bdAll:"Hammasi", bd7:"7 kun", bd30:"30 kun", bd90:"90 kun", bdAny:"Butun yil", bdTurns:"{n} yoshga to'ladi", bdYears:"tavalludiga {n} yil", bdIn:"{n} kun", bdNone:"Ko'rsatish uchun sana topilmadi.",
   bdPriv:"Maxfiylik: tirik qarindoshlarning kun va oyi faqat shajara egasiga ko'rinadi. Tashrif buyuruvchilar uchun faqat yili ko'rsatiladi.", bdPartial:"Kun va oyi kiritilmagan: {n} kishi", bdMonth:"Shu oy", bdTomorrow:"Ertaga", bdWeek:"Shu hafta", bdLater:"Keyinroq" });
 function birthdayList(){
-  const now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), out = []; let partial = 0;
+  const now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), out = [], missing = []; let partial = 0;
   for (const p of S.people.values()){
-    const b = parseDate(p.birthDate); if (!(b?.d && b?.m)){ partial++; continue; }
+    const b = parseDate(p.birthDate); if (!(b?.d && b?.m)){ partial++; if (!isDead(p)) missing.push(p); continue; }
     let yy = t0.getFullYear(), dt;
     for (let k = 0; k < 2; k++){ let dd = b.d; if (b.m === 2 && dd === 29 && !isLeap(yy)) dd = 28; dt = new Date(yy, b.m - 1, dd); if (dt >= t0) break; yy++; }
-    out.push({ p, dead:isDead(p), date:dt, diff:Math.round((dt - t0) / 864e5), n: b.y ? dt.getFullYear() - b.y : null });
+    out.push({ p, dead:isDead(p), circle:isCircle(p), date:dt, diff:Math.round((dt - t0) / 864e5), n: b.y ? dt.getFullYear() - b.y : null });
   }
   out.sort((a, b) => a.diff - b.diff || short(a.p).localeCompare(short(b.p)));
-  return { list:out, partial };
+  missing.sort((a, b) => (isCircle(a) - isCircle(b)) || short(a).localeCompare(short(b)));
+  return { list:out, partial, missing };
 }
 S.bdKind = "live"; S.bdRange = 0;
 let _bdTimer = null;
 function bdayStop(){ clearInterval(_bdTimer); _bdTimer = null; }
 function renderBday(){
-  const { list, partial } = birthdayList();
-  const kindOk = e => S.bdKind === "all" || (S.bdKind === "dead" ? e.dead : !e.dead);
+  const { list, partial, missing } = birthdayList();
+  const kindOk = e => S.bdKind === "all" || (S.bdKind === "dead" ? e.dead : S.bdKind === "friends" ? e.circle && !e.dead : !e.dead && !e.circle);
   const rows = list.filter(e => kindOk(e) && (!S.bdRange || e.diff <= S.bdRange));
-  const nearest = list.filter(e => !e.dead)[0] || list[0];
+  const nearest = list.filter(kindOk)[0];
+  const hasFr = [...S.people.values()].some(isCircle);
   const chip = (grp, k, lbl, cur) => `<button class="chipb" data-${grp}="${k}" aria-pressed="${cur === k}">${esc(t(lbl))}</button>`;
   const monthName = d => dn(MONTHS[d.getMonth()]);
   let lastKey = "", body = "";
@@ -1881,13 +1977,16 @@ function renderBday(){
       <div class="bd-clock" id="bdClock" data-t="${nearest.date.getTime()}" aria-live="off">${["bdDays","bdHours","bdMin","bdSec"].map((k, i) => `<div class="bd-u"><b id="bdU${i}">0</b><span>${esc(t(k))}</span></div>`).join("")}</div></section>` : "";
   $("list").innerHTML = `<div class="lv-grid"><section>${hero}
     <div class="lvbar" style="margin-top:6px"><h2 class="lv-h">${esc(t("bdTitle"))} <small>${esc(t("bdSub"))} · ${rows.length}</small></h2></div>
-    <div class="chips" style="margin:6px 0 8px">${chip("bk", "live", "bdLive", S.bdKind)}${chip("bk", "dead", "bdDead", S.bdKind)}${chip("bk", "all", "bdAll", S.bdKind)}</div>
+    <div class="chips" style="margin:6px 0 8px">${chip("bk", "live", "bdLive", S.bdKind)}${hasFr ? chip("bk", "friends", "bdFriends", S.bdKind) : ""}${chip("bk", "dead", "bdDead", S.bdKind)}${chip("bk", "all", "bdAll", S.bdKind)}</div>
     <div class="chips" style="margin:0 0 16px">${[[0,"bdAny"],[7,"bd7"],[30,"bd30"],[90,"bd90"]].map(([k, l]) => `<button class="chipb sm" data-br="${k}" aria-pressed="${S.bdRange === k}">${esc(t(l))}</button>`).join("")}</div>
     ${body ? `<div class="bd-list">${body}</div>` : emptyBox(t("bdNone"))}
-    ${partial ? `<p class="note" style="margin-top:14px">${esc(t("bdPartial", { n:partial }))}</p>` : ""}${S.canEdit ? "" : `<p class="note" style="margin-top:6px">${esc(t("bdPriv"))}</p>`}</section></div>`;
+    ${S.canEdit && missing.length ? `<details class="bd-fill"><summary>${esc(t("bdFill"))} · ${missing.length}</summary><p class="note">${esc(t("bdFillSub"))}</p><div class="minis">${missing.slice(0, 60).map(p => `<button class="mini" data-edit="${esc(p.id)}">${avatar(p)}<span class="n">${esc(first(p))}</span><small>${esc(yrs(p) || "—")}</small></button>`).join("")}</div></details>` : partial ? `<p class="note" style="margin-top:14px">${esc(t("bdPartial", { n:partial }))}</p>` : ""}
+    ${!S.meta.birthPublic ? (S.canEdit ? `<div class="bd-ban"><span>${esc(t("bdBannerE"))}</span><button class="btn sm gold" id="bdOpen">${esc(t("bdOpenAll"))}</button></div>` : `<p class="note" style="margin-top:10px">${esc(t("bdBannerV"))}</p>`) : ""}</section></div>`;
   const root = $("list"); wireGo(root);
   root.querySelectorAll("[data-bk]").forEach(b => b.onclick = () => { S.bdKind = b.dataset.bk; renderBday(); });
   root.querySelectorAll("[data-br]").forEach(b => b.onclick = () => { S.bdRange = +b.dataset.br; renderBday(); });
+  root.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openForm(b.dataset.edit));
+  if ($("bdOpen")) $("bdOpen").onclick = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:true }); toast(t("bdOpened")); } catch(e){ toast(t("errSave")); } };
   reveal(root);
   bdayStop(); const clock = $("bdClock");
   if (clock){
@@ -2055,6 +2154,7 @@ function pdfPersonPage(p, idx, total, sub){
   if (fx.sps.length) fam.push(["user", t(fx.sps.length > 1 ? "pSpouses" : "pSpouse"), fx.sps.map(nm).join("; ")]);
   if (fx.par.length) fam.push(["users", t("pParents"), fx.par.map(nm).join("; ")]);
   if (fx.sib.length) fam.push(["users", t("pSibs"), `${fx.sib.length} ${t("pPpl")}` + (fx.sib.length <= 4 ? " — " + fx.sib.map(first).join(", ") : "")]);
+  { const gs = groupsOf(p.id); if (gs.length) fam.push(["users", t("cDavra"), gs.slice(0, 2).map(g => grpTitle(g) + (g.to ? ` (${g.to})` : "")).join("; ") + (gs.length > 2 ? ` +${gs.length - 2}` : "")]); }
   if (fx.kids.length) fam.push(["users", t("pKids"), `${fx.kids.length} ${t("pPpl")}` + (fx.m && fx.f ? ` (${fx.m} ${t("pBoys")}, ${fx.f} ${t("pGirls")})` : fx.m ? ` (${fx.m} ${t("pBoys")})` : ` (${fx.f} ${t("pGirls")})`)]);
   if (fx.gk.length) fam.push(["group", t("pGrand"), `${fx.gk.length} ${t("pPpl")}`]);
   if (fx.gg.length) fam.push(["group", t("pGreat"), `${fx.gg.length} ${t("pPpl")}`]);
@@ -2129,7 +2229,7 @@ function pdfPrint(frame, name){
   win.onafterprint = restore; setTimeout(restore, 60000); win.focus(); win.print();
 }
 function pdfPane(){
-  const all = [...S.people.values()].sort((a, b) => short(a).localeCompare(short(b)));
+  const all = famVals().sort((a, b) => short(a).localeCompare(short(b)));
   const def = S.selId && P(S.selId) ? S.selId : (P(S.meId) ? S.meId : (founders()[0]?.id || all[0]?.id));
   return `<section data-pane="pdf" hidden><div class="ex-grid pdfg"><div style="display:grid;gap:14px;min-width:0;align-content:start">
     <div class="f-field"><span>${esc(t("pdfScope"))}</span><div class="pill-row" style="flex-direction:column;align-items:stretch">${[["one","pdfOne"],["branch","pdfBranch"],["book","pdfBook"]].map(([k, l], i) => `<label><input type="radio" name="pdfScope" value="${k}"${i === 0 ? " checked" : ""}>${esc(t(l))}</label>`).join("")}</div></div>
@@ -2148,7 +2248,7 @@ function pdfWire(m){
     $("pdfWhoW").hidden = scope === "book"; $("pdfCoverW").hidden = scope === "one";
     const cover = scope !== "one" && $("pdfCover").checked;
     const list = scope === "one" ? [P(who)].filter(Boolean) : scope === "branch" ? pdfOrder([who]) : pdfOrder(founders().map(f => f.id));
-    const rest = scope === "book" ? [...S.people.values()].filter(p => !list.includes(p)) : []; return { list:[...list, ...rest], cover, scope, who };
+    const rest = scope === "book" ? famVals().filter(p => !list.includes(p)) : []; return { list:[...list, ...rest], cover, scope, who };
   };
   const build = async () => {
     const o = pick(); if (!o.list.length){ $("pdfMsg").textContent = t("noRes"); return; }
@@ -2172,6 +2272,325 @@ function pdfWire(m){
   };
   return build;
 }
+
+/* ================= Circles: classmates, coursemates, colleagues, friends =================
+   Model
+   - A person with `circle:true` is NOT family: he/she never enters the tree, counts or the family book.
+   - A group (collection "groups") = one cohort: kind, institution, label, city, from–to years, members:[{id, role}].
+     Members may be circle people OR relatives (a cousin can also be your classmate).
+   - Everything else (classmates of X, closest mates, anniversaries, relation terms) is derived, never stored twice. */
+Object.assign(L, { viewCircles:"Do'stlar davrasi", crTitle:"Do'stlar davrasi", crSub:"sinfdoshlar, kursdoshlar, hamkasblar va do'stlar", crNew:"Yangi davra", crNone:"Hali davra yo'q. Maktab sinfi, universitet kursi yoki ish jamoasidan boshlang — a'zolarni ro'yxat qilib bir yo'la kiritish mumkin.", crMine:"Sizning davralaringiz", crClose:"Eng yaqin do'stlaringiz", crCloseSub:"ko'p davrada birga bo'lganlar",
+  kClass:"Sinfdoshlar", kCourse:"Kursdoshlar", kGroup:"Guruhdoshlar", kWork:"Hamkasblar", kFriends:"Do'stlar", k1Class:"Sinfdosh", k1Course:"Kursdosh", k1Group:"Guruhdosh", k1Work:"Hamkasb", k1Friends:"Do'st",
+  kHClass:"Maktab sinfi", kHCourse:"Universitet / kollej kursi", kHGroup:"O'quv guruhi / to'garak", kHWork:"Ish jamoasi", kHFriends:"Do'stlar davrasi",
+  gInst:"Muassasa", gInstPh:"masalan: Samarqand 12-maktab", gLabel:"Sinf / kurs / guruh", gLabelPh:"masalan: 11-A yoki Yuridik fakultet, 3-kurs", gCity:"Shahar / tuman", gFrom:"Boshlagan yil", gTo:"Tugatgan yil", gName:"Nomi (ixtiyoriy)", gNamePh:"bo'sh qoldirsangiz o'zi tuziladi", gNote:"Izoh",
+  gEdit:"Davrani tahrirlash", gDel:"Davrani o'chirish", gDelC:"Ha, davra o'chirilsin (odamlar qoladi)", gSaved:"Davra saqlandi", gDup:"Shunga o'xshash davra allaqachon bor:", gOpenDup:"Mavjudini ochish", gMakeAnyway:"Baribir yaratish",
+  gMembers:"A'zolar", gAddM:"A'zo qo'shish", gAddList:"Ro'yxatdan qo'shish", gEmptyM:"Hali a'zo yo'q.", gRoleMember:"A'zo", gRoleTeacher:"Ustoz / o'qituvchi", gRoleHead:"Sinf rahbari / kurator", gRemove:"Davradan chiqarish", gRel:"qarindosh",
+  gSince:"Tugatganiga {n} yil", gSinceL:"yil o'tdi", gReunion:"{n} yillik uchrashuvga {m} yil qoldi", gReunionNow:"Bu yil {n} yillik uchrashuv!", gYears:"{a} – {b}", gYearsFrom:"{a} yildan",
+  amTabE:"Mavjud odam", amTabN:"Yangi odam", amTabL:"Ro'yxatdan", amSearch:"Ism bo'yicha qidiring…", amRole:"Roli", amAdd:"Qo'shish", amNone:"Hech kim topilmadi.", amNew1:"Ism", amNew2:"Familiya", amBirthY:"Tug'ilgan yil", amListHint:"Har qatorga bitta odam. Masalan: «Karimov Aziz, 1990». Raqam va tire ishlamaydi.", amOrderLF:"Familiya Ism", amOrderFL:"Ism Familiya", amParse:"Tekshirish", amListLines:"{n} ta odam topildi", amExists:"bazada bor — ulanadi", amNewTag:"yangi", amSave:"Hammasini saqlash", amAdded:"{n} ta odam qo'shildi", amSkip:"o'tkazib yuborish",
+  tabCirc:"Davra", cDavra:"Davralari", cNone:"Hech qaysi davraga qo'shilmagan.", cAddTo:"Davraga qo'shish", cPick:"— davrani tanlang —", cNewFor:"Yangi davra yaratish", cFriendTag:"Do'st davrasi", cAddFriend:"Do'st / sinfdosh qo'shish", cMates:"Shu davralardagi odamlar",
+  setT:"Sozlamalar", setPubB:"Tirik qarindoshlarning tug'ilgan kun va oyi hammaga ko'rinsin", setPubBh:"O'chiq bo'lsa, mehmonlar faqat tug'ilgan yilni ko'radi. Alohida odam uchun kartochkada «Kun va oyini yashirish»ni belgilash mumkin.", setPubC:"Do'stlar davrasi hammaga ko'rinsin", setPubCh:"O'chiq bo'lsa, sinfdosh/kursdoshlar faqat sizga (egasiga) ko'rinadi.", setOn:"Yoqilgan", setSaved:"Sozlama saqlandi", privBirth:"Kun va oyini mehmonlardan yashirish",
+  bdFriends:"Do'stlar", bdFill:"Kun va oyini to'ldirish", bdFillSub:"Sanasi to'liq emas — kiriting, hisoblagich ishga tushadi", bdBannerV:"Egasi tirik qarindoshlarning kun va oyini mehmonlardan yashirgan. Ko'ringan sanalar: faqat marhumlar tavalludi.", bdBannerE:"Hozir mehmonlar tirik odamlarning faqat tug'ilgan yilini ko'radi.", bdOpenAll:"Hammaga ochish", bdOpened:"Endi hamma ko'ra oladi",
+  profBack:"Orqaga", profFull:"To'liq profil", profTabInfo:"Asosiy ma'lumot", profTabRel:"Qarindoshlar", profTabLife:"Hayot yo'li", profTabCirc:"Do'stlar davrasi", profTabPdf:"PDF", profFacts:"Ma'lumotlar", profStory:"Qisqacha ma'lumot", profBlood:"Qarindoshlik", pTagGen:"avlod" });
+const KINDS = { class:{ ic:"cap", c:"#2F8F6B" }, course:{ ic:"book", c:"#5B93C9" }, group:{ ic:"group", c:"#8B6BD6" }, work:{ ic:"job", c:"#C9962F" }, friends:{ ic:"heart", c:"#E1788C" } };
+const KCAP = k => ({ class:"kClass", course:"kCourse", group:"kGroup", work:"kWork", friends:"kFriends" })[k] || "kFriends";
+const KONE = k => ({ class:"k1Class", course:"k1Course", group:"k1Group", work:"k1Work", friends:"k1Friends" })[k] || "k1Friends";
+const KHINT = k => ({ class:"kHClass", course:"kHCourse", group:"kHGroup", work:"kHWork", friends:"kHFriends" })[k] || "kHFriends";
+Object.assign(PI, { cap:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5M22 9v6"/>', book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 18.5V5.5M8 7h8"/>' });
+const kIc = (k, sz = 22) => `<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${PI[KINDS[k]?.ic || "heart"]}</svg>`;
+Object.assign(ICO, { circles:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c.6-3 2.7-4.8 5.5-4.8s4.9 1.8 5.5 4.8M14.5 14.4c3 0 4.7 1.7 5.2 4.6"/></svg>' });
+
+const isCircle = p => !!(p && p.circle);
+const famVals = () => [...S.people.values()].filter(p => !p.circle);
+const grpTitle = g => g.name || [g.inst, g.label].filter(Boolean).join(", ") || t(KCAP(g.kind));
+const grpYears = g => g.from && g.to ? t("gYears", { a:g.from, b:g.to }) : g.to ? String(g.to) : g.from ? t("gYearsFrom", { a:g.from }) : "";
+const groupsOf = pid => [...S.groups.values()].filter(g => (g.members || []).some(m => m.id === pid)).sort((a, b) => (+b.to || 0) - (+a.to || 0));
+const roleOf = (g, pid) => (g.members || []).find(m => m.id === pid)?.role || "member";
+const roleLbl = r => t(r === "teacher" ? "gRoleTeacher" : r === "head" ? "gRoleHead" : "gRoleMember");
+function reunion(g){
+  const to = +g.to; if (!to) return null; const ny = new Date().getFullYear(), y = ny - to; if (y < 0) return null;
+  if (y > 0 && y % 5 === 0) return { y, now:true };
+  const next = Math.ceil((y + .001) / 5) * 5; return { y, next, left:next - y };
+}
+/* what is X to me through shared groups? (classmate / coursemate / teacher …) */
+function circleRel(meId, pid){
+  if (!meId || meId === pid) return null;
+  const mine = new Map(groupsOf(meId).map(g => [g.id, g])), sh = groupsOf(pid).filter(g => mine.has(g.id));
+  if (!sh.length) return null;
+  const pri = { class:0, course:1, group:2, work:3, friends:4 }; sh.sort((a, b) => (pri[a.kind] ?? 9) - (pri[b.kind] ?? 9));
+  const g0 = sh[0], rMe = roleOf(g0, meId), rHe = roleOf(g0, pid);
+  let term = t(KONE(g0.kind));
+  if (rHe !== "member" && rMe === "member") term = rHe === "head" ? (g0.kind === "class" ? dn("Sinf rahbari") : dn("Kurator")) : dn("O'qituvchi / ustoz");
+  else if (rMe !== "member" && rHe === "member") term = dn("Shogird / o'quvchi");
+  return { term, desc: sh.map(g => grpTitle(g) + (grpYears(g) ? " · " + grpYears(g) : "")).join(" ; "), n:sh.length, groups:sh };
+}
+/* people who shared the most groups with pid */
+function matesOf(pid){
+  const m = new Map();
+  for (const g of groupsOf(pid)) for (const x of g.members || []) if (x.id !== pid && P(x.id)){ const e = m.get(x.id) || { p:P(x.id), gs:[] }; e.gs.push(g); m.set(x.id, e); }
+  return [...m.values()].sort((a, b) => b.gs.length - a.gs.length || short(a.p).localeCompare(short(b.p)));
+}
+const newId = col => S.db.collection(col).doc().id;
+async function saveGroup(id, data){ await S.db.collection("groups").doc(id).set(data); }
+async function setMembers(g, members){ await S.db.collection("groups").doc(g.id).update({ members }); }
+async function addMembersTo(gid, ids, role){
+  const g = S.groups.get(gid); if (!g) return 0; const have = new Set((g.members || []).map(m => m.id)); const add = ids.filter(i => !have.has(i));
+  if (add.length) await setMembers(g, [...(g.members || []), ...add.map(id => ({ id, role:role || "member" }))]); return add.length;
+}
+async function dropFromGroups(pid){ for (const g of groupsOf(pid)) await setMembers(g, (g.members || []).filter(m => m.id !== pid)); }
+
+/* ---------- Circles page ---------- */
+S.crKind = "all";
+function renderCircles(){
+  const all = [...S.groups.values()].sort((a, b) => (+b.to || 0) - (+a.to || 0) || grpTitle(a).localeCompare(grpTitle(b)));
+  const me = P(S.meId), mine = me ? groupsOf(me.id) : [], close = me ? matesOf(me.id).slice(0, 8) : [];
+  const kinds = ["class", "course", "group", "work", "friends"], cnt = k => all.filter(g => k === "all" || g.kind === k).length;
+  const rows = all.filter(g => S.crKind === "all" || g.kind === S.crKind);
+  const card = g => { const ms = (g.members || []).map(m => P(m.id)).filter(Boolean), r = reunion(g), k = KINDS[g.kind] || KINDS.friends;
+    return `<button class="gcard reveal" data-g="${esc(g.id)}" style="--k:${k.c}"><span class="gk">${kIc(g.kind, 20)}<b>${esc(t(KONE(g.kind)))}</b></span>
+      <h3>${esc(grpTitle(g))}</h3><p>${esc([g.city, grpYears(g)].filter(Boolean).join(" · ")) || "\u00a0"}</p>
+      <span class="gav">${ms.slice(0, 6).map(p => avatar(p)).join("")}${ms.length > 6 ? `<i class="more">+${ms.length - 6}</i>` : ""}</span>
+      <span class="gfoot"><b>${(g.members || []).length}</b> ${esc(t("people"))}${r ? `<em>${esc(r.now ? t("gReunionNow", { n:r.y }) : t("gSince", { n:r.y }))}</em>` : ""}</span></button>`; };
+  const mini = (p, sub) => `<button class="mini reveal" data-go="${esc(p.id)}">${avatar(p)}<span class="n">${esc(first(p))}</span><small>${esc(sub)}</small></button>`;
+  $("list").innerHTML = `<div class="lv-grid"><section><div class="lvbar"><h2 class="lv-h">${esc(t("crTitle"))} <small>${esc(t("crSub"))}</small></h2>
+    ${S.canEdit ? `<button class="btn gold" id="crNew">+ ${esc(t("crNew"))}</button>` : ""}</div>
+    ${all.length ? `<div class="chips" style="margin:6px 0 16px"><button class="chipb" data-ck="all" aria-pressed="${S.crKind === "all"}">${esc(t("bdAll"))} · ${cnt("all")}</button>${kinds.filter(k => cnt(k)).map(k => `<button class="chipb" data-ck="${k}" aria-pressed="${S.crKind === k}">${esc(t(KCAP(k)))} · ${cnt(k)}</button>`).join("")}</div>
+      ${me && mine.length && S.crKind === "all" ? `<h3 class="sec-t" style="margin:4px 0 8px">${esc(t("crMine"))}</h3><div class="gwrap">${mine.map(card).join("")}</div>` : ""}
+      ${close.length && S.crKind === "all" ? `<h3 class="sec-t" style="margin:18px 0 8px">${esc(t("crClose"))} <small class="muted">${esc(t("crCloseSub"))}</small></h3><div class="minis">${close.map(e => mini(e.p, e.gs.length + " " + t("gYearsN"))).join("")}</div>` : ""}
+      <h3 class="sec-t" style="margin:18px 0 8px">${esc(S.crKind === "all" ? t("bdAll") : t(KCAP(S.crKind)))}</h3><div class="gwrap">${rows.map(card).join("")}</div>`
+      : emptyBox(t("crNone")) + (S.canEdit ? `<p style="text-align:center;margin-top:14px"><button class="btn gold" id="crNew2">+ ${esc(t("crNew"))}</button></p>` : "")}</section></div>`;
+  const root = $("list"); wireGo(root);
+  root.querySelectorAll("[data-g]").forEach(b => b.onclick = () => openGroup(b.dataset.g));
+  root.querySelectorAll("[data-ck]").forEach(b => b.onclick = () => { S.crKind = b.dataset.ck; renderCircles(); });
+  ["crNew", "crNew2"].forEach(i => { if ($(i)) $(i).onclick = () => openGroupForm(null, {}); });
+  reveal(root);
+}
+L.gYearsN = "davrada birga";
+
+/* ---------- Group details ---------- */
+function openGroup(id){
+  const g = S.groups.get(id); if (!g){ $("modal").hidden = true; return; }
+  const m = $("modal"), ms = (g.members || []).map(x => ({ ...x, p:P(x.id) })).filter(x => x.p), r = reunion(g), k = KINDS[g.kind] || KINDS.friends;
+  const order = { head:0, teacher:1, member:2 };
+  ms.sort((a, b) => order[a.role] - order[b.role] || short(a.p).localeCompare(short(b.p)));
+  const soon = new Map(birthdayList().list.filter(e => !e.dead && e.diff <= 30).map(e => [e.p.id, e.diff]));
+  m.innerHTML = `<div class="form wide gdlg" role="dialog" aria-modal="true" style="--k:${k.c}">
+    <div class="gh-top"><span class="gk big">${kIc(g.kind, 26)}<b>${esc(t(KONE(g.kind)))}</b></span><button class="icon-btn" id="gClose" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div><h2>${esc(grpTitle(g))}</h2><p class="note" style="margin-top:4px">${esc([g.inst && g.name ? g.inst : "", g.city, grpYears(g)].filter(Boolean).join(" · "))}</p></div>
+    ${g.note ? `<p class="bio" style="margin:0">${esc(g.note)}</p>` : ""}
+    <div class="gstats"><div><b>${ms.length}</b><span>${esc(t("gMembers"))}</span></div>
+      ${r ? `<div><b>${r.y}</b><span>${esc(t("gSinceL"))}</span></div><div class="${r.now ? "hot" : ""}"><b>${r.now ? "🎉" : r.left}</b><span>${esc(r.now ? t("gReunionNow", { n:r.y }) : t("gReunion", { n:r.next, m:r.left }))}</span></div>` : ""}</div>
+    <div class="actions">${S.canEdit ? `<button class="btn gold" id="gAdd">+ ${esc(t("gAddM"))}</button><button class="btn" id="gList">${esc(t("gAddList"))}</button><button class="btn" id="gEd">${esc(t("gEdit"))}</button><button class="btn danger" id="gDel">${esc(t("gDel"))}</button>` : ""}</div>
+    ${ms.length ? `<div class="gmem">${ms.map(x => `<div class="gm"><button class="gmb" data-go="${esc(x.p.id)}">${avatar(x.p)}<span class="gmt"><b>${esc(short(x.p))}</b><small>${esc(yrs(x.p))}${x.role !== "member" ? ` · ${esc(roleLbl(x.role))}` : ""}</small>
+        <span class="tags">${isCircle(x.p) ? "" : `<i class="tg fam">${esc(t("gRel"))}</i>`}${soon.has(x.p.id) ? `<i class="tg bd">🎂 ${soon.get(x.p.id) === 0 ? esc(t("today")) : soon.get(x.p.id) + " " + esc(t("bdDays"))}</i>` : ""}</span></span></button>
+        ${S.canEdit ? `<button class="gx" data-rm="${esc(x.p.id)}" aria-label="${esc(t("gRemove"))}" title="${esc(t("gRemove"))}">✕</button>` : ""}</div>`).join("")}</div>` : `<p class="note">${esc(t("gEmptyM"))}</p>`}
+  </div>`;
+  m.hidden = false;
+  const close = () => { m.hidden = true; m.innerHTML = ""; };
+  $("gClose").onclick = close; m.onclick = e => { if (e.target === m) close(); };
+  m.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { close(); select(b.dataset.go, true); });
+  if (!S.canEdit) return;
+  $("gAdd").onclick = () => openAddMembers(id, "e"); $("gList").onclick = () => openAddMembers(id, "l"); $("gEd").onclick = () => openGroupForm(id, {});
+  m.querySelectorAll("[data-rm]").forEach(b => b.onclick = async () => { await setMembers(g, (g.members || []).filter(x => x.id !== b.dataset.rm)); openGroup(id); });
+  const del = $("gDel"); del.onclick = async () => { if (!del.classList.contains("armed")){ del.classList.add("armed"); del.textContent = t("gDelC"); setTimeout(() => { if (del.isConnected){ del.classList.remove("armed"); del.textContent = t("gDel"); } }, 4000); return; }
+    try { await S.db.collection("groups").doc(id).delete(); close(); toast(t("deleted")); } catch(e){ toast(t("errSave")); } };
+}
+
+/* ---------- Group form (create / edit) ---------- */
+function openGroupForm(id, preset){
+  const g = id ? S.groups.get(id) : null, d = g ? { ...g } : { kind:preset.kind || "class", inst:"", label:"", city:"", from:"", to:"", name:"", note:"", members:preset.members || [] };
+  const insts = [...new Set([...S.groups.values()].map(x => x.inst).filter(Boolean))], m = $("modal");
+  m.innerHTML = `<form class="form" id="gf" novalidate><h2>${esc(t(g ? "gEdit" : "crNew"))}</h2>
+    <div class="pill-row">${Object.keys(KINDS).map(k => `<label><input type="radio" name="gk" value="${k}"${d.kind === k ? " checked" : ""}>${esc(t(KHINT(k)))}</label>`).join("")}</div>
+    <div class="grid2"><label class="f-field"><span>${esc(t("gInst"))}</span><input id="gI" list="gInstL" value="${esc(d.inst || "")}" placeholder="${esc(t("gInstPh"))}" autocomplete="off"><datalist id="gInstL">${insts.map(i => `<option value="${esc(i)}">`).join("")}</datalist></label>
+      <label class="f-field"><span>${esc(t("gLabel"))}</span><input id="gL" value="${esc(d.label || "")}" placeholder="${esc(t("gLabelPh"))}" autocomplete="off"></label>
+      <label class="f-field"><span>${esc(t("gCity"))}</span><input id="gC" value="${esc(d.city || "")}" autocomplete="off"></label>
+      <label class="f-field"><span>${esc(t("gName"))}</span><input id="gN" value="${esc(d.name || "")}" placeholder="${esc(t("gNamePh"))}" autocomplete="off"></label>
+      <label class="f-field"><span>${esc(t("gFrom"))}</span><input id="gFr" inputmode="numeric" maxlength="4" value="${esc(d.from || "")}"></label>
+      <label class="f-field"><span>${esc(t("gTo"))}</span><input id="gTo" inputmode="numeric" maxlength="4" value="${esc(d.to || "")}"></label></div>
+    <label class="f-field"><span>${esc(t("gNote"))}</span><textarea id="gNt" style="min-height:70px">${esc(d.note || "")}</textarea></label>
+    <div id="gDup"></div><p class="err" id="gErr" hidden></p>
+    <div class="form-foot"><button type="button" class="btn" id="gCancel">${esc(t("cancel"))}</button><button class="btn primary" id="gSave">${esc(t("save"))}</button></div></form>`;
+  m.hidden = false;
+  const close = () => { m.hidden = true; m.innerHTML = ""; }; $("gCancel").onclick = close; m.onclick = e => { if (e.target === m) close(); };
+  const err = x => { $("gErr").textContent = x || ""; $("gErr").hidden = !x; };
+  let force = false;
+  $("gf").onsubmit = async e => {
+    e.preventDefault(); err("");
+    const kind = m.querySelector("[name=gk]:checked").value, y = v => { v = String(v).trim(); return /^\d{4}$/.test(v) ? +v : ""; };
+    const from = y($("gFr").value), to = y($("gTo").value);
+    if (($("gFr").value.trim() && !from) || ($("gTo").value.trim() && !to)){ err(t("errYear")); return; }
+    if (from && to && to < from){ err(t("errOrder")); return; }
+    const data = { kind, inst:$("gI").value.trim(), label:$("gL").value.trim(), city:$("gC").value.trim(), name:$("gN").value.trim(), from, to, note:$("gNt").value.trim(), members:d.members || [], createdAt:g?.createdAt || Date.now() };
+    if (!data.inst && !data.label && !data.name){ err(t("errName")); return; }
+    if (!g && !force){
+      const dup = [...S.groups.values()].find(x => x.kind === kind && norm(x.inst) === norm(data.inst) && norm(x.label) === norm(data.label) && (!x.to || !to || x.to === to));
+      if (dup){ $("gDup").innerHTML = `<div class="relbox"><small>${esc(t("gDup"))}</small><b style="font-size:19px">${esc(grpTitle(dup))}</b><div class="actions" style="margin-top:8px"><button type="button" class="btn sm" id="gOpenDup">${esc(t("gOpenDup"))}</button><button type="button" class="btn sm" id="gForce">${esc(t("gMakeAnyway"))}</button></div></div>`;
+        $("gOpenDup").onclick = () => openGroup(dup.id); $("gForce").onclick = () => { force = true; $("gf").requestSubmit(); }; return; }
+    }
+    $("gSave").disabled = true;
+    try { const nid = id || newId("groups"); await saveGroup(nid, data); toast(t("gSaved")); if (preset.after) await preset.after(nid); openGroup(nid); }
+    catch(x){ err(t("errSave")); $("gSave").disabled = false; }
+  };
+  setTimeout(() => $("gI").focus(), 30);
+}
+
+/* ---------- Add members: existing person / new person / pasted list ---------- */
+const femGuess = (ln, patr) => /(ova|eva|yeva|qizi|kizi)$/i.test(ln || "") || /\b(qizi|kizi)\b/i.test(patr || "");
+function parseNames(text, order){
+  const out = [];
+  for (let raw of String(text).split(/\r?\n/)){
+    raw = raw.replace(/^\s*(?:\d+\s*[.)\-:]|[-•*·])\s*/, "").trim(); if (!raw) continue;
+    let yr = ""; const ym = raw.match(/[,;\s]+((?:19|20)\d{2})\s*$/); if (ym){ yr = ym[1]; raw = raw.slice(0, ym.index).trim(); }
+    const tok = raw.split(/[\s,]+/).filter(Boolean); if (!tok.length) continue;
+    const a = tok[0], b = tok[1] || "", rest = tok.slice(2).join(" ");
+    const first = !b ? a : order === "LF" ? b : a, last = !b ? "" : order === "LF" ? a : b;
+    out.push({ first, last, patr:rest, gender: femGuess(last || first, rest) ? "f" : "m", year:yr });
+  }
+  return out;
+}
+function openAddMembers(gid, tab0){
+  const g = S.groups.get(gid); if (!g) return; const m = $("modal"); let tab = tab0 || "e", role = "member", order = "LF", pick = new Set(), rowsL = [];
+  const have = () => new Set((S.groups.get(gid)?.members || []).map(x => x.id));
+  const roles = `<label class="f-field" style="max-width:260px"><span>${esc(t("amRole"))}</span><select id="amRole">${["member", "teacher", "head"].map(r => `<option value="${r}"${role === r ? " selected" : ""}>${esc(roleLbl(r))}</option>`).join("")}</select></label>`;
+  const draw = () => {
+    m.innerHTML = `<div class="form wide" role="dialog" aria-modal="true"><div class="gh-top"><h2>${esc(grpTitle(g))}</h2><button class="icon-btn" id="amX" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="tabs">${[["e", "amTabE"], ["n", "amTabN"], ["l", "amTabL"]].map(([k, l]) => `<button type="button" data-t="${k}" aria-selected="${tab === k}">${esc(t(l))}</button>`).join("")}</div>
+      ${roles}<div id="amBody"></div></div>`;
+    $("amX").onclick = () => openGroup(gid); m.onclick = e => { if (e.target === m) openGroup(gid); };
+    m.querySelectorAll("[data-t]").forEach(b => b.onclick = () => { tab = b.dataset.t; draw(); });
+    $("amRole").onchange = e => { role = e.target.value; };
+    body();
+  };
+  const body = () => {
+    const B = $("amBody");
+    if (tab === "e"){
+      B.innerHTML = `<input class="amq" id="amQ" type="search" placeholder="${esc(t("amSearch"))}" autocomplete="off"><div class="amr" id="amR"></div><div class="actions"><button class="btn gold" id="amGo" disabled>${esc(t("amAdd"))}</button></div>`;
+      const res = () => { const q = norm($("amQ").value.trim()), hv = have();
+        const list = [...S.people.values()].filter(p => !hv.has(p.id) && (!q || norm([p.firstName, p.lastName, p.patronymic].join(" ")).includes(q))).sort((a, b) => short(a).localeCompare(short(b))).slice(0, 60);
+        $("amR").innerHTML = list.length ? list.map(p => `<label class="amp"><input type="checkbox" value="${esc(p.id)}"${pick.has(p.id) ? " checked" : ""}>${avatar(p)}<span><b>${esc(short(p))}</b><small>${esc(yrs(p))}${isCircle(p) ? "" : " · " + esc(t("gRel"))}</small></span></label>`).join("") : `<p class="note">${esc(t("amNone"))}</p>`;
+        $("amR").querySelectorAll("input").forEach(c => c.onchange = () => { c.checked ? pick.add(c.value) : pick.delete(c.value); $("amGo").disabled = !pick.size; $("amGo").textContent = t("amAdd") + (pick.size ? " (" + pick.size + ")" : ""); }); };
+      $("amQ").oninput = res; res();
+      $("amGo").onclick = async () => { $("amGo").disabled = true; try { const n = await addMembersTo(gid, [...pick], role); toast(t("amAdded", { n })); openGroup(gid); } catch(e){ toast(t("errSave")); $("amGo").disabled = false; } };
+      setTimeout(() => $("amQ").focus(), 30);
+    } else if (tab === "n"){
+      B.innerHTML = `<div class="grid3"><label class="f-field"><span>${esc(t("amNew1"))} *</span><input id="nF" autocomplete="off"></label><label class="f-field"><span>${esc(t("amNew2"))}</span><input id="nL" autocomplete="off"></label><label class="f-field"><span>${esc(t("amBirthY"))}</span><input id="nY" inputmode="numeric" maxlength="4"></label></div>
+        <div class="seg" role="group"><button type="button" id="nGm" aria-pressed="true">${esc(t("male"))}</button><button type="button" id="nGf" aria-pressed="false">${esc(t("female"))}</button></div><p class="err" id="nE" hidden></p>
+        <div class="actions"><button class="btn gold" id="nGo">${esc(t("amAdd"))}</button></div>`;
+      let gen = "m"; $("nGm").onclick = () => { gen = "m"; $("nGm").setAttribute("aria-pressed", true); $("nGf").setAttribute("aria-pressed", false); }; $("nGf").onclick = () => { gen = "f"; $("nGf").setAttribute("aria-pressed", true); $("nGm").setAttribute("aria-pressed", false); };
+      $("nL").oninput = () => { if (femGuess($("nL").value)){ $("nGf").click(); } };
+      $("nGo").onclick = async () => { const fn = $("nF").value.trim(); if (!fn){ $("nE").textContent = t("errName"); $("nE").hidden = false; return; }
+        const y = $("nY").value.trim(); if (y && !/^\d{4}$/.test(y)){ $("nE").textContent = t("errYear"); $("nE").hidden = false; return; }
+        $("nGo").disabled = true;
+        try { const id = newId("people"); await S.db.collection("people").doc(id).set(circleData({ first:fn, last:$("nL").value.trim(), gender:gen, year:y })); await addMembersTo(gid, [id], role); toast(t("saved")); openGroup(gid); } catch(e){ $("nE").textContent = t("errSave"); $("nE").hidden = false; $("nGo").disabled = false; } };
+      setTimeout(() => $("nF").focus(), 30);
+    } else {
+      B.innerHTML = `<p class="hint">${esc(t("amListHint"))}</p><div class="seg" role="group" style="margin:6px 0"><button type="button" data-o="LF" aria-pressed="${order === "LF"}">${esc(t("amOrderLF"))}</button><button type="button" data-o="FL" aria-pressed="${order === "FL"}">${esc(t("amOrderFL"))}</button></div>
+        <textarea class="amta" id="amT" placeholder="Karimov Aziz, 1990&#10;Yusupova Dilnoza&#10;Rahimov Sardor Baxtiyor o'g'li"></textarea><div class="actions"><button class="btn" id="amP">${esc(t("amParse"))}</button></div><div id="amPrev"></div>`;
+      B.querySelectorAll("[data-o]").forEach(b => b.onclick = () => { order = b.dataset.o; B.querySelectorAll("[data-o]").forEach(x => x.setAttribute("aria-pressed", x === b)); if (rowsL.length) preview(); });
+      $("amP").onclick = () => { rowsL = parseNames($("amT").value, order === "LF" ? "LF" : "FL").map(r => ({ ...r, skip:false })); matchRows(); preview(); };
+      const matchRows = () => { for (const r of rowsL){ const key = norm(r.first + " " + r.last), key2 = norm(r.last + " " + r.first); r.match = [...S.people.values()].find(p => { const a = norm((p.firstName || "") + " " + (p.lastName || "")); return a === key || a === key2; }) || null; } };
+      const preview = () => { matchRows();
+        $("amPrev").innerHTML = rowsL.length ? `<h3 class="sec-t" style="margin:10px 0 6px">${esc(t("amListLines", { n:rowsL.length }))}</h3><div class="amtb">${rowsL.map((r, i) => `<div class="amrow${r.skip ? " off" : ""}"><input type="checkbox" data-i="${i}" ${r.skip ? "" : "checked"} aria-label="${esc(t("amAdd"))}">
+          <b>${esc(r.last)} ${esc(r.first)}${r.patr ? " " + esc(r.patr) : ""}</b><span>${r.year || ""}</span>
+          ${r.match ? `<em class="ex">${esc(t("amExists"))}: ${esc(short(r.match))}</em>` : `<span class="seg sm"><button type="button" data-g="${i}:m" aria-pressed="${r.gender === "m"}">${esc(t("male"))}</button><button type="button" data-g="${i}:f" aria-pressed="${r.gender === "f"}">${esc(t("female"))}</button></span>`}</div>`).join("")}</div>
+          <div class="actions" style="margin-top:12px"><button class="btn gold" id="amSaveL">${esc(t("amSave"))}</button></div>` : `<p class="note">${esc(t("amNone"))}</p>`;
+        $("amPrev").querySelectorAll("[data-i]").forEach(c => c.onchange = () => { rowsL[+c.dataset.i].skip = !c.checked; c.closest(".amrow").classList.toggle("off", !c.checked); });
+        $("amPrev").querySelectorAll("[data-g]").forEach(b => b.onclick = () => { const [i, v] = b.dataset.g.split(":"); rowsL[+i].gender = v; b.parentElement.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); });
+        if ($("amSaveL")) $("amSaveL").onclick = async () => { $("amSaveL").disabled = true; try { const ids = []; let made = 0;
+            for (const r of rowsL){ if (r.skip) continue; if (r.match){ ids.push(r.match.id); continue; } const id = newId("people"); await S.db.collection("people").doc(id).set(circleData({ first:r.first, last:r.last, patr:r.patr, gender:r.gender, year:r.year })); ids.push(id); made++; }
+            await addMembersTo(gid, ids, role); toast(t("amAdded", { n:ids.length })); openGroup(gid); } catch(e){ toast(t("errSave")); $("amSaveL").disabled = false; } }; };
+    }
+  };
+  draw();
+}
+const circleData = ({ first, last, patr, gender, year }) => ({ firstName:first, lastName:last || "", patronymic:patr || "", gender:gender || "m", birthDate:year || "", birthPlace:"", deathDate:"", deceased:false, burialPlace:"", occupation:"", bio:"", photo:null, photoId:null, fatherId:null, motherId:null, spouses:[], circle:true, createdAt:Date.now() });
+
+/* ---------- Sheet: "Davra" tab ---------- */
+function circTabHtml(p){
+  const gs = groupsOf(p.id), mates = matesOf(p.id);
+  const tiles = arr => `<div class="tiles">${arr.map(q => `<button class="tile" data-go="${esc(q.p.id)}">${avatar(q.p)}<span>${esc(first(q.p))}</span><small>${q.gs.length > 1 ? q.gs.length + "×" : ""}</small></button>`).join("")}</div>`;
+  return `${gs.length ? gs.map(g => { const r = reunion(g); return `<div class="gline" style="--k:${(KINDS[g.kind] || KINDS.friends).c}"><button class="gl" data-g="${esc(g.id)}"><span class="gk">${kIc(g.kind, 18)}</span><span><b>${esc(grpTitle(g))}</b><small>${esc([t(KONE(g.kind)), roleOf(g, p.id) !== "member" ? roleLbl(roleOf(g, p.id)) : "", grpYears(g)].filter(Boolean).join(" · "))}${r && r.now ? " · 🎉 " + esc(t("gReunionNow", { n:r.y })) : ""}</small></span><i>${(g.members || []).length}</i></button></div>`; }).join("")
+      : `<p class="note">${esc(t("cNone"))}</p>`}
+    ${mates.length ? `<div><p class="sec-t">${esc(t("cMates"))} (${mates.length})</p>${tiles(mates.slice(0, 18))}</div>` : ""}
+    ${S.canEdit ? `<div class="actions"><button class="btn gold" id="cAdd">+ ${esc(t("cAddTo"))}</button></div>` : ""}`;
+}
+function wireCircTab(sh, p){
+  sh.querySelectorAll("[data-g]").forEach(b => b.onclick = () => openGroup(b.dataset.g));
+  if (!$("cAdd")) return;
+  $("cAdd").onclick = () => { const m = $("modal"), hv = new Set(groupsOf(p.id).map(g => g.id)), opts = [...S.groups.values()].filter(g => !hv.has(g.id)).sort((a, b) => grpTitle(a).localeCompare(grpTitle(b)));
+    m.innerHTML = `<div class="form" role="dialog" aria-modal="true"><h2>${esc(t("cAddTo"))}</h2><p class="note">${esc(short(p))}</p>
+      ${opts.length ? `<label class="f-field"><span>${esc(t("gMembers"))}</span><select id="cSel"><option value="">${esc(t("cPick"))}</option>${opts.map(g => `<option value="${esc(g.id)}">${esc(grpTitle(g))}${grpYears(g) ? " · " + esc(grpYears(g)) : ""}</option>`).join("")}</select></label>
+      <label class="f-field" style="max-width:260px"><span>${esc(t("amRole"))}</span><select id="cRole">${["member", "teacher", "head"].map(r => `<option value="${r}">${esc(roleLbl(r))}</option>`).join("")}</select></label>` : ""}
+      <div class="form-foot"><button class="btn" id="cNo">${esc(t("cancel"))}</button><button class="btn" id="cNew">${esc(t("cNewFor"))}</button>${opts.length ? `<button class="btn primary" id="cYes">${esc(t("amAdd"))}</button>` : ""}</div></div>`;
+    m.hidden = false; const close = () => { m.hidden = true; m.innerHTML = ""; }; $("cNo").onclick = close; m.onclick = e => { if (e.target === m) close(); };
+    $("cNew").onclick = () => openGroupForm(null, { members:[{ id:p.id, role:"member" }], after: async () => {} });
+    if ($("cYes")) $("cYes").onclick = async () => { const gid = $("cSel").value; if (!gid) return; await addMembersTo(gid, [p.id], $("cRole").value); close(); toast(t("saved")); S.view === "profile" ? renderProfile() : renderSheet(); }; };
+}
+
+/* ---------- Settings (owner) ---------- */
+function openSettings(){
+  const m = $("modal"), sw = (id, on, lbl, hint) => `<label class="swrow"><input type="checkbox" id="${id}"${on ? " checked" : ""}><i class="sw"></i><span><b>${esc(t(lbl))}</b><small>${esc(t(hint))}</small></span></label>`;
+  m.innerHTML = `<div class="form" role="dialog" aria-modal="true"><div class="gh-top"><h2>${esc(t("setT"))}</h2><button class="icon-btn" id="stX" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    ${sw("stB", !!S.meta.birthPublic, "setPubB", "setPubBh")}${sw("stC", !!S.meta.circlesPublic, "setPubC", "setPubCh")}</div>`;
+  m.hidden = false; const close = () => { m.hidden = true; m.innerHTML = ""; }; $("stX").onclick = close; m.onclick = e => { if (e.target === m) close(); };
+  const save = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:$("stB").checked, circlesPublic:$("stC").checked }); toast(t("setSaved")); } catch(e){ toast(t("errSave")); } };
+  $("stB").onchange = save; $("stC").onchange = save;
+}
+
+/* ---------- Full profile page ---------- */
+S.ptab = "info";
+function profTiles(arr, lab){ return `<div class="tiles">${arr.map(q => `<button class="tile" data-go="${esc(q.id)}">${avatar(q)}<span>${esc(first(q))}</span>${lab && lab(q) ? `<small>${esc(lab(q))}</small>` : ""}</button>`).join("")}</div>`; }
+function renderProfile(){
+  const p = P(S.profId);
+  if (!p){ S.view = S.prevView && S.prevView !== "profile" ? S.prevView : "home"; render(); return; }
+  const fx = pdfFacts(p), age = ageOf(p), dead = isDead(p), hasMe = !!P(S.meId), circ = isCircle(p), gm = genMap(), g0 = gm.get(p.id);
+  const rel = hasMe && !circ ? (S.meId === p.id ? { term:dn("Siz") } : relate(S.meId, p.id)) : null, cr = hasMe ? circleRel(S.meId, p.id) : null;
+  const quote = p.bio ? clipTxt(p.bio.split(/(?<=[.!?])\s/)[0], 190) : "";
+  const tabs = circ ? [["info", "profTabInfo"], ["circ", "profTabCirc"]] : [["info", "profTabInfo"], ["rel", "profTabRel"], ["life", "profTabLife"], ["circ", "profTabCirc"]];
+  if (!tabs.some(x => x[0] === S.ptab)) S.ptab = "info";
+  const facts = [p.birthDate && [ICON.cal, t("bdate"), fmtDate(p.birthDate)], p.birthPlace && [ICON.pin, t("bplace"), dn(p.birthPlace)],
+    dead && [ICON.clock, t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"], !dead && age != null && [ICON.clock, t("age"), age + " " + t("age")],
+    p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)], p.occupation && [ICON.job, t("job"), dn(p.occupation)]].filter(Boolean);
+  const lab = q => { const r = relate(p.id, q.id, "third"); return r ? dn(r.term) : ""; };
+  let pane = "";
+  if (S.ptab === "info"){
+    pane = `<div class="pf-grid"><div>${facts.length ? `<ul class="facts big">${facts.map(([ic, k, v]) => `<li>${ic}<div><small>${esc(k)}</small><span>${esc(v)}</span></div></li>`).join("")}</ul>` : `<p class="note">${esc(t("pNoData"))}</p>`}
+      ${rel ? `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(dn(rel.term))}</b>${rel.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div>` : ""}
+      ${cr ? `<div class="relbox alt"><small>${esc(t(circ ? "forYou" : "cDavra"))}</small><b>${esc(cr.term)}</b><span>${esc(cr.desc)}</span></div>` : ""}</div>
+      <div>${p.bio ? `<div class="story"><p class="sec-t">${esc(t("profStory"))}</p><p class="bio">${esc(p.bio)}</p></div>` : ""}
+      ${circ ? "" : `<div class="yetti"><div class="yetti-top"><b>${esc(t("yetti"))}</b><small>${paternal(p.id)} / 7</small></div><div class="dots">${Array.from({ length:7 }, (_, i) => `<span class="${i < paternal(p.id) ? "on" : ""}"></span>`).join("")}</div></div>`}</div></div>`;
+  } else if (S.ptab === "rel"){
+    const kel = [], qud = []; for (const k of fx.kids) for (const sp of spousesOf(k)){ if (!kel.includes(sp)) kel.push(sp); for (const par of [P(sp.fatherId), P(sp.motherId)]) if (par && par.id !== p.id && !qud.includes(par) && !fx.sps.includes(par)) qud.push(par); }
+    const sec = (ttl, arr, l) => arr.length ? `<div><p class="sec-t">${esc(ttl)} (${arr.length})</p>${profTiles(arr, l)}</div>` : "";
+    pane = `<div class="pf-rel">${sec(t("spouse"), fx.sps)}${sec(t("parents"), fx.par)}${sec(t("children"), fx.kids)}${sec(t("siblings"), fx.sib)}${sec(t("kelin"), kel, lab)}${sec(t("qudalar"), qud, lab)}${sec(t("grand"), fx.gk)}${sec(t("great"), fx.gg)}
+      ${!fx.sps.length && !fx.par.length && !fx.kids.length && !fx.sib.length ? `<p class="note">${esc(t("noRel"))}</p>` : ""}</div>`;
+  } else if (S.ptab === "life"){
+    const ev = []; const by = +year(p.birthDate), dy = +year(p.deathDate);
+    if (by) ev.push({ y:by, a:t("pBornEv"), b:p.birthPlace ? dn(p.birthPlace) : "" });
+    for (const k of fx.kids){ const y = +year(k.birthDate); if (y) ev.push({ y, a:t("pChildEv", { n:short(k) }), b:"", id:k.id }); }
+    for (const sp of fx.sps){ const y = +year(sp.deathDate); if (y) ev.push({ y, a:t("pSpDied", { n:short(sp) }), b:"", id:sp.id }); }
+    for (const g of groupsOf(p.id)) if (+g.to) ev.push({ y:+g.to, a:t(KONE(g.kind)) + ": " + grpTitle(g), b:"", g:g.id });
+    if (dy) ev.push({ y:dy, a:t("pDiedEv"), b:p.burialPlace ? dn(p.burialPlace) : "" });
+    ev.sort((a, b) => a.y - b.y);
+    pane = ev.length ? `<div class="tl v">${ev.map(e => `<div class="tl-row"><div class="tl-y">${e.y}</div><i class="tl-dot"></i><div class="tl-card" ${e.id ? `data-go="${esc(e.id)}"` : e.g ? `data-g="${esc(e.g)}"` : ""}><div><b>${esc(e.a)}</b>${e.b ? `<span>${esc(e.b)}</span>` : ""}</div></div></div>`).join("")}</div>` : `<p class="note">${esc(t("pNoData"))}</p>`;
+  } else pane = `<div class="pf-circ">${circTabHtml(p)}</div>`;
+  const tags = [circ ? t("cFriendTag") : (p.gender === "f" ? t("female") : t("male")), g0 != null && !circ ? genLbl(g0) : "", p.occupation ? dn(p.occupation) : "", dead ? t("stDead") : t("stLive")].filter(Boolean);
+  $("list").innerHTML = `<div class="prof"><div class="pf-bar"><button class="btn sm" id="pfBack">← ${esc(t("profBack"))}</button><span class="tb-spacer"></span>
+      <button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${S.canEdit ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
+    <section class="pf-hero reveal"><div class="portrait big">${avatar(p)}</div><div class="pf-id"><h1>${esc(full(p))}</h1><div class="psub">${esc(yrs(p))}${age != null && !dead ? ` · ${age} ${esc(t("age"))}` : ""}</div>
+      <div class="pf-tags">${tags.map(x => `<i class="ptag">${esc(x)}</i>`).join("")}</div>${quote ? `<blockquote>“${esc(quote)}”</blockquote>` : ""}</div></section>
+    <div class="stabs pf-tabs" role="tablist">${tabs.map(([k, l]) => `<button role="tab" data-pt="${k}" aria-selected="${S.ptab === k}">${esc(t(l))}</button>`).join("")}</div>
+    <div class="pf-pane">${pane}</div></div>`;
+  const root = $("list"); wireGo(root); wireCircTab(root, p);
+  root.querySelectorAll("[data-pt]").forEach(b => b.onclick = () => { S.ptab = b.dataset.pt; renderProfile(); });
+  root.querySelectorAll(".tl-card[data-g]").forEach(b => b.onclick = () => openGroup(b.dataset.g));
+  $("pfBack").onclick = () => { S.selId = p.id; setView(S.prevView && S.prevView !== "profile" ? S.prevView : "home"); };
+  $("pfShare").onclick = () => shareLink(p.id); $("pfPdf").onclick = () => { S.selId = p.id; openExport("pdf"); };
+  if ($("pfTree")) $("pfTree").onclick = () => { S.selId = p.id; S.rootId = topOf(p.id); setView("tree"); };
+  if ($("pfEdit")) $("pfEdit").onclick = () => openForm(p.id);
+  reveal(root);
+}
+function openProfile(id){ S.selId = null; S.profId = id; S.ptab = "info"; if (S.view !== "profile") S.prevView = S.view; S.view = "profile"; render(true); }
 
 /* ---------- Ambient particles (golden motes + drifting leaves) ---------- */
 const FX = (() => {
@@ -2214,14 +2633,14 @@ function renderChrome(){
   document.querySelectorAll("[data-t]").forEach(el => el.textContent = t(el.dataset.t));
   document.querySelectorAll("[data-tp]").forEach(el => el.placeholder = t(el.dataset.tp));
   $("scLat").setAttribute("aria-pressed", S.script === "lat"); $("scCyr").setAttribute("aria-pressed", S.script === "cyr");
-  for (const [b, v] of [["vHome","home"],["vTree","tree"],["vFan","fan"],["vList","list"],["vTime","time"],["vBday","bday"],["vMap","map"],["vPhotos","photos"]]) $(b).setAttribute("aria-pressed", S.view === v);
+  for (const [b, v] of [["vHome","home"],["vTree","tree"],["vFan","fan"],["vList","list"],["vTime","time"],["vBday","bday"],["vCircles","circles"],["vMap","map"],["vPhotos","photos"]]) $(b).setAttribute("aria-pressed", S.view === v);
   const ttl = S.meta.title ? dn(S.meta.title) : t("defTitle");
   if ($("title")) $("title").textContent = ttl; document.title = ttl;
-  const n = S.people.size; let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
+  const n = famVals().length; let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
   $("stats").textContent = S.loaded ? `${n} ${t("ppl")} · ${g} ${t("gens")}` : " ";
   $("genN").textContent = S.loaded ? g : "–"; $("pplN").textContent = S.loaded ? t("pplOf", { n }) : "";
   $("addBtn").hidden = !S.canEdit || !S.loaded; if ($("titleEditBtn")) $("titleEditBtn").hidden = !S.canEdit;
-  $("exportBtn").hidden = !S.loaded || !n;
+  $("exportBtn").hidden = !S.loaded || !n; $("setBtn").hidden = !S.canEdit || !S.loaded; $("vCircles").hidden = !S.canEdit && !S.groups.size;
   const today = S.loaded ? upcoming(0).length : 0;
   $("todayBtn").hidden = !today;
   if (today) $("todayBtn").innerHTML = `<span class="today-dot">${today}</span>${esc(t("todayDates"))}`;
@@ -2231,7 +2650,7 @@ function renderChrome(){
   $("zoom").hidden = PLAIN.has(S.view) || !n;
   $("pickWrap").hidden = !n || PLAIN.has(S.view); $("genWrap").hidden = S.view !== "tree" || !n;
   $("pickLbl").textContent = t(S.view === "tree" ? "root" : "center");
-  const list = S.view === "tree" ? founders() : [...S.people.values()].sort((a,b) => short(a).localeCompare(short(b)));
+  const list = S.view === "tree" ? founders() : famVals().sort((a,b) => short(a).localeCompare(short(b)));
   const cur = S.view === "tree" ? S.rootId : S.focusId;
   $("pick").innerHTML = list.map(p => `<option value="${esc(p.id)}"${p.id === cur ? " selected" : ""}>${esc(short(p))}${S.view === "tree" ? " · " + descCount(p.id) : ""}</option>`).join("");
   const me = P(S.meId), mc = $("meChip");
@@ -2242,7 +2661,7 @@ function renderChrome(){
 function renderState(){
   const st = $("state");
   if (!S.loaded){ st.hidden = false; return; }
-  if (S.people.size){ st.hidden = true; return; }
+  if (famVals().length){ st.hidden = true; return; }
   st.hidden = false;
   st.innerHTML = `<div class="box"><svg class="mark" aria-hidden="true"><use href="#star"/></svg>
     <h2>${esc(t(S.canEdit ? "emptyOT" : "emptyVT"))}</h2><p>${esc(t(S.canEdit ? "emptyOP" : "emptyVP"))}</p>
@@ -2258,7 +2677,7 @@ function render(fit){
   if (S.view !== "time") simStop();
   if (S.view !== "bday") bdayStop();
   if (S._lastView !== S.view){ S._lastView = S.view; lst.classList.remove("vin"); void lst.offsetWidth; if (plain){ lst.classList.add("vin"); lst.scrollTop = 0; } FX.refill(); }
-  ({ tree:renderTree, fan:renderFan, home:renderHome, list:renderList, time:renderTime, map:renderMap, photos:renderPhotos, bday:renderBday })[S.view]();
+  ({ tree:renderTree, fan:renderFan, home:renderHome, list:renderList, time:renderTime, map:renderMap, photos:renderPhotos, bday:renderBday, circles:renderCircles, profile:renderProfile })[S.view]();
   if (!plain){
     const key = S.view + ":" + (S.view === "tree" ? S.rootId + (S.paged ? ":p" + S.page : "") : S.focusId);
     if (fit || S.fittedFor !== key){ S.fittedFor = key; requestAnimationFrame(() => PZ.fit()); stageEnter(); }
@@ -2283,7 +2702,7 @@ const ICON = {
 function renderSheet(){
   const sh = $("sheet"), p = P(S.selId);
   if (!p){ sh.hidden = true; return; }
-  const tab = S.stab === "rel" ? "rel" : "info";
+  const isC = isCircle(p), tab = S.stab === "circ" ? "circ" : (S.stab === "rel" && !isC ? "rel" : "info");
   const fa = P(p.fatherId), mo = P(p.motherId), sps = spousesOf(p), ks = kidsOf(p.id), sibs = siblingsOf(p);
   let gk = [], gg = [], g2 = [];
   ks.forEach(k => kidsOf(k.id).forEach(n => { gk.push(n); kidsOf(n.id).forEach(e => { gg.push(e); kidsOf(e.id).forEach(c => g2.push(c)); }); }));
@@ -2299,14 +2718,17 @@ function renderSheet(){
     p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)],
     p.occupation && [ICON.job, t("job"), dn(p.occupation)]
   ].filter(Boolean);
-  const relBox = hasMe ? (S.meId === p.id ? `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(dn("Siz"))}</b></div>`
+  const relBoxF = hasMe ? (S.meId === p.id ? `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(dn("Siz"))}</b></div>`
       : `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(rel ? dn(rel.term) : t("relNone"))}</b>${rel?.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div>`)
     : `<p class="note">${esc(t("meHint"))}</p>`;
-  const info = `${relBox}
+  const cr = hasMe ? circleRel(S.meId, p.id) : null;
+  const relBox = (isC ? (hasMe && !cr ? "" : "") : relBoxF) + (cr ? `<div class="relbox alt"><small>${esc(t(isC ? "forYou" : "cDavra"))}</small><b>${esc(cr.term)}</b><span>${esc(cr.desc)}</span></div>` : "");
+  const info0 = `${relBox}
     ${facts.length ? `<ul class="facts">${facts.map(([ic, k, v]) => `<li>${ic}<div><small>${esc(k)}</small><span>${esc(v)}</span></div></li>`).join("")}</ul>` : ""}
     ${p.bio ? `<div><p class="sec-t">${esc(t("bioT"))}</p><p class="bio">${esc(p.bio)}</p></div>` : ""}
     <div class="yetti"><div class="yetti-top"><b>${esc(t("yetti"))}</b><small>${yt} / 7 · ${esc(t("yettiHint"))}</small></div>
       <div class="dots">${Array.from({length:7}, (_, i) => `<span class="${i < yt ? "on" : ""}"></span>`).join("")}</div></div>`;
+  const info = isC ? info0.replace(/<div class="yetti">[\s\S]*$/, "") : info0;
   const prow = q => `<button class="prow" data-go="${esc(q.id)}">${avatar(q)}<span class="pt"><b>${esc(short(q))}</b><small>${esc(yrs(q))}</small></span>${ICON.chev}</button>`;
   const tiles = (arr, lab) => `<div class="tiles">${arr.map(q => { const l = lab ? lab(q) : ""; return `<button class="tile" data-go="${esc(q.id)}">${avatar(q)}<span>${esc(first(q))}</span>${l ? `<small>${esc(l)}</small>` : ""}</button>`; }).join("")}</div>`;
   const inl = [];
@@ -2328,20 +2750,21 @@ function renderSheet(){
   sh.innerHTML = `<div class="sheet-in">
     <button class="icon-btn sh-close" id="shClose" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="p-hero"><div class="portrait">${avatar(p)}</div><h2 class="pname">${esc(full(p))}</h2><div class="psub">${esc(yrs(p))}${age != null && !isDead(p) ? ` · ${age} ${esc(t("age"))}` : ""}</div></div>
-    <div class="stabs" role="tablist"><button role="tab" data-stab="info" aria-selected="${tab === "info"}">${esc(t("tabInfo"))}</button><button role="tab" data-stab="rel" aria-selected="${tab === "rel"}">${esc(t("tabRel"))}</button></div>
-    ${tab === "info" ? info : relTab}
+    <div class="stabs" role="tablist"><button role="tab" data-stab="info" aria-selected="${tab === "info"}">${esc(t("tabInfo"))}</button>${isC ? "" : `<button role="tab" data-stab="rel" aria-selected="${tab === "rel"}">${esc(t("tabRel"))}</button>`}<button role="tab" data-stab="circ" aria-selected="${tab === "circ"}">${esc(t("tabCirc"))}${groupsOf(p.id).length ? " · " + groupsOf(p.id).length : ""}</button></div>
+    ${tab === "info" ? info : tab === "circ" ? circTabHtml(p) : relTab}
     <div class="actions">
-      ${S.meId !== p.id ? `<button class="btn gold" id="isMe">${esc(t("isMe"))}</button>` : `<button class="btn" id="unMe">${esc(t("meClear"))}</button>`}
-      <button class="btn" id="goFan">${esc(t(S.view === "fan" ? "showTree" : "showFan"))}</button>
+      ${isC ? "" : S.meId !== p.id ? `<button class="btn gold" id="isMe">${esc(t("isMe"))}</button>` : `<button class="btn" id="unMe">${esc(t("meClear"))}</button>`}
+      ${isC ? "" : `<button class="btn" id="goFan">${esc(t(S.view === "fan" ? "showTree" : "showFan"))}</button>`}
+      <button class="btn" id="profP">${esc(t("profFull"))}</button>
       <button class="btn" id="shareP">${esc(t("shareT"))}</button>
-      <button class="btn" id="pdfP">PDF</button>
+      ${isC ? "" : `<button class="btn" id="pdfP">PDF</button>`}
       ${S.canEdit ? `<button class="btn primary" id="edit">${esc(t("edit"))}</button>` : ""}
     </div>
-    ${S.canEdit ? `<div class="addrow"><span class="lbl">${esc(t("addLbl"))}</span>
+    ${S.canEdit ? `${isC ? "" : `<div class="addrow"><span class="lbl">${esc(t("addLbl"))}</span>
       ${!fa ? `<button class="btn sm" data-rel="father">+ ${esc(t("father"))}</button>` : ""}
       ${!mo ? `<button class="btn sm" data-rel="mother">+ ${esc(t("mother"))}</button>` : ""}
       <button class="btn sm" data-rel="spouse">+ ${esc(t("spouse"))}</button>
-      <button class="btn sm" data-rel="child">+ ${esc(t("child"))}</button></div>
+      <button class="btn sm" data-rel="child">+ ${esc(t("child"))}</button></div>`}
       <div><button class="btn danger sm" id="del">${esc(t("del"))}</button></div>`
       : `<p class="note">${esc(t("readonly"))}</p>`}
   </div>`;
@@ -2350,11 +2773,13 @@ function renderSheet(){
   sh.querySelectorAll("[data-stab]").forEach(b => b.onclick = () => { S.stab = b.dataset.stab; renderSheet(); });
   sh.querySelectorAll("[data-go]").forEach(b => b.onclick = () => select(b.dataset.go, true));
   if ($("cmpSel")) $("cmpSel").onchange = e => { S.cmpId = e.target.value || null; renderSheet(); };
+  if (tab === "circ") wireCircTab(sh, p);
+  $("profP").onclick = () => openProfile(p.id);
   if ($("isMe")) $("isMe").onclick = e => { setMe(p.id); const r = e.currentTarget.getBoundingClientRect(); Confetti.burst(r.left + r.width / 2, r.top + r.height / 2, 80); };
   $("shareP").onclick = () => shareLink(p.id);
-  $("pdfP").onclick = () => { S.selId = p.id; openExport("pdf"); };
+  if ($("pdfP")) $("pdfP").onclick = () => { S.selId = p.id; openExport("pdf"); };
   if ($("unMe")) $("unMe").onclick = () => setMe(null);
-  $("goFan").onclick = () => {
+  if ($("goFan")) $("goFan").onclick = () => {
     if (S.view === "fan"){ S.view = "tree"; S.rootId = topOf(p.id); } else { S.view = "fan"; S.focusId = p.id; }
     store.set("shajara.view", S.view); render(true); locate(p.id);
   };
@@ -2371,6 +2796,7 @@ function renderSheet(){
 function centerId(id){ const e = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]:not(.ghost)`); if (e) PZ.centerOn(e); }
 function select(id, locateIt){
   const wasOpen = !$("sheet").hidden;
+  if (isCircle(P(id)) && !PLAIN.has(S.view)){ S.selId = id; renderSheet(); syncHash(); return; }
   S.selId = id; if (PLAIN.has(S.view)) renderSheet(); else render();
   if (PLAIN.has(S.view)) return;
   if (locateIt) locate(id);
@@ -2403,6 +2829,7 @@ async function removePerson(id){
     if ((q.spouses||[]).includes(id)) patch.spouses = q.spouses.filter(x => x !== id);
     if (Object.keys(patch).length) await ref(q.id).update(patch);
   }
+  await dropFromGroups(id);
   await ref(id).delete();
   if (victim?.photoId && S.assets) S.assets.delete(victim.photoId).catch(() => {});
   if (S.meId === id) setMe(null);
@@ -2465,18 +2892,18 @@ function readDate(id){
   return { o: (m || y) ? { d: m ? d : null, m, y } : null };
 }
 function openForm(id, preset = {}){
-  const p = id ? P(id) : null;
+  const p = id ? P(id) : null, circ = !!(p?.circle || preset.circle);
   const d = p ? { ...p, spouses:[...(p.spouses||[])] } : { firstName:"", lastName:preset.lastName || "", patronymic:"", gender:preset.gender || "m",
     birthDate:"", birthPlace:"", deathDate:"", deceased:false, burialPlace:"", occupation:"", bio:"", photo:null, photoId:null,
     fatherId:preset.fatherId || null, motherId:preset.motherId || null, spouses:preset.spouses ? [...preset.spouses] : [] };
   const prevSp = p ? [...(p.spouses||[])] : [];
   let newBlob = null, newPreview = null, autoPatr = patrOf(P(d.fatherId), d.gender);
   if (!p && !d.patronymic) d.patronymic = autoPatr;
-  const others = [...S.people.values()].filter(q => q.id !== id).sort((a,b) => short(a).localeCompare(short(b)));
+  const others = [...S.people.values()].filter(q => q.id !== id && !q.circle).sort((a,b) => short(a).localeCompare(short(b)));
   const opt = (g, cur) => `<option value="">${esc(t("none"))}</option>` + others.filter(q => q.gender === g).map(q => `<option value="${esc(q.id)}"${q.id === cur ? " selected" : ""}>${esc(short(q))}${yrs(q) ? " · " + yrs(q) : ""}</option>`).join("");
   const m = $("modal");
   m.innerHTML = `<form class="form" id="pf" novalidate>
-    <div><h2>${esc(t(p ? "formEdit" : "formNew"))}</h2>${preset.ctx ? `<p class="note" style="margin-top:6px">${esc(preset.ctx)}</p>` : ""}</div>
+    <div><h2>${esc(t(p ? "formEdit" : (circ ? "cAddFriend" : "formNew")))}</h2>${preset.ctx ? `<p class="note" style="margin-top:6px">${esc(preset.ctx)}</p>` : ""}</div>
     <div class="photo-row"><span id="fAv"></span>
       <label class="btn file-btn">${esc(t("photoAdd"))}<input type="file" id="fPhoto" accept="image/jpeg,image/png,image/webp"></label>
       <button type="button" class="btn" id="fPhotoDel">${esc(t("photoDel"))}</button>
@@ -2494,11 +2921,12 @@ function openForm(id, preset = {}){
       <label class="f-field"><span>${esc(t("bplace"))}</span><input id="fBp" value="${esc(d.birthPlace)}"></label>
       <div class="f-field">${dateField("fX", t("ddate"), d.deathDate)}<label class="check"><input type="checkbox" id="fDead"${isDead(d) ? " checked" : ""}>${esc(t("deceased"))}</label></div>
       <label class="f-field"><span>${esc(t("dplace"))}</span><input id="fDp" value="${esc(d.burialPlace)}"></label>
-      <label class="f-field"><span>${esc(t("father"))}</span><select id="fFa">${opt("m", d.fatherId)}</select></label>
-      <label class="f-field"><span>${esc(t("mother"))}</span><select id="fMo">${opt("f", d.motherId)}</select></label>
+      <label class="f-field"${circ ? " hidden" : ""}><span>${esc(t("father"))}</span><select id="fFa">${opt("m", d.fatherId)}</select></label>
+      <label class="f-field"${circ ? " hidden" : ""}><span>${esc(t("mother"))}</span><select id="fMo">${opt("f", d.motherId)}</select></label>
     </div>
     <p class="hint">${esc(t("dateHint"))}</p>
-    <div class="f-field"><span>${esc(t("spouse"))}</span><div class="chips" id="fSp"></div><select id="fSpAdd"></select></div>
+    <label class="check"><input type="checkbox" id="fPriv"${d.privBirth ? " checked" : ""}>${esc(t("privBirth"))}</label>
+    <div class="f-field"${circ ? " hidden" : ""}><span>${esc(t("spouse"))}</span><div class="chips" id="fSp"></div><select id="fSpAdd"></select></div>
     <label class="f-field"><span>${esc(t("bio"))}</span><textarea id="fBio" placeholder="${esc(t("bioPh"))}">${esc(d.bio)}</textarea></label>
     <p class="err" id="fErr" hidden></p>
     <div class="form-foot"><button type="button" class="btn" id="fCancel">${esc(t("cancel"))}</button><button type="submit" class="btn primary" id="fSave">${esc(t("save"))}</button></div>
@@ -2556,9 +2984,10 @@ function openForm(id, preset = {}){
     const data = { firstName:fn, lastName:$("fLast").value.trim(), patronymic:$("fPatr").value.trim(), gender:d.gender,
       birthDate:serDate(bd.o), birthPlace:$("fBp").value.trim(), deathDate:serDate(dd.o), deceased:$("fDead").checked || !!dd.o, burialPlace:$("fDp").value.trim(),
       occupation:$("fJob").value.trim(), bio:$("fBio").value.trim(), photo, photoId, fatherId:$("fFa").value || null, motherId:$("fMo").value || null,
-      spouses:[...new Set(d.spouses)].filter(x => x !== nid), createdAt:p?.createdAt || Date.now() };
+      spouses:[...new Set(d.spouses)].filter(x => x !== nid), createdAt:p?.createdAt || Date.now(), ...(circ ? { circle:true } : {}), ...($("fPriv").checked ? { privBirth:true } : {}) };
     try {
       await writePerson(nid, data, prevSp);
+      if (preset.groupId) await addMembersTo(preset.groupId, [nid], preset.role || "member");
       if (preset.after){ const c = P(preset.after.child); if (c) await ref(c.id).update({ [preset.after.role]: nid }); }
       if (p?.photoId && p.photoId !== photoId && S.assets) S.assets.delete(p.photoId).catch(() => {});
       close(); toast(t("saved"));
@@ -2855,7 +3284,7 @@ function openExport(tab = "poster"){
   $("calCsv").onclick = () => saveFile("shajara-google-calendar.csv", buildCsv());
   $("calIcs").onclick = () => saveFile("shajara-kalendar.zip", makeZip([{ name:"shajara.ics", data:buildIcs() }]));
   $("bkSave").onclick = () => {
-    const data = { app:"shajara", version:2, exportedAt:new Date().toISOString(), meta:S.meta, people:[...S.people.values()] };
+    const data = { app:"shajara", version:2, exportedAt:new Date().toISOString(), meta:S.meta, people:[...S.people.values()], groups:[...S.groups.values()] };
     saveFile(`shajara-zaxira-${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(data, null, 2));
   };
   if ($("bkFile")) $("bkFile").onchange = async e => {
@@ -2870,6 +3299,7 @@ function openExport(tab = "poster"){
       $("bkYes").disabled = true;
       try {
         for (const p of data.people){ const { id, ...rest } = p; await ref(id).set(rest); }
+        for (const g of (Array.isArray(data.groups) ? data.groups : [])){ if (g && typeof g.id === "string"){ const { id, ...rest } = g; await S.db.collection("groups").doc(id).set(rest); } }
         if (data.meta && typeof data.meta === "object" && !Array.isArray(data.meta)) await S.db.doc("meta/info").set({ ...data.meta });
         msg.innerHTML = `<p class="note">${esc(t("bkDone", { n:data.people.length }))}</p>`;
       } catch(x){ msg.innerHTML = `<p class="err">${esc(t("errSave"))}</p>`; }
@@ -2927,7 +3357,7 @@ PZ.st.addEventListener("keydown", e => {
   const r = best.getBoundingClientRect(), v = PZ.vp.getBoundingClientRect(); if (r.left < v.left + 20 || r.right > v.right - PZ.side() - 20 || r.top < v.top + 70 || r.bottom > v.bottom - 20) PZ.centerOn(best);
 });
 PZ.st.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.matches("g[role=button]")){ e.preventDefault(); e.target.dispatchEvent(new MouseEvent("click", { bubbles:true })); } });
-const setView = v => { S.view = v; store.set("shajara.view", v); setMenu(false); render(true); if (S.selId && !PLAIN.has(v)) locate(S.selId); };
+const setView = v => { S.view = v; if (v !== "profile") store.set("shajara.view", v); setMenu(false); render(true); if (S.selId && !PLAIN.has(v)) locate(S.selId); };
 $("vTree").onclick = () => setView("tree");
 $("pageMode").onclick = () => { S.paged = !S.paged; store.set("shajara.paged", S.paged ? "1" : "0"); if (S.paged){ const pi = S.selId ? pageOfPerson(treePages(), S.selId) : -1; S.page = pi >= 0 ? pi : 0; } render(true); };
 $("pgPrev").onclick = () => { S.page = Math.max(0, (S.page || 0) - 1); render(true); };
@@ -2939,7 +3369,7 @@ document.addEventListener("keydown", e => {
 });
 $("vFan").onclick = () => { if (S.selId) S.focusId = S.selId; setView("fan"); };
 $("vList").onclick = () => setView("list");
-$("vHome").onclick = () => setView("home"); $("vBday").onclick = () => setView("bday"); $("vTime").onclick = () => setView("time"); $("vMap").onclick = () => setView("map"); $("vPhotos").onclick = () => setView("photos");
+$("vHome").onclick = () => setView("home"); $("vBday").onclick = () => setView("bday"); $("vCircles").onclick = () => setView("circles"); $("vTime").onclick = () => setView("time"); $("vMap").onclick = () => setView("map"); $("vPhotos").onclick = () => setView("photos");
 $("scLat").onclick = () => { S.script = "lat"; store.set("shajara.script", "lat"); render(); };
 $("scCyr").onclick = () => { S.script = "cyr"; store.set("shajara.script", "cyr"); render(); };
 $("genSel").onchange = e => { S.maxGen = +e.target.value || 0; store.set("shajara.maxgen", S.maxGen ? String(S.maxGen) : null); S.page = 0; render(true); };
@@ -2947,7 +3377,7 @@ $("pick").onchange = e => { if (S.view === "tree"){ S.rootId = e.target.value; S
 $("addBtn").onclick = () => openForm(null, {});
 $("exportBtn").onclick = () => openExport("poster");
 $("todayBtn").onclick = () => setView("bday");
-$("themeBtn").onclick = Theme.toggle; $("shareBtn").onclick = () => shareLink(null);
+$("setBtn").onclick = openSettings; $("themeBtn").onclick = Theme.toggle; $("shareBtn").onclick = () => shareLink(null);
 $("toTop").onclick = () => $("list").scrollTo({ top:0, behavior:reduceMotion() ? "auto" : "smooth" });
 $("list").addEventListener("scroll", updScroll, { passive:true });
 tilt($("stage"), ".card"); tilt($("list"), ".mcard,.hs,.mini");
@@ -2958,7 +3388,7 @@ q.oninput = () => {
   if (S.view === "list"){ renderList(); res.hidden = true; return; }
   const s = norm(q.value.trim()); if (!s){ res.hidden = true; return; }
   const hits = [...S.people.values()].filter(p => norm([p.firstName, p.lastName, p.patronymic].join(" ")).includes(s)).slice(0, 8);
-  res.innerHTML = hits.length ? hits.map(p => `<button data-hit="${esc(p.id)}">${avatar(p)}<span><b>${esc(short(p))}</b><br><small>${esc(yrs(p))}</small></span></button>`).join("") : `<div class="empty">—</div>`;
+  res.innerHTML = hits.length ? hits.map(p => `<button data-hit="${esc(p.id)}">${avatar(p)}<span><b>${esc(short(p))}</b><br><small>${esc(yrs(p))}${isCircle(p) ? " · " + esc(t("cFriendTag")) : ""}</small></span></button>`).join("") : `<div class="empty">—</div>`;
   res.hidden = false;
   res.querySelectorAll("[data-hit]").forEach(b => b.onclick = () => { res.hidden = true; q.value = ""; if (S.view === "fan") S.focusId = b.dataset.hit; select(b.dataset.hit, true); });
 };
@@ -2970,14 +3400,14 @@ window.addEventListener("resize", () => { clearTimeout(window._rz); window._rz =
 function setMenu(open){ const app = document.querySelector(".app"); app.classList.toggle("menu-open", open); $("scrim").hidden = !open; $("menuBtn").setAttribute("aria-expanded", open); }
 $("menuBtn").onclick = () => setMenu(!document.querySelector(".app").classList.contains("menu-open"));
 $("scrim").onclick = () => setMenu(false);
-["vHome","vTree","vFan","vList","vTime","vBday","vMap","vPhotos","exportBtn","todayBtn","meChip"].forEach(id => $(id).addEventListener("click", () => setMenu(false)));
+["vHome","vTree","vFan","vList","vTime","vBday","vCircles","vMap","vPhotos","exportBtn","todayBtn","meChip"].forEach(id => $(id).addEventListener("click", () => setMenu(false)));
 document.querySelector(".app").addEventListener("wheel", e => { if (e.ctrlKey && !PZ.vp.contains(e.target)) e.preventDefault(); }, { passive:false });
 ["gesturestart", "gesturechange"].forEach(n => document.addEventListener(n, e => { if (e.target.closest && e.target.closest(".app")) e.preventDefault(); }, { passive:false }));
 document.addEventListener("keydown", e => { if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")){ e.preventDefault(); $("q").focus(); } });
 
 /* ================= Boot ================= */
 S.script = store.get("shajara.script") === "cyr" ? "cyr" : "lat";
-S.view = ["home","tree","fan","list","time","bday","map","photos"].includes(store.get("shajara.view")) ? store.get("shajara.view") : "home";
+S.view = ["home","tree","fan","list","time","bday","circles","map","photos"].includes(store.get("shajara.view")) ? store.get("shajara.view") : "home";
 S.paged = store.get("shajara.paged") ? store.get("shajara.paged") === "1" : window.innerWidth < 700; S.page = 0;
 Theme.init(); renderChrome(); FX.start();
 (async () => {
@@ -2995,6 +3425,7 @@ Theme.init(); renderChrome(); FX.start();
     if (!S.meId && S.isOwner && S.meta.meId){ S.meId = S.meta.meId; if (S.loaded) render(); }
     renderChrome();
   }, () => {});
+  db.collection("groups").onSnapshot(snap => { S.groups = new Map(snap.docs.map(d => [d.id, { id:d.id, ...d.data() }])); if (S.loaded) render(); }, () => {});
   db.collection("people").onSnapshot(snap => {
     S.people = new Map(snap.docs.map(d => [d.id, { id:d.id, ...d.data() }]));
     if (S.meId && !P(S.meId)) S.meId = null;
