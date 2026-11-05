@@ -1900,9 +1900,9 @@ function renderBday(){
 
 /* ================= PDF: print-grade A4 person sheets & family book ================= */
 Object.assign(L, { tabPdf:"PDF (shaxs / oila kitobi)", pdfScope:"Nima chiqariladi", pdfOne:"Faqat tanlangan shaxs (1 sahifa)", pdfBranch:"Shaxs va uning avlodlari", pdfBook:"Butun oila kitobi", pdfWho:"Shaxs", pdfCover:"Muqova va mundarija bilan",
-  pdfMake:"Ko'rib chiqish", pdfSave:"PDF sifatida saqlash", pdfHint:"Hujjat vektor formatda: matn va ramkalar istalgan kattalashtirishda aniq. «PDF sifatida saqlash»ni bossangiz chop etish oynasi ochiladi — manzil sifatida «PDF sifatida saqlash» (Save as PDF)ni tanlang.", pdfPages:"{n} sahifa", pdfBuilding:"Hujjat tayyorlanmoqda…",
+  pdfMake:"Ko'rib chiqish", pdfSave:"Chop etish (vektor)", pdfHint:"«PDF yuklab olish» faylni to'g'ridan-to'g'ri qurilmangizga saqlaydi. «Chop etish (vektor)» brauzer oynasini ochadi: u yerda «PDF sifatida saqlash»ni tanlasangiz, matn vektor ko'rinishida qoladi.", pdfDl:"PDF yuklab olish", pdfPrintB:"Chop etish (vektor)", pdfQ:"Sifat", pdfQ3:"Yuqori (300 dpi)", pdfQ2:"Oddiy (200 dpi, kichik fayl)", pdfMaking:"Sahifa {i} / {n} tayyorlanmoqda…", pdfDone:"Tayyor: fayl yuklab olindi.", pdfFail:"PDF yaratib bo'lmadi: {e}", pdfPages:"{n} sahifa", pdfBuilding:"Hujjat tayyorlanmoqda…",
   pTitleP:"Shaxs ma'lumotlari", pBasic:"Asosiy ma'lumotlar", pFam:"Oila aloqalari", pLife:"Hayot yo'li (asosiy voqealar)", pSpouse:"Turmush o'rtog'i", pSpouses:"Turmush o'rtoqlari", pParents:"Ota-onasi", pSibs:"Aka-uka, opa-singillari", pKids:"Farzandlari", pGrand:"Nabiralari", pGreat:"Evaralari",
-  pPpl:"nafar", pBoys:"o'g'il", pGirls:"qiz", pBornEv:"Tug'ilgan", pDiedEv:"Vafot etgan", pChildEv:"{n} tug'ildi", pSpDied:"{n} vafot etdi", pLiving:"hozir", pCoverT:"Oila shajarasi", pCoverS:"Ajdodlarimiz xotirasi — kelajak avlodlarga meros", pContents:"Mundarija", pBookT:"Oila kitobi", pPg:"bet", pBy:"Tuzilgan sana", pPersons:"inson", pGens:"avlod", pBranch:"shoxi", pQuda:"Qudalar" });
+  pPpl:"nafar", pBoys:"o'g'il", pGirls:"qiz", pBornEv:"Tug'ilgan", pDiedEv:"Vafot etgan", pChildEv:"{n} tug'ildi", pSpDied:"{n} vafot etdi", pLiving:"hozir", pNoData:"Ma'lumot hali kiritilmagan.", pCoverT:"Oila shajarasi", pCoverS:"Ajdodlarimiz xotirasi — kelajak avlodlarga meros", pContents:"Mundarija", pBookT:"Oila kitobi", pPg:"bet", pBy:"Tuzilgan sana", pPersons:"inson", pGens:"avlod", pBranch:"shoxi", pQuda:"Qudalar" });
 const PI = {
   cal:'<rect x="3.5" y="5" width="17" height="15.5" rx="2.2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>', pin:'<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/>',
   clock:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>', grave:'<path d="M5 20h14M7 20v-8a5 5 0 0 1 10 0v8M12 8V5M10.5 6.5h3"/>', job:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 12.5h18"/>',
@@ -1951,7 +1951,7 @@ body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#
 .page:last-child{break-after:auto;page-break-after:auto}
 @media print{body{background:none}.page{margin:0;box-shadow:none}html{zoom:1!important}}
 .ser{font-family:"Alegreya",Georgia,serif}
-.bgp{position:absolute;inset:0;background:radial-gradient(120mm 80mm at 0 0,rgba(201,162,79,.12),transparent 70%),radial-gradient(120mm 90mm at 100% 60%,rgba(18,64,43,.05),transparent 70%)}
+.bgp{position:absolute;inset:0;background:linear-gradient(165deg,#FCF7EA 0%,#FAF3E1 55%,#F7EEDA 100%)}
 .hd{position:absolute;left:0;top:0;width:210mm;height:38mm}
 .hd svg{position:absolute;inset:0;width:100%;height:100%}
 .logo{position:absolute;left:13mm;top:7mm;display:flex;align-items:center;gap:3mm;color:var(--g)}
@@ -2024,7 +2024,13 @@ body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#
 .ix .it.lv1{padding-left:4mm}.ix .it.lv2{padding-left:8mm}.ix .it.lv3{padding-left:12mm}.ix .it.lv4{padding-left:16mm}
 `; }
 const REGISTAN = '<svg class="wm" viewBox="0 0 220 120" fill="none" stroke="#8c7a52" stroke-width="1.1" stroke-linejoin="round"><path d="M70 118V50Q110 6 150 50V118"/><path d="M82 118V62Q110 28 138 62V118"/><path d="M94 118V76Q110 52 126 76V118"/><path d="M62 118V46h14M144 46h14v72"/><rect x="36" y="22" width="12" height="96"/><path d="M34 22h16M36 30h12M40 22l2-10 2 10"/><rect x="172" y="22" width="12" height="96"/><path d="M170 22h16M172 30h12M176 22l2-10 2 10"/><path d="M6 118V70h30v48M184 118V70h30v48"/><path d="M12 118V92q6-14 12 0v26M26 118V92q6-14 12 0v26M190 118V92q6-14 12 0v26M204 118V92q6-14 12 0v26"/><path d="M100 28q10-22 20 0"/><path d="M0 118h220"/></svg>';
-const PDF_FRAME = (p, photo) => { const f = p.gender === "f";
+const PDF_IMG = new Map();
+async function pdfInline(list){
+  await Promise.all(list.map(async p => { const u = photoSrc(p); if (!u || PDF_IMG.has(u) || /^data:/.test(u)) return;
+    try { const r = await fetch(u); if (!r.ok) throw 0; const b = await r.blob(); PDF_IMG.set(u, await new Promise(res => { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.readAsDataURL(b); })); } catch(e){ PDF_IMG.set(u, ""); } }));
+}
+const clipTxt = (x, n) => { x = String(x || "").trim(); if (x.length <= n) return x; const c = x.slice(0, n); return c.slice(0, Math.max(n - 40, c.lastIndexOf(" "))).replace(/[\s,;:.\-]+$/, "") + "…"; };
+const PDF_FRAME = (p, photo0) => { const f = p.gender === "f"; const photo = photo0 ? (PDF_IMG.has(photo0) ? PDF_IMG.get(photo0) : photo0) : null;
   const ini = esc(initials(p)), id = "c" + Math.random().toString(36).slice(2, 8);
   return `<svg class="frame" viewBox="0 0 224 280" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F1D88C"/><stop offset=".5" stop-color="#B8862F"/><stop offset="1" stop-color="#E9CB77"/></linearGradient><clipPath id="${id}"><ellipse cx="112" cy="146" rx="84" ry="108"/></clipPath>
   <radialGradient id="${id}b" cx=".35" cy=".3"><stop offset="0" stop-color="${f ? "#FBE0E4" : "#DCE9F7"}"/><stop offset="1" stop-color="${f ? "#E7A5B2" : "#8DB4DC"}"/></radialGradient></defs>
@@ -2054,10 +2060,10 @@ function pdfPersonPage(p, idx, total, sub){
   if (fx.gg.length) fam.push(["group", t("pGreat"), `${fx.gg.length} ${t("pPpl")}`]);
   const ev = pdfEvents(p, fx);
   return `<section class="page"><div class="bgp"></div>${PDF_HEAD(sub, t("pTitleP"))}
-  <div class="col-l"><div class="pcard">${PDF_FRAME(p, photo)}<div class="pname">${esc(full(p))}</div><div class="pyr">${esc(yrs(p) || "")}</div>${PDF_ORN}</div>
-    ${p.bio ? `<div class="bio"><h3>${pic("doc", 5.6)}${esc(t("bioT"))}</h3><p>${esc(p.bio)}</p></div>` : ""}</div>
+  <div class="col-l"><div class="pcard">${PDF_FRAME(p, photo)}<div class="pname">${esc(clipTxt(full(p), 70))}</div><div class="pyr">${esc(yrs(p) || "")}</div>${PDF_ORN}</div>
+    ${p.bio ? `<div class="bio"><h3>${pic("doc", 5.6)}${esc(t("bioT"))}</h3><p>${esc(clipTxt(p.bio, 430))}</p></div>` : ""}</div>
   <div class="col-r">
-    <div class="sec"><h3><span class="dot">${pic("users", 4.6)}</span>${esc(t("pBasic"))}</h3><div class="box">${REGISTAN}<div class="rows">${rows.length ? rows.map(([ic, l, v]) => `<div class="rw"><span class="ib">${pic(ic, 4.2)}</span><span class="lb">${esc(l)}:</span><span class="vl">${esc(v)}</span></div>`).join("") : `<div class="rw"><span></span><span class="lb">—</span><span></span></div>`}</div></div></div>
+    <div class="sec"><h3><span class="dot">${pic("users", 4.6)}</span>${esc(t("pBasic"))}</h3><div class="box">${REGISTAN}<div class="rows">${rows.length ? rows.map(([ic, l, v]) => `<div class="rw"><span class="ib">${pic(ic, 4.2)}</span><span class="lb">${esc(l)}:</span><span class="vl">${esc(v)}</span></div>`).join("") : `<div class="rw" style="grid-template-columns:1fr;color:#6F7568;font-size:3.4mm;padding:3mm 0">${esc(t("pNoData"))}</div>`}</div></div></div>
     ${rel ? `<div class="you">${pic("group", 11)}<div><small>${esc(t("forYou"))}</small><b>${esc(dn(rel.term))}</b>${rel.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div></div>` : ""}
     ${fam.length ? `<div class="sec"><h3><span class="dot">${pic("tree", 4.6)}</span>${esc(t("pFam"))}</h3><div class="box"><div class="ft">${fam.map(([ic, l, v]) => `<div class="fr"><b>${esc(l)}:</b>${pic(ic, 5.4)}<span>${esc(v)}</span></div>`).join("")}</div></div></div>` : ""}
     ${ev.length > 1 ? `<div class="sec"><h3><span class="dot">${pic("flag", 4.4)}</span>${esc(t("pLife"))}</h3><div class="box life"><div class="tl">${ev.map(e => `<div><b>${e.y}</b><span>${esc(e.a)}</span></div>`).join("")}</div></div></div>` : ""}
@@ -2096,6 +2102,27 @@ async function pdfReady(doc){
   await Promise.all([...doc.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
   await new Promise(r => setTimeout(r, 120));
 }
+function loadLib(src){ return window._libs && window._libs[src] ? window._libs[src] : ((window._libs = window._libs || {})[src] = loadScript(src)); }
+async function pdfDownload(d, name, scale, prog){
+  await Promise.all([loadLib("/vendor/html2canvas.min.js"), loadLib("/vendor/jspdf.umd.min.js")]);
+  const fr = document.createElement("iframe"); fr.setAttribute("aria-hidden", "true"); fr.style.cssText = "position:fixed;left:-12000px;top:0;width:900px;height:1200px;border:0;visibility:hidden";
+  document.body.appendChild(fr);
+  try {
+    fr.srcdoc = d.html.replace("</style>", ".page{margin:0 0 6mm 0!important;box-shadow:none!important}body{padding:0!important;background:#fff}</style>");
+    await new Promise(r => { fr.onload = r; }); await pdfReady(fr.contentDocument);
+    const pages = [...fr.contentDocument.querySelectorAll(".page")], { jsPDF } = window.jspdf, pdf = new jsPDF({ unit:"mm", format:"a4", compress:true });
+    pdf.setProperties({ title:name, author:"Shajara", subject:d.sub, creator:"Shajara" });
+    for (let i = 0; i < pages.length; i++){
+      prog(i, pages.length);
+      const cv = await window.html2canvas(pages[i], { scale, useCORS:true, backgroundColor:"#FBF6EA", logging:false, windowWidth:900, windowHeight:1200, scrollX:0, scrollY:0 });
+      if (i) pdf.addPage();
+      pdf.addImage(cv.toDataURL("image/jpeg", .94), "JPEG", 0, 0, 210, 297, undefined, "FAST");
+      cv.width = cv.height = 0; await new Promise(r => setTimeout(r, 0));
+    }
+    prog(pages.length, pages.length);
+    pdf.save(name.replace(/[\\/:*?"<>|]+/g, "").trim() + ".pdf");
+  } finally { fr.remove(); }
+}
 function pdfPrint(frame, name){
   const old = document.title, win = frame.contentWindow, restore = () => { document.title = old; };
   document.title = name; try { frame.contentDocument.title = name; } catch(e){}
@@ -2108,7 +2135,9 @@ function pdfPane(){
     <div class="f-field"><span>${esc(t("pdfScope"))}</span><div class="pill-row" style="flex-direction:column;align-items:stretch">${[["one","pdfOne"],["branch","pdfBranch"],["book","pdfBook"]].map(([k, l], i) => `<label><input type="radio" name="pdfScope" value="${k}"${i === 0 ? " checked" : ""}>${esc(t(l))}</label>`).join("")}</div></div>
     <label class="f-field" id="pdfWhoW"><span>${esc(t("pdfWho"))}</span><select id="pdfWho">${all.map(p => `<option value="${esc(p.id)}"${p.id === def ? " selected" : ""}>${esc(short(p))}${yrs(p) ? " · " + esc(yrs(p)) : ""}</option>`).join("")}</select></label>
     <label class="check" id="pdfCoverW"><input type="checkbox" id="pdfCover" checked>${esc(t("pdfCover"))}</label>
-    <div class="actions"><button class="btn gold" id="pdfSave">${esc(t("pdfSave"))}</button></div>
+    <label class="f-field"><span>${esc(t("pdfQ"))}</span><select id="pdfQ"><option value="3">${esc(t("pdfQ3"))}</option><option value="2">${esc(t("pdfQ2"))}</option></select></label>
+    <div class="actions"><button class="btn gold" id="pdfDl">${esc(t("pdfDl"))}</button><button class="btn" id="pdfSave">${esc(t("pdfSave"))}</button></div>
+    <div class="progress" id="pdfProg" hidden><i></i></div>
     <p class="hint" id="pdfMsg">${esc(t("pdfHint"))}</p></div>
     <div class="preview pdfprev" id="pdfPrev"><iframe id="pdfFrame" title="PDF preview"></iframe></div></div></section>`;
 }
@@ -2124,14 +2153,23 @@ function pdfWire(m){
   const build = async () => {
     const o = pick(); if (!o.list.length){ $("pdfMsg").textContent = t("noRes"); return; }
     $("pdfMsg").textContent = t("pdfBuilding");
-    const d = pdfDoc(o.list, o.cover); cur = d; frame.srcdoc = d.html;
+    await pdfInline(o.list); const d = pdfDoc(o.list, o.cover); cur = d; frame.srcdoc = d.html;
     await new Promise(r => { frame.onload = r; }); await pdfReady(frame.contentDocument);
     const doc = frame.contentDocument, w = frame.clientWidth - 24, z = Math.min(1, w / (210 / 25.4 * 96));
     doc.documentElement.style.zoom = z; doc.body.style.padding = "12px 0";
     $("pdfMsg").textContent = t("pdfPages", { n:d.n }) + " · " + t("pdfHint");
   };
   m.querySelectorAll("[name=pdfScope],#pdfWho,#pdfCover").forEach(el => el.onchange = build);
-  $("pdfSave").onclick = async () => { if (!cur) await build(); const name = (o => o.scope === "one" ? short(P(o.who)) : (S.meta.title ? dn(S.meta.title) : t("defTitle")))(pick()); await pdfReady(frame.contentDocument); pdfPrint(frame, "Shajara — " + name); };
+  const nameOf = () => (o => o.scope === "one" ? short(P(o.who)) : (S.meta.title ? dn(S.meta.title) : t("defTitle")))(pick());
+  $("pdfSave").onclick = async () => { if (!cur) await build(); await pdfReady(frame.contentDocument); pdfPrint(frame, "Shajara - " + nameOf()); };
+  $("pdfDl").onclick = async () => {
+    const btn = $("pdfDl"), bar = $("pdfProg"), fill = bar.firstElementChild; btn.disabled = true; bar.hidden = false; fill.style.width = "2%";
+    try { if (!cur) await build();
+      await pdfDownload(cur, "Shajara - " + nameOf(), +$("pdfQ").value, (i, n) => { fill.style.width = Math.max(3, Math.round(i / n * 100)) + "%"; $("pdfMsg").textContent = t("pdfMaking", { i:Math.min(i + 1, n), n }); });
+      $("pdfMsg").textContent = t("pdfDone"); toast(t("pdfDone"));
+    } catch(e){ console.error(e); $("pdfMsg").textContent = t("pdfFail", { e:String(e && e.message || e) }); }
+    btn.disabled = false; setTimeout(() => { bar.hidden = true; }, 1500);
+  };
   return build;
 }
 
