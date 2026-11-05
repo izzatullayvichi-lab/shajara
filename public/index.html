@@ -500,6 +500,11 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 #addBtn{background:linear-gradient(135deg,#1A6A4F,#0E3B2C);border-color:transparent;color:#fff;box-shadow:0 12px 24px -12px rgba(14,59,44,.95)}
 #addBtn:hover{color:#fff;filter:brightness(1.15)}
 #zFit{box-shadow:inset 0 0 0 2px var(--green);color:var(--green)}
+/* blood-relative spouses (quda between relatives) */
+.card.ghost{border-style:dashed;background:linear-gradient(180deg,color-mix(in srgb,var(--gold-soft) 55%,var(--card)),var(--card))}
+.card.ghost::after{content:"↔";display:grid;place-items:center;color:#fff;font:700 12px/1 var(--sans)}
+.gh{position:absolute;z-index:3;transform:translate(-50%,-50%);padding:3px 11px;border-radius:999px;border:1.5px dashed var(--gold);background:var(--card);color:var(--gold);font:600 12px/1.2 var(--sans);box-shadow:var(--shadow-s);white-space:nowrap;transition:transform .2s var(--ease),background .2s}
+.gh:hover{transform:translate(-50%,-50%) scale(1.08);background:var(--gold-soft)}
 /* lineage focus, branch toggles, in-law jump */
 .card{transition:box-shadow .3s var(--ease),transform .3s var(--ease),opacity .45s,filter .45s}
 .card.dim{opacity:.34;filter:saturate(.45)}
@@ -540,6 +545,44 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 .mcard .pl{position:relative;color:var(--muted);font-size:13px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mcard .pl:empty{display:none}
 .sheet .actions .btn{flex:1 1 auto}
+/* birthdays */
+.chipb.sm{padding:5px 13px;font-size:13.5px}
+.bd-hero{position:relative;overflow:hidden;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:center;border-radius:28px;padding:24px 28px;margin-bottom:22px;color:#EFE8D2;border:1px solid color-mix(in srgb,var(--gold) 55%,var(--line));
+  background:radial-gradient(90% 130% at 0 0,rgba(60,170,120,.32),transparent 60%),linear-gradient(170deg,var(--emerald),var(--emerald2));box-shadow:0 30px 60px -34px rgba(4,30,20,.85)}
+.bd-hero::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--orn) 0 0/72px;opacity:.07}
+.bd-who{display:flex;gap:16px;align-items:center;margin-top:10px}
+.bd-who .av{width:88px;height:88px;font-size:28px}
+.bd-who>div{display:grid;gap:4px;align-content:center}
+.bd-who h2{font-family:var(--serif);font-size:34px;line-height:1.05;color:#FBF4DF}
+.bd-who p{margin-top:4px;color:#A8C2B4;font-size:16px}
+.bd-clock{display:flex;gap:10px}
+.bd-u{min-width:88px;text-align:center;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);border-radius:20px;padding:14px 8px;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.bd-u b{display:block;font:600 42px/1 var(--sans);letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:#fff}
+.bd-u b.tk{animation:tick .45s var(--ease)}
+.bd-u span{display:block;margin-top:6px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#E5C16C}
+@keyframes tick{from{transform:translateY(-10px);opacity:.25}to{transform:none;opacity:1}}
+.bd-h{font-family:var(--serif);font-size:21px;margin:24px 0 10px;color:var(--gold)}
+.bd-list{display:grid;gap:10px}
+.bd-row{display:grid;grid-template-columns:26px 54px minmax(0,1fr) auto;gap:14px;align-items:center;text-align:left;width:100%;border:1px solid var(--line);border-radius:20px;padding:12px 16px;background:var(--card);box-shadow:var(--shadow-s);transition:transform .3s var(--ease),border-color .2s,box-shadow .3s}
+.bd-row:hover{transform:translateX(6px);border-color:var(--gold)}
+.bd-row .av{width:54px;height:54px;font-size:17px}
+.bd-rk{font-weight:600;color:var(--muted);font-size:13px;text-align:center;font-variant-numeric:tabular-nums}
+.bd-w{min-width:0;display:grid;gap:4px}
+.bd-w b{font-family:var(--serif);font-size:19px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd-w>span{color:var(--muted);font-size:14px}
+.bd-bar{display:block;height:5px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:2px}
+.bd-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--green),var(--gold));transition:width 1s var(--ease)}
+.bd-c{text-align:center;min-width:76px;border-radius:16px;padding:7px 10px;background:var(--sunk)}
+.bd-c b{display:block;font:600 28px/1 var(--sans);font-variant-numeric:tabular-nums}
+.bd-c small{color:var(--muted);font-size:12px}
+.bd-row.t{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold),0 0 36px -8px color-mix(in srgb,var(--gold) 70%,transparent)}
+.bd-row.t .bd-c{background:var(--gold-soft);color:var(--gold)}
+.bd-row.a .bd-c{background:var(--green-soft);color:var(--green)}
+.bd-row.b .bd-c{background:var(--lapis-soft);color:var(--lapis)}
+.pdfg{grid-template-columns:minmax(0,300px) minmax(0,1fr)}
+.pdfg .pill-row label{justify-content:flex-start;white-space:normal}
+.pdfprev{padding:0;min-height:62vh;display:block}
+.pdfprev iframe{width:100%;height:68vh;border:0;border-radius:16px;background:#d9d3c2;display:block}
 @keyframes fly{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 120px))}}
 @keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
 
@@ -718,6 +761,9 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
   .hgrid,.mapwrap{grid-template-columns:minmax(0,1fr)}
   .hero-orn{display:none}
   #shareBtn,#genWrap{display:none}
+  .bd-hero{grid-template-columns:minmax(0,1fr);padding:18px}.bd-who h2{font-size:26px}.bd-who .av{width:68px;height:68px}.bd-clock{gap:6px}.bd-u{min-width:0;flex:1;padding:10px 4px}.bd-u b{font-size:28px}
+  .bd-row{grid-template-columns:44px minmax(0,1fr) auto;gap:10px;padding:10px 12px}.bd-rk{display:none}.bd-row .av{width:44px;height:44px}.bd-c{min-width:62px}.bd-c b{font-size:22px}
+  .pdfg{grid-template-columns:minmax(0,1fr)}.pdfprev iframe{height:56vh}
   #themeBtn{margin-left:auto}
   .minimap{display:none}
   .sim-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.kpi{padding:8px 10px}.kpi b{font-size:24px}.kpi span{font-size:11px}
@@ -760,6 +806,7 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
       <button id="vFan" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M3 12h6M15 12h6M12 3v6"/></svg><span data-t="viewFan"></span></button>
       <button id="vList" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.5 0 4 1.5 4.5 4"/></svg><span data-t="viewList"></span></button>
       <button id="vTime" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg><span data-t="viewTime"></span></button>
+      <button id="vBday" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8M2 7.5h20V12H2zM12 21V7.5M12 7.5C10 3.5 6 4 6.5 6S10 7.5 12 7.5zM12 7.5c2-4 6-3.5 5.5-1.5S14 7.5 12 7.5z"/></svg><span data-t="viewBday"></span></button>
       <button id="vMap" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-t="viewMap"></span></button>
       <button id="vPhotos" aria-pressed="false"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10.5" r="1.8"/><path d="M21 16l-5-5-8 8"/></svg><span data-t="viewPhotos"></span></button>
       <button id="exportBtn" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M12 11v6M9 14l3 3 3-3"/></svg><span data-t="exportBtn"></span></button>
@@ -1127,12 +1174,16 @@ function relOf(id){
 /* ================= Tree layout (shared by screen and poster) ================= */
 function layoutTree(rootId, o){
   const seen = new Set(), nodes = [], marriages = [], families = [];
+  // everyone who descends from this root: a spouse from this set is a blood relative (cousin marriage, quda between relatives)
+  const inTree = new Set([rootId]); for (const q = [rootId]; q.length;){ const x = q.pop(); for (const k of kidsOf(x)) if (!inTree.has(k.id)){ inTree.add(k.id); q.push(k.id); } }
   const groupGap = o.groupGap ?? o.gap * 1.8;
   function build(id, dep){
     const p = P(id); seen.add(id);
-    const sps = spousesOf(p).filter(s => !seen.has(s.id)); sps.forEach(s => seen.add(s.id));
+    const ghostOf = s => inTree.has(s.id) && inTree.has(id);
+    const sps = spousesOf(p).filter(s => ghostOf(s) || !seen.has(s.id)); sps.forEach(s => { if (!ghostOf(s)) seen.add(s.id); });
     const right = sps.filter((_, i) => i % 2 === 0), left = sps.filter((_, i) => i % 2 === 1).reverse();
-    const row = [...left.map(s => ({ id:s.id, inLaw:true })), { id, inLaw:false }, ...right.map(s => ({ id:s.id, inLaw:true }))];
+    const mk = s => ({ id:s.id, inLaw:true, ghost:ghostOf(s) });
+    const row = [...left.map(mk), { id, inLaw:false }, ...right.map(mk)];
     const spSet = new Set(sps.map(s => s.id)), kidsP = kidsOf(id);
     const stop = S.collapsed.has(id) || (S.maxGen > 0 && (o.dep0 || 0) + dep + 1 >= S.maxGen); let total = 0;
     const other = (k, of) => k.fatherId === of ? k.motherId : k.fatherId;
@@ -1160,7 +1211,7 @@ function layoutTree(rootId, o){
     const y = tn.dep * (o.h + o.rowGap); maxDepth = Math.max(maxDepth, tn.dep);
     const cx = x0 + tn.w / 2, rx = cx - tn.rowW / 2;
     const xs = tn.row.map((_, i) => rx + i * (o.w + o.coupleGap));
-    tn.row.forEach((c, i) => nodes.push({ id:c.id, x:xs[i], y, inLaw:c.inLaw, depth:tn.dep, total:c.inLaw ? 0 : tn.total, folded:!c.inLaw && tn.stop && tn.total > 0 }));
+    tn.row.forEach((c, i) => nodes.push({ id:c.id, x:xs[i], y, inLaw:c.inLaw, ghost:!!c.ghost, depth:tn.dep, total:c.inLaw ? 0 : tn.total, folded:!c.inLaw && tn.stop && tn.total > 0 }));
     const px = xs[tn.pIdx];
     const ne = tn.groups.filter(g => g.children.length);
     let cxp = cx - tn.childW / 2;
@@ -1350,15 +1401,16 @@ function renderTree(){
   let cards = "";
   for (const n of Lt.nodes){
     const p = P(n.id), rel = relOf(n.id);
-    cards += `<button class="card ${p.gender === "f" ? "f" : "m"}${n.inLaw ? " in-law" : ""}${S.selId === p.id ? " sel" : ""}${S.meId === p.id ? " me" : ""}${hl ? (hl.rel.has(p.id) ? (hl.chain.has(p.id) ? " anc" : "") : " dim") : ""}" data-id="${esc(p.id)}" title="${esc(full(p) + (yrs(p) ? " · " + yrs(p) : "") + (rel ? " · " + dn(rel.term) : ""))}" style="left:${n.x + padL}px;top:${n.y + pad}px;width:${TD.w}px;height:${TD.h}px">
+    cards += `<button class="card ${p.gender === "f" ? "f" : "m"}${n.inLaw ? " in-law" : ""}${n.ghost ? " ghost" : ""}${S.selId === p.id ? " sel" : ""}${S.meId === p.id ? " me" : ""}${hl ? (hl.rel.has(p.id) ? (hl.chain.has(p.id) ? " anc" : "") : " dim") : ""}" data-id="${esc(p.id)}" title="${esc(full(p) + (yrs(p) ? " · " + yrs(p) : "") + (rel ? " · " + dn(rel.term) : ""))}" style="left:${n.x + padL}px;top:${n.y + pad}px;width:${TD.w}px;height:${TD.h}px">
       ${rel ? `<span class="rel" title="${esc(dn(rel.term))}">${esc(dn(rel.term))}</span>` : ""}
       ${avatar(p)}<span class="nm">${esc(first(p))}</span>${p.lastName ? `<span class="sn">${esc(dn(p.lastName))}</span>` : ""}<span class="yr">${yrs(p) ? "(" + esc(yrs(p)) + ")" : "&nbsp;"}</span></button>`;
-    cards += QA(p, n.x + padL + TD.w - 10, n.y + pad + 34);
+    if (!n.ghost) cards += QA(p, n.x + padL + TD.w - 10, n.y + pad + 34);
+    else cards += `<button class="gh" data-ghost="${esc(p.id)}" style="left:${n.x + padL + TD.w / 2}px;top:${n.y + pad + TD.h}px" aria-label="${esc(t("ghostGo"))}" title="${esc(t("ghostGo"))}">↗ ${esc(t("ghostLbl"))}</button>`;
   }
   for (const n of Lt.nodes){
     const cx = n.x + padL + TD.w / 2, p = P(n.id);
     if (!n.inLaw && n.total > 0) cards += `<button class="tog${n.folded ? " fold" : ""}" data-tog="${esc(n.id)}" style="left:${cx}px;top:${n.y + pad + TD.h}px" aria-label="${esc(t(n.folded ? "tgOpen" : "tgFold"))}" title="${esc(t(n.folded ? "tgOpen" : "tgFold"))}">${n.folded ? "+" + descCount(n.id) : "−"}</button>`;
-    if (n.inLaw && (P(p.fatherId) || P(p.motherId))) cards += `<button class="upb" data-up="${esc(n.id)}" style="left:${n.x + padL + TD.w - 14}px;top:${n.y + pad - 10}px" aria-label="${esc(t("tgUp"))}" title="${esc(t("tgUp"))}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>`;
+    if (n.inLaw && !n.ghost && (P(p.fatherId) || P(p.motherId))) cards += `<button class="upb" data-up="${esc(n.id)}" style="left:${n.x + padL + TD.w - 14}px;top:${n.y + pad - 10}px" aria-label="${esc(t("tgUp"))}" title="${esc(t("tgUp"))}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>`;
   }
   PZ.st.style.width = W + "px"; PZ.st.style.height = H + "px";
   PZ.st.classList.toggle("focus", !!hl);
@@ -1476,7 +1528,7 @@ function evLabel(e){
 }
 function whenLabel(d){ return d === 0 ? t("today") : d === 1 ? t("tomorrow") : t("inDays", { n:d }); }
 /* ================= Pages: home · members · time machine · map · photo archive ================= */
-Object.assign(L, { themeToDark:"Tungi rejimga o'tish", themeToLight:"Kunduzgi rejimga o'tish", shareT:"Ulashish", shareDone:"Havola nusxalandi", qaFan:"Doirada ko'rish", qaMe:"Bu — men", qaAdd:"Farzand qo'shish", qaLink:"Havolani nusxalash", toTop:"Yuqoriga", stLive:"Tirik", stDead:"Marhum", genLbl2:"Avlodlar", genAll:"Barcha avlod", tgFold:"Shoxni yig'ish", tgOpen:"Shoxni ochish", tgUp:"Ota-onasi tomoni — o'sha oila shajarasini ochish", viewHome:"Bosh sahifa", viewTime:"Tarixiy voqealar", viewMap:"Xarita", viewPhotos:"Fotoarxiv",
+Object.assign(L, { ghostLbl:"Asl o'rni", ghostGo:"Bu inson o'z ota-onasi qatorida ham bor — o'sha joyga o'tish", kelin:"Kelin va kuyovlar", qudalar:"Qudalar", quda:"Quda", themeToDark:"Tungi rejimga o'tish", themeToLight:"Kunduzgi rejimga o'tish", shareT:"Ulashish", shareDone:"Havola nusxalandi", qaFan:"Doirada ko'rish", qaMe:"Bu — men", qaAdd:"Farzand qo'shish", qaLink:"Havolani nusxalash", toTop:"Yuqoriga", stLive:"Tirik", stDead:"Marhum", genLbl2:"Avlodlar", genAll:"Barcha avlod", tgFold:"Shoxni yig'ish", tgOpen:"Shoxni ochish", tgUp:"Ota-onasi tomoni — o'sha oila shajarasini ochish", viewHome:"Bosh sahifa", viewTime:"Tarixiy voqealar", viewMap:"Xarita", viewPhotos:"Fotoarxiv",
   heroEyebrow:"Oilaviy meros", heroT1:"Bizning", heroT2:"shajara tariximiz", heroP:"Ajdodlarimizni eslash, o'zligimizni anglash va kelajak avlodlarga meros qoldirish.", heroCta:"Shajara daraxtini ochish",
   hsPhotos:"Suratlar", hsPlaces:"Joylar", recent:"Oila a'zolari", recentSub:"yangi qo'shilganlar", seeAll:"Hammasi",
   fAll:"Hammasi", fM:"Erkaklar", fF:"Ayollar", fLive:"Tirik", fDead:"Marhum", mvCards:"Kartalar", mvTable:"Jadval", noRes:"Hech narsa topilmadi.",
@@ -1485,7 +1537,7 @@ Object.assign(L, { themeToDark:"Tungi rejimga o'tish", themeToLight:"Kunduzgi re
   mapT:"Ajdodlar xaritasi", mapSub:"Tug'ilgan joylar va oila ko'chishlari", mapList:"Manzillar ro'yxati", mapNone:"Xaritada ko'rsatish uchun insonlarning «Tug'ilgan joyi»ni kiriting (masalan: Samarqand, Toshkent, Buxoro).", mapNote:"Xarita sxematik: joylar taxminiy koordinatalar bo'yicha qo'yilgan. Chiziqlar ota-ona tug'ilgan joydan farzand tug'ilgan joyga ko'chishni bildiradi.", mapUnk:"Xaritada topilmagan joylar: {n}", people:"kishi",
   phTitle:"Oila fotoarxivi", phNone:"Hali surat yuklanmagan. Inson kartochkasida «Tahrirlash → Surat tanlash» orqali portret qo'shing.", phHint:"Suratlar a'zolarning portretlaridan yig'iladi." });
 const GEN_ROMAN = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
-const PLAIN = new Set(["home","list","time","map","photos"]);
+const PLAIN = new Set(["home","list","time","map","photos","bday"]);
 const ICO = {
   gens:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V11M12 15l-4-3M12 13l4-3"/><path d="M7 10a5 5 0 0 1 10 0 3.5 3.5 0 0 1-2 6.3H9A3.5 3.5 0 0 1 7 10z"/></svg>',
   ppl:'<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.5 0 4 1.5 4.5 4"/></svg>',
@@ -1548,7 +1600,8 @@ function renderHome(){
         ${ups.length ? `<div class="upc">${ups.map(e => { const lb = evLabel(e); return `<button class="ev reveal${e.diff === 0 ? " today" : ""}" data-go="${esc(e.p.id)}">
           <span class="when"><b>${e.date.getDate()}</b><small>${esc(dn(MONTHS[e.date.getMonth()].slice(0, 3)))}</small></span>
           <span class="what"><b>${esc(short(e.p))}</b><span>${esc(lb.title)}${lb.sub ? " · " + esc(lb.sub) : ""}</span><span>${esc(whenLabel(e.diff))}</span></span></button>`; }).join("")}</div>`
-          : `<p class="note">${esc(t("upNone"))}</p>`}</section>
+          : `<p class="note">${esc(t("upNone"))}</p>`}
+        <p style="margin:14px 0 0"><button class="btn sm" data-nav="bday">${esc(t("viewBday"))} →</button></p></section>
       <section><h2 class="lv-h">${esc(t("recent"))} <small>${esc(t("recentSub"))}</small></h2>
         <div class="minis">${recent.map(p => `<button class="mini reveal" data-go="${esc(p.id)}">${avatar(p)}<span class="n">${esc(first(p))}</span><small>${esc(yrs(p))}</small></button>`).join("")}</div>
         <p style="margin:14px 0 0"><button class="btn sm" data-nav="list">${esc(t("seeAll"))}</button></p></section>
@@ -1804,6 +1857,300 @@ function updScroll(){
   document.querySelector(".topbar").classList.toggle("scrolled", plain && top > 16); $("toTop").hidden = !plain || top < 480;
 }
 
+/* ================= Birthdays: countdown to every date, nearest first ================= */
+Object.assign(L, { viewBday:"Tug'ilgan kunlar", bdTitle:"Tug'ilgan kunlargacha", bdSub:"eng yaqinidan eng uzog'iga", bdNext:"Eng yaqin sana", bdToday:"Bugun tug'ilgan kun!", bdDays:"kun", bdHours:"soat", bdMin:"daqiqa", bdSec:"soniya",
+  bdLive:"Tirik", bdDead:"Marhumlar tavalludi", bdAll:"Hammasi", bd7:"7 kun", bd30:"30 kun", bd90:"90 kun", bdAny:"Butun yil", bdTurns:"{n} yoshga to'ladi", bdYears:"tavalludiga {n} yil", bdIn:"{n} kun", bdNone:"Ko'rsatish uchun sana topilmadi.",
+  bdPriv:"Maxfiylik: tirik qarindoshlarning kun va oyi faqat shajara egasiga ko'rinadi. Tashrif buyuruvchilar uchun faqat yili ko'rsatiladi.", bdPartial:"Kun va oyi kiritilmagan: {n} kishi", bdMonth:"Shu oy", bdTomorrow:"Ertaga", bdWeek:"Shu hafta", bdLater:"Keyinroq" });
+function birthdayList(){
+  const now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), out = []; let partial = 0;
+  for (const p of S.people.values()){
+    const b = parseDate(p.birthDate); if (!(b?.d && b?.m)){ partial++; continue; }
+    let yy = t0.getFullYear(), dt;
+    for (let k = 0; k < 2; k++){ let dd = b.d; if (b.m === 2 && dd === 29 && !isLeap(yy)) dd = 28; dt = new Date(yy, b.m - 1, dd); if (dt >= t0) break; yy++; }
+    out.push({ p, dead:isDead(p), date:dt, diff:Math.round((dt - t0) / 864e5), n: b.y ? dt.getFullYear() - b.y : null });
+  }
+  out.sort((a, b) => a.diff - b.diff || short(a.p).localeCompare(short(b.p)));
+  return { list:out, partial };
+}
+S.bdKind = "live"; S.bdRange = 0;
+let _bdTimer = null;
+function bdayStop(){ clearInterval(_bdTimer); _bdTimer = null; }
+function renderBday(){
+  const { list, partial } = birthdayList();
+  const kindOk = e => S.bdKind === "all" || (S.bdKind === "dead" ? e.dead : !e.dead);
+  const rows = list.filter(e => kindOk(e) && (!S.bdRange || e.diff <= S.bdRange));
+  const nearest = list.filter(e => !e.dead)[0] || list[0];
+  const chip = (grp, k, lbl, cur) => `<button class="chipb" data-${grp}="${k}" aria-pressed="${cur === k}">${esc(t(lbl))}</button>`;
+  const monthName = d => dn(MONTHS[d.getMonth()]);
+  let lastKey = "", body = "";
+  rows.forEach((e, i) => {
+    const key = e.diff === 0 ? "t" : e.diff <= 7 ? "w" : e.date.getMonth() + "-" + e.date.getFullYear();
+    if (key !== lastKey){ lastKey = key; body += `<h3 class="bd-h reveal">${esc(key === "t" ? t("today") : key === "w" ? t("bdWeek") : capF(monthName(e.date)) + " " + e.date.getFullYear())}</h3>`; }
+    const pct = Math.max(4, Math.round((1 - e.diff / 366) * 100)), tone = e.diff === 0 ? "t" : e.diff <= 7 ? "a" : e.diff <= 30 ? "b" : "c";
+    const sub = e.dead ? (e.n ? t("bdYears", { n:e.n }) : t("evBirthD")) : (e.n ? t("bdTurns", { n:e.n }) : t("evBirth"));
+    body += `<button class="bd-row reveal ${tone}" data-go="${esc(e.p.id)}"><span class="bd-rk">${i + 1}</span>${avatar(e.p)}
+      <span class="bd-w"><b>${esc(short(e.p))}</b><span>${e.date.getDate()}-${esc(monthName(e.date))} · ${esc(sub)}</span><i class="bd-bar"><i style="width:${pct}%"></i></i></span>
+      <span class="bd-c"><b>${e.diff === 0 ? "🎉" : e.diff}</b><small>${esc(e.diff === 0 ? t("today") : e.diff === 1 ? t("bdTomorrow") : t("bdDays"))}</small></span></button>`;
+  });
+  const hero = nearest ? `<section class="bd-hero reveal" id="bdHero"><div class="bd-hl"><span class="eyebrow">${esc(t("bdNext"))}</span>
+      <div class="bd-who">${avatar(nearest.p)}<div><h2>${esc(short(nearest.p))}</h2><p>${nearest.date.getDate()}-${esc(monthName(nearest.date))}${nearest.n ? " · " + esc(nearest.dead ? t("bdYears", { n:nearest.n }) : t("bdTurns", { n:nearest.n })) : ""}</p></div></div></div>
+      <div class="bd-clock" id="bdClock" data-t="${nearest.date.getTime()}" aria-live="off">${["bdDays","bdHours","bdMin","bdSec"].map((k, i) => `<div class="bd-u"><b id="bdU${i}">0</b><span>${esc(t(k))}</span></div>`).join("")}</div></section>` : "";
+  $("list").innerHTML = `<div class="lv-grid"><section>${hero}
+    <div class="lvbar" style="margin-top:6px"><h2 class="lv-h">${esc(t("bdTitle"))} <small>${esc(t("bdSub"))} · ${rows.length}</small></h2></div>
+    <div class="chips" style="margin:6px 0 8px">${chip("bk", "live", "bdLive", S.bdKind)}${chip("bk", "dead", "bdDead", S.bdKind)}${chip("bk", "all", "bdAll", S.bdKind)}</div>
+    <div class="chips" style="margin:0 0 16px">${[[0,"bdAny"],[7,"bd7"],[30,"bd30"],[90,"bd90"]].map(([k, l]) => `<button class="chipb sm" data-br="${k}" aria-pressed="${S.bdRange === k}">${esc(t(l))}</button>`).join("")}</div>
+    ${body ? `<div class="bd-list">${body}</div>` : emptyBox(t("bdNone"))}
+    ${partial ? `<p class="note" style="margin-top:14px">${esc(t("bdPartial", { n:partial }))}</p>` : ""}${S.canEdit ? "" : `<p class="note" style="margin-top:6px">${esc(t("bdPriv"))}</p>`}</section></div>`;
+  const root = $("list"); wireGo(root);
+  root.querySelectorAll("[data-bk]").forEach(b => b.onclick = () => { S.bdKind = b.dataset.bk; renderBday(); });
+  root.querySelectorAll("[data-br]").forEach(b => b.onclick = () => { S.bdRange = +b.dataset.br; renderBday(); });
+  reveal(root);
+  bdayStop(); const clock = $("bdClock");
+  if (clock){
+    const target = +clock.dataset.t, tick = () => { let ms = Math.max(0, target - Date.now()), d = Math.floor(ms / 864e5); ms -= d * 864e5; const h = Math.floor(ms / 36e5); ms -= h * 36e5; const m = Math.floor(ms / 6e4), s = Math.floor((ms - m * 6e4) / 1e3);
+      [d, h, m, s].forEach((v, i) => { const el = $("bdU" + i); if (el && el.textContent !== String(v)){ el.textContent = String(v).padStart(i ? 2 : 1, "0"); if (i === 3){ el.classList.remove("tk"); void el.offsetWidth; el.classList.add("tk"); } } }); };
+    tick(); _bdTimer = setInterval(tick, 1000);
+    if (nearest.diff === 0 && !S._bdCf){ S._bdCf = 1; setTimeout(() => { const r = clock.getBoundingClientRect(); if (S.view === "bday") Confetti.burst(r.left + r.width / 2, r.top, 120); }, 700); }
+  }
+}
+
+/* ================= PDF: print-grade A4 person sheets & family book ================= */
+Object.assign(L, { tabPdf:"PDF (shaxs / oila kitobi)", pdfScope:"Nima chiqariladi", pdfOne:"Faqat tanlangan shaxs (1 sahifa)", pdfBranch:"Shaxs va uning avlodlari", pdfBook:"Butun oila kitobi", pdfWho:"Shaxs", pdfCover:"Muqova va mundarija bilan",
+  pdfMake:"Ko'rib chiqish", pdfSave:"PDF sifatida saqlash", pdfHint:"Hujjat vektor formatda: matn va ramkalar istalgan kattalashtirishda aniq. «PDF sifatida saqlash»ni bossangiz chop etish oynasi ochiladi — manzil sifatida «PDF sifatida saqlash» (Save as PDF)ni tanlang.", pdfPages:"{n} sahifa", pdfBuilding:"Hujjat tayyorlanmoqda…",
+  pTitleP:"Shaxs ma'lumotlari", pBasic:"Asosiy ma'lumotlar", pFam:"Oila aloqalari", pLife:"Hayot yo'li (asosiy voqealar)", pSpouse:"Turmush o'rtog'i", pSpouses:"Turmush o'rtoqlari", pParents:"Ota-onasi", pSibs:"Aka-uka, opa-singillari", pKids:"Farzandlari", pGrand:"Nabiralari", pGreat:"Evaralari",
+  pPpl:"nafar", pBoys:"o'g'il", pGirls:"qiz", pBornEv:"Tug'ilgan", pDiedEv:"Vafot etgan", pChildEv:"{n} tug'ildi", pSpDied:"{n} vafot etdi", pLiving:"hozir", pCoverT:"Oila shajarasi", pCoverS:"Ajdodlarimiz xotirasi — kelajak avlodlarga meros", pContents:"Mundarija", pBookT:"Oila kitobi", pPg:"bet", pBy:"Tuzilgan sana", pPersons:"inson", pGens:"avlod", pBranch:"shoxi", pQuda:"Qudalar" });
+const PI = {
+  cal:'<rect x="3.5" y="5" width="17" height="15.5" rx="2.2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>', pin:'<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/>',
+  clock:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>', grave:'<path d="M5 20h14M7 20v-8a5 5 0 0 1 10 0v8M12 8V5M10.5 6.5h3"/>', job:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M3 12.5h18"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>', users:'<circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c2.5 0 4 1.5 4.5 4"/>',
+  heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.4A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', tree:'<path d="M12 22V11M12 15l-4-3M12 13l4-3"/><path d="M7 10a5 5 0 0 1 10 0 3.5 3.5 0 0 1-2 6.3H9A3.5 3.5 0 0 1 7 10z"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>', doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>', group:'<circle cx="12" cy="7" r="3"/><circle cx="5.5" cy="10" r="2.2"/><circle cx="18.5" cy="10" r="2.2"/><path d="M6.5 20c.5-3.5 2.6-5.5 5.5-5.5s5 2 5.5 5.5M1.5 18c.3-2.2 1.7-3.6 4-3.6M22.5 18c-.3-2.2-1.7-3.6-4-3.6"/>'
+};
+const pic = (k, sz = 5, cls = "") => `<svg class="ic ${cls}" style="width:${sz}mm;height:${sz}mm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${PI[k]}</svg>`;
+
+function pdfOrder(rootIds){
+  const out = [], seen = new Set();
+  const visit = id => { const p = P(id); if (!p || seen.has(id)) return; seen.add(id); out.push(p); for (const sp of spousesOf(p)) if (!seen.has(sp.id)){ seen.add(sp.id); out.push(sp); } for (const k of kidsOf(id)) visit(k.id); };
+  rootIds.forEach(visit); return out;
+}
+function pdfFacts(p){
+  const kids = kidsOf(p.id), gk = [], gg = [];
+  kids.forEach(k => kidsOf(k.id).forEach(n => { gk.push(n); kidsOf(n.id).forEach(e => gg.push(e)); }));
+  const m = kids.filter(k => k.gender !== "f").length, f = kids.length - m;
+  return { kids, m, f, gk, gg, sps: spousesOf(p), par: [P(p.fatherId), P(p.motherId)].filter(Boolean), sib: siblingsOf(p) };
+}
+function pdfEvents(p, fx){
+  const ev = [], by = +year(p.birthDate), dy = +year(p.deathDate);
+  if (by) ev.push({ y:by, k:"b", a:t("pBornEv"), b:"" });
+  const ck = fx.kids.filter(k => +year(k.birthDate)).sort((a, b) => +year(a.birthDate) - +year(b.birthDate));
+  const pickK = ck.length <= 2 ? ck : [ck[0], ck[ck.length - 1]];
+  pickK.forEach(k => ev.push({ y:+year(k.birthDate), k:"c", a:t("pChildEv", { n:first(k) }), b:"" }));
+  for (const sp of fx.sps){ const y = +year(sp.deathDate); if (y && (!dy || y <= dy + 60) && (!by || y > by)) ev.push({ y, k:"s", a:t("pSpDied", { n:first(sp) }), b:"" }); }
+  if (dy) ev.push({ y:dy, k:"d", a:t("pDiedEv"), b:"" });
+  ev.sort((a, b) => a.y - b.y || (a.k === "b" ? -1 : b.k === "b" ? 1 : 0));
+  while (ev.length > 5){ const i = ev.findIndex((e, j) => j > 0 && j < ev.length - 1 && e.k === "c"); ev.splice(i > 0 ? i : 1, 1); }
+  return ev;
+}
+function pdfCss(){ return `
+@font-face{font-family:"Alegreya";font-weight:400;src:url("/fonts/alegreya-400.woff") format("woff")}
+@font-face{font-family:"Alegreya";font-weight:700;src:url("/fonts/alegreya-700.woff") format("woff")}
+@font-face{font-family:"Alegreya";font-weight:800;src:url("/fonts/alegreya-800.woff") format("woff")}
+@font-face{font-family:"Golos Text";font-weight:400;src:url("/fonts/golos-400.woff") format("woff")}
+@font-face{font-family:"Golos Text";font-weight:500;src:url("/fonts/golos-500.woff") format("woff")}
+@font-face{font-family:"Golos Text";font-weight:600;src:url("/fonts/golos-600.woff") format("woff")}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+:root{--g:#12402B;--g2:#1B5A40;--gold:#B8862F;--gold2:#D9B25E;--paper:#FBF6EA;--card:#FFFDF6;--line:#E5D9C0;--ink:#25302A;--mut:#6F7568;--soft:#F5E8C6}
+body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#d9d3c2;font-size:3.5mm;line-height:1.4}
+.page{position:relative;width:210mm;height:297mm;margin:0 auto 8mm;overflow:hidden;background:var(--paper);break-after:page;page-break-after:always;box-shadow:0 6px 30px rgba(0,0,0,.25)}
+.page:last-child{break-after:auto;page-break-after:auto}
+@media print{body{background:none}.page{margin:0;box-shadow:none}html{zoom:1!important}}
+.ser{font-family:"Alegreya",Georgia,serif}
+.bgp{position:absolute;inset:0;background:radial-gradient(120mm 80mm at 0 0,rgba(201,162,79,.12),transparent 70%),radial-gradient(120mm 90mm at 100% 60%,rgba(18,64,43,.05),transparent 70%)}
+.hd{position:absolute;left:0;top:0;width:210mm;height:38mm}
+.hd svg{position:absolute;inset:0;width:100%;height:100%}
+.logo{position:absolute;left:13mm;top:7mm;display:flex;align-items:center;gap:3mm;color:var(--g)}
+.logo svg{position:static;width:15mm;height:15mm}
+.logo b{display:block;font-family:"Alegreya",serif;font-weight:800;font-size:9.5mm;line-height:.95}
+.logo small{display:block;font-size:3mm;color:#3b4a40;margin-top:.6mm}
+.ttl{position:absolute;right:12mm;top:9.5mm;color:#fff;font-family:"Alegreya",serif;font-weight:700;font-size:8.4mm;letter-spacing:.2mm;text-shadow:0 .4mm 1mm rgba(0,0,0,.25)}
+.col-l{position:absolute;left:12mm;top:42mm;width:66mm}
+.col-r{position:absolute;left:84mm;top:42mm;width:114mm;display:grid;gap:4mm}
+.pcard{position:relative;border:.3mm solid var(--line);border-radius:7mm;background:linear-gradient(180deg,#FFFDF6,#FBF3E0);padding:5mm 3mm 4mm;text-align:center;box-shadow:0 1mm 3mm rgba(60,40,10,.08)}
+.frame{display:block;margin:0 auto;width:56mm;height:70mm}
+.pname{font-family:"Alegreya",serif;font-weight:700;font-size:6.6mm;line-height:1.08;margin-top:2mm;color:#1d261f;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pyr{font-family:"Alegreya",serif;font-size:5mm;color:#3a463d;margin-top:1.4mm}
+.orn{display:block;margin:2mm auto 0;width:44mm;height:4mm}
+.bio{margin-top:4mm;border:.3mm solid #d4e0d6;border-radius:5mm;background:linear-gradient(180deg,#E7F0E9,#F2F6EF);padding:4mm 4.2mm}
+.bio h3{display:flex;align-items:center;gap:2mm;font-family:"Alegreya",serif;font-weight:700;font-size:4.8mm;color:var(--g);margin-bottom:2mm}
+.bio p{font-size:3.35mm;line-height:1.5;color:#2c352f;display:-webkit-box;-webkit-line-clamp:11;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere;white-space:pre-line}
+.sec>h3{display:flex;align-items:center;gap:2.6mm;font-family:"Alegreya",serif;font-weight:700;font-size:5.4mm;color:var(--g);margin-bottom:2mm}
+.sec>h3 .dot{width:8mm;height:8mm;border-radius:50%;background:var(--g2);color:#fff;display:grid;place-items:center;flex:none}
+.box{position:relative;border:.3mm solid var(--line);border-radius:5mm;background:var(--card);overflow:hidden;box-shadow:0 1mm 3mm rgba(60,40,10,.06)}
+.rows{position:relative;padding:2mm 4mm;display:grid}
+.rw{display:grid;grid-template-columns:8mm 33mm 1fr;gap:2.4mm;align-items:center;padding:1.7mm 0}
+.rw+.rw{border-top:.2mm solid #ece3cf}
+.rw .ib{width:7.4mm;height:7.4mm;border-radius:50%;background:#EEF3EA;color:var(--g2);display:grid;place-items:center;border:.2mm solid #d6e2d3}
+.rw .lb{color:#4e5a52;font-size:3.3mm}
+.rw .vl{font-weight:600;font-size:3.7mm;color:#1c2820;overflow-wrap:anywhere}
+.wm{position:absolute;right:-2mm;top:0;width:62mm;height:36mm;opacity:.3}
+.you{display:flex;align-items:center;gap:4mm;border-radius:5mm;padding:3.4mm 5mm;background:linear-gradient(100deg,#F7E7B8,#F9EDCB);border:.3mm solid #E9D391}
+.you .ic{color:#8a6a1b}
+.you small{display:block;font-size:3.2mm;color:#7a5d17;font-weight:600}
+.you b{display:block;font-family:"Alegreya",serif;font-weight:700;font-size:6.6mm;line-height:1.05;color:#1d261f}
+.you span{display:block;font-size:3.2mm;color:#665d3d}
+.ft{padding:1mm 4mm}
+.fr{display:grid;grid-template-columns:34mm 7mm 1fr;gap:2.4mm;align-items:center;padding:1.8mm 0;font-size:3.5mm}
+.fr+.fr{border-top:.2mm solid #ece3cf}
+.fr b{color:var(--g);font-weight:600}.fr .ic{color:#3b4a40}
+.fr span{overflow-wrap:anywhere}
+.life{padding:4mm 5mm 3.4mm}
+.tl{position:relative;display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:1mm;text-align:center;padding-top:0}
+.tl::before{content:"";position:absolute;left:8%;right:8%;top:1.6mm;height:.5mm;background:linear-gradient(90deg,#9fb48a,#6f9457,#9fb48a)}
+.tl>div{position:relative;padding-top:6mm}
+.tl>div::before{content:"";position:absolute;left:50%;top:0;width:3.4mm;height:3.4mm;margin-left:-1.7mm;border-radius:50%;background:#F4F0C8;border:.5mm solid #7a9a52}
+.tl b{display:block;font-family:"Alegreya",serif;font-weight:700;font-size:4.6mm;color:#1d261f}
+.tl span{display:block;font-size:3.1mm;color:#4b564e;line-height:1.25;overflow-wrap:anywhere}
+.land{position:absolute;left:0;right:0;bottom:0;height:62mm;background:url("/img/tree.jpg") 50% 96%/118% auto no-repeat}
+.land::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--paper) 0%,rgba(251,246,234,.82) 28%,rgba(251,246,234,.15) 70%,rgba(251,246,234,0) 100%)}
+.band{position:absolute;left:0;right:0;bottom:0;height:7mm;background:linear-gradient(180deg,rgba(251,246,234,0),rgba(251,246,234,.9))}
+.band svg{position:absolute;inset:0;width:100%;height:100%}
+.foot{position:absolute;left:12mm;right:12mm;bottom:9.5mm;display:flex;justify-content:space-between;font-size:2.9mm;color:#5d5a3f;letter-spacing:.02em}
+.foot span{background:rgba(251,246,234,.78);padding:.4mm 2mm;border-radius:2mm}
+/* cover & contents */
+.cv{background:radial-gradient(150mm 120mm at 50% 30%,#1d6247,#0c3426 70%,#07241a)}
+.cv .orn-bg{position:absolute;inset:0;opacity:.09}
+.cv .frm{z-index:3;position:absolute;inset:9mm;border:.5mm solid rgba(229,193,108,.8);border-radius:3mm}
+.cv .frm::after{content:"";position:absolute;inset:2.4mm;border:.25mm solid rgba(229,193,108,.55);border-radius:2mm}
+.cv .mid{z-index:2;position:absolute;left:0;right:0;top:46mm;text-align:center;color:#FBF1D4}
+.cv .mid svg{width:30mm;height:30mm;color:#E5C16C}
+.cv h1{font-family:"Alegreya",serif;font-weight:800;font-size:19mm;line-height:1;margin-top:8mm;color:#FFF8E4;text-shadow:0 1mm 4mm rgba(0,0,0,.4)}
+.cv h2{font-family:"Alegreya",serif;font-weight:700;font-size:9mm;margin-top:5mm;color:#E5C16C}
+.cv p{font-size:4mm;margin-top:6mm;color:#cfe0d4;max-width:120mm;margin-left:auto;margin-right:auto}
+.cv .stat{display:flex;justify-content:center;gap:12mm;margin-top:14mm}
+.cv .stat b{display:block;font-family:"Alegreya",serif;font-weight:800;font-size:13mm;color:#fff}
+.cv .stat span{font-size:3.2mm;letter-spacing:.2em;text-transform:uppercase;color:#E5C16C}
+.cv .land{height:92mm;background-size:130% auto}.cv .land::before{background:linear-gradient(180deg,#07241a 0%,rgba(7,36,26,.55) 40%,rgba(7,36,26,.05) 100%)}
+.cv .date{position:absolute;left:0;right:0;bottom:14mm;text-align:center;color:#E5C16C;font-size:3.4mm;letter-spacing:.14em;z-index:2}
+.ix h2{position:absolute;left:14mm;top:20mm;font-family:"Alegreya",serif;font-weight:800;font-size:11mm;color:var(--g)}
+.ix .lst{position:absolute;left:14mm;right:14mm;top:40mm;bottom:20mm;columns:2;column-gap:10mm;font-size:3.4mm}
+.ix .it{display:flex;align-items:baseline;gap:1.6mm;padding:.5mm 0;break-inside:avoid}
+.ix .it b{font-weight:500}.ix .it i{flex:1;border-bottom:.25mm dotted #b9ab88;transform:translateY(-1mm)}.ix .it u{text-decoration:none;color:var(--gold);font-weight:600}
+.ix .it.lv1{padding-left:4mm}.ix .it.lv2{padding-left:8mm}.ix .it.lv3{padding-left:12mm}.ix .it.lv4{padding-left:16mm}
+`; }
+const REGISTAN = '<svg class="wm" viewBox="0 0 220 120" fill="none" stroke="#8c7a52" stroke-width="1.1" stroke-linejoin="round"><path d="M70 118V50Q110 6 150 50V118"/><path d="M82 118V62Q110 28 138 62V118"/><path d="M94 118V76Q110 52 126 76V118"/><path d="M62 118V46h14M144 46h14v72"/><rect x="36" y="22" width="12" height="96"/><path d="M34 22h16M36 30h12M40 22l2-10 2 10"/><rect x="172" y="22" width="12" height="96"/><path d="M170 22h16M172 30h12M176 22l2-10 2 10"/><path d="M6 118V70h30v48M184 118V70h30v48"/><path d="M12 118V92q6-14 12 0v26M26 118V92q6-14 12 0v26M190 118V92q6-14 12 0v26M204 118V92q6-14 12 0v26"/><path d="M100 28q10-22 20 0"/><path d="M0 118h220"/></svg>';
+const PDF_FRAME = (p, photo) => { const f = p.gender === "f";
+  const ini = esc(initials(p)), id = "c" + Math.random().toString(36).slice(2, 8);
+  return `<svg class="frame" viewBox="0 0 224 280" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${id}g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F1D88C"/><stop offset=".5" stop-color="#B8862F"/><stop offset="1" stop-color="#E9CB77"/></linearGradient><clipPath id="${id}"><ellipse cx="112" cy="146" rx="84" ry="108"/></clipPath>
+  <radialGradient id="${id}b" cx=".35" cy=".3"><stop offset="0" stop-color="${f ? "#FBE0E4" : "#DCE9F7"}"/><stop offset="1" stop-color="${f ? "#E7A5B2" : "#8DB4DC"}"/></radialGradient></defs>
+  <g fill="none" stroke="url(#${id}g)" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="112" cy="146" rx="101" ry="127" stroke-width="3.2"/><ellipse cx="112" cy="146" rx="94" ry="120" stroke-width="1.1"/>
+  <path d="M112 19c-6-12-22-14-28-4 8-3 14 0 14 7M112 19c6-12 22-14 28-4-8-3-14 0-14 7M112 24c0-9-3-15 0-21 3 6 0 12 0 21" stroke-width="2.2"/>
+  <path d="M112 273c-6 10-22 12-28 3 8 2 14-1 14-7M112 273c6 10 22 12 28 3-8 2-14-1-14-7" stroke-width="2.2"/>
+  <path d="M12 146c-10-14-8-30 4-34M212 146c10-14 8-30-4-34M14 168c-12 6-14 22-2 28M210 168c12 6 14 22 2 28M14 124c-12-4-14-20-2-26M210 124c12-4 14-20 2-26" stroke-width="2"/></g>
+  <g clip-path="url(#${id})">${photo ? `<image href="${esc(photo)}" x="28" y="38" width="168" height="216" preserveAspectRatio="xMidYMid slice"/>` : `<rect x="20" y="30" width="184" height="232" fill="url(#${id}b)"/><text x="112" y="170" text-anchor="middle" font-family="Alegreya,serif" font-weight="800" font-size="74" fill="rgba(255,255,255,.92)">${ini}</text>`}</g></svg>`; };
+const PDF_ORN = '<svg class="orn" viewBox="0 0 176 16" fill="none" stroke="#B8862F" stroke-width="1.2" stroke-linecap="round"><path d="M4 8h62M110 8h62"/><path d="M88 1l6 7-6 7-6-7z" fill="#F5E8C6"/><circle cx="72" cy="8" r="1.8" fill="#B8862F"/><circle cx="104" cy="8" r="1.8" fill="#B8862F"/></svg>';
+const PDF_HEAD = (sub, title) => `<div class="hd"><svg viewBox="0 0 210 38" preserveAspectRatio="none"><defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="#1F6B4E"/><stop offset="1" stop-color="#0F3B2A"/></linearGradient></defs>
+  <path d="M62 0C86 1 92 15 128 19c34 4 62-2 82-9V0z" fill="url(#hg)"/><path d="M62 0C86 1 92 15 128 19c34 4 62-2 82-9" fill="none" stroke="#D9B25E" stroke-width=".7"/><path d="M58 0c24 4 30 19 70 23 34 3 62-3 82-11" fill="none" stroke="#D9B25E" stroke-width=".35" opacity=".7"/></svg>
+  <div class="logo"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M32 58V30M32 44l-9-8M32 40l9-9M32 34l-6-7M32 34l6-7M20 58h24"/><path d="M32 6c-4 4-4 9 0 13 4-4 4-9 0-13zM20 12c-1 5 1 9 6 11 1-5-1-9-6-11zM44 12c1 5-1 9-6 11-1-5 1-9 6-11zM12 24c1 5 4 8 9 8 0-5-4-8-9-8zM52 24c-1 5-4 8-9 8 0-5 4-8 9-8z"/></svg><div><b>Shajara</b><small>${esc(sub)}</small></div></div><div class="ttl">${esc(title)}</div></div>`;
+const PDF_BAND = '<div class="band"><svg viewBox="0 0 210 7" preserveAspectRatio="none"><path d="M0 6.2h210" stroke="#B8862F" stroke-width=".4"/><path d="M0 5.2h210" stroke="#D9B25E" stroke-width=".2"/></svg></div>';
+function pdfPersonPage(p, idx, total, sub){
+  const fx = pdfFacts(p), age = ageOf(p), dead = isDead(p), photo = photoSrc(p);
+  const rel = P(S.meId) ? (S.meId === p.id ? { term:dn("Siz") } : relate(S.meId, p.id)) : null;
+  const rows = [p.birthDate && ["cal", t("bdate"), fmtDate(p.birthDate)], p.birthPlace && ["pin", t("bplace"), dn(p.birthPlace)],
+    dead && ["clock", t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"], !dead && age != null && ["clock", t("age"), age + " " + t("age")],
+    p.burialPlace && ["grave", t("dplace"), dn(p.burialPlace)], p.occupation && ["job", t("job"), dn(p.occupation)]].filter(Boolean);
+  const nm = x => short(x) + (yrs(x) ? ` (${yrs(x)})` : "");
+  const fam = [];
+  if (fx.sps.length) fam.push(["user", t(fx.sps.length > 1 ? "pSpouses" : "pSpouse"), fx.sps.map(nm).join("; ")]);
+  if (fx.par.length) fam.push(["users", t("pParents"), fx.par.map(nm).join("; ")]);
+  if (fx.sib.length) fam.push(["users", t("pSibs"), `${fx.sib.length} ${t("pPpl")}` + (fx.sib.length <= 4 ? " — " + fx.sib.map(first).join(", ") : "")]);
+  if (fx.kids.length) fam.push(["users", t("pKids"), `${fx.kids.length} ${t("pPpl")}` + (fx.m && fx.f ? ` (${fx.m} ${t("pBoys")}, ${fx.f} ${t("pGirls")})` : fx.m ? ` (${fx.m} ${t("pBoys")})` : ` (${fx.f} ${t("pGirls")})`)]);
+  if (fx.gk.length) fam.push(["group", t("pGrand"), `${fx.gk.length} ${t("pPpl")}`]);
+  if (fx.gg.length) fam.push(["group", t("pGreat"), `${fx.gg.length} ${t("pPpl")}`]);
+  const ev = pdfEvents(p, fx);
+  return `<section class="page"><div class="bgp"></div>${PDF_HEAD(sub, t("pTitleP"))}
+  <div class="col-l"><div class="pcard">${PDF_FRAME(p, photo)}<div class="pname">${esc(full(p))}</div><div class="pyr">${esc(yrs(p) || "")}</div>${PDF_ORN}</div>
+    ${p.bio ? `<div class="bio"><h3>${pic("doc", 5.6)}${esc(t("bioT"))}</h3><p>${esc(p.bio)}</p></div>` : ""}</div>
+  <div class="col-r">
+    <div class="sec"><h3><span class="dot">${pic("users", 4.6)}</span>${esc(t("pBasic"))}</h3><div class="box">${REGISTAN}<div class="rows">${rows.length ? rows.map(([ic, l, v]) => `<div class="rw"><span class="ib">${pic(ic, 4.2)}</span><span class="lb">${esc(l)}:</span><span class="vl">${esc(v)}</span></div>`).join("") : `<div class="rw"><span></span><span class="lb">—</span><span></span></div>`}</div></div></div>
+    ${rel ? `<div class="you">${pic("group", 11)}<div><small>${esc(t("forYou"))}</small><b>${esc(dn(rel.term))}</b>${rel.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div></div>` : ""}
+    ${fam.length ? `<div class="sec"><h3><span class="dot">${pic("tree", 4.6)}</span>${esc(t("pFam"))}</h3><div class="box"><div class="ft">${fam.map(([ic, l, v]) => `<div class="fr"><b>${esc(l)}:</b>${pic(ic, 5.4)}<span>${esc(v)}</span></div>`).join("")}</div></div></div>` : ""}
+    ${ev.length > 1 ? `<div class="sec"><h3><span class="dot">${pic("flag", 4.4)}</span>${esc(t("pLife"))}</h3><div class="box life"><div class="tl">${ev.map(e => `<div><b>${e.y}</b><span>${esc(e.a)}</span></div>`).join("")}</div></div></div>` : ""}
+  </div><div class="land"></div>${PDF_BAND}<div class="foot"><span>${esc(sub)}</span><span>${idx} / ${total}</span></div></section>`;
+}
+function famName(list){
+  const c = new Map();
+  for (const p of list){ const ln = (p.lastName || "").trim(); if (!ln) continue; const m = ln.replace(/(ova|eva)$/i, x => x[0] + (x.toLowerCase() === "ova" ? "ov" : "ev")); c.set(m, (c.get(m) || 0) + 1); }
+  const top = [...c].sort((a, b) => b[1] - a[1])[0]; return top ? dn(top[0] + "lar oilasi") : null;
+}
+function pdfBook(list, sub, withCover, roman){
+  const dt = new Date(), ds = `${dt.getDate()}-${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
+  let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
+  const gm = genMap(), pages = [];
+  const extra = withCover ? 1 + Math.ceil(list.length / 52) : 0, total = list.length + extra;
+  if (withCover){
+    pages.push(`<section class="page cv"><svg class="orn-bg" viewBox="0 0 210 297" preserveAspectRatio="xMidYMid slice"><defs><pattern id="op" width="26" height="26" patternUnits="userSpaceOnUse"><g fill="none" stroke="#E5C16C" stroke-width=".35"><rect x="7" y="7" width="12" height="12"/><rect x="7" y="7" width="12" height="12" transform="rotate(45 13 13)"/><circle cx="13" cy="13" r="2.6"/></g></pattern></defs><rect width="210" height="297" fill="url(#op)"/></svg><div class="frm"></div>
+      <div class="mid"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M32 58V30M32 44l-9-8M32 40l9-9M32 34l-6-7M32 34l6-7M20 58h24"/><path d="M32 6c-4 4-4 9 0 13 4-4 4-9 0-13zM20 12c-1 5 1 9 6 11 1-5-1-9-6-11zM44 12c1 5-1 9-6 11-1-5 1-9 6-11zM12 24c1 5 4 8 9 8 0-5-4-8-9-8zM52 24c-1 5-4 8-9 8 0-5 4-8 9-8z"/></svg>
+      <h1>${esc(t("pCoverT"))}</h1><h2>${esc(S.meta.title && dn(S.meta.title) !== t("defTitle") ? dn(S.meta.title) : (famName(list) || sub))}</h2><p>${esc(t("pCoverS"))}</p>
+      <div class="stat"><div><b>${list.length}</b><span>${esc(t("pPersons"))}</span></div><div><b>${g}</b><span>${esc(t("pGens"))}</span></div></div></div><div class="land"></div><div class="date">${esc(t("pBy"))}: ${esc(dn(ds))}</div></section>`);
+    const per = 52; for (let c = 0; c * per < list.length; c++){
+      const chunk = list.slice(c * per, (c + 1) * per);
+      pages.push(`<section class="page ix"><div class="bgp"></div>${PDF_HEAD(sub, t("pBookT"))}<h2 style="top:46mm">${esc(t("pContents"))}</h2><div class="lst" style="top:66mm">${chunk.map((p, i) => `<div class="it lv${Math.min(4, gm.get(p.id) ?? 0)}"><b>${esc(short(p))}</b><i></i><u>${extra + c * per + i + 1}</u></div>`).join("")}</div><div class="land" style="height:46mm"></div>${PDF_BAND}<div class="foot"><span>${esc(sub)}</span><span>${pages.length + 1} / ${total}</span></div></section>`);
+    }
+  }
+  list.forEach((p, i) => pages.push(pdfPersonPage(p, extra + i + 1, total, sub)));
+  return pages;
+}
+function pdfDoc(list, withCover){
+  const sub = S.meta.title ? dn(S.meta.title) : t("defTitle");
+  const pages = pdfBook(list, sub, withCover);
+  return { html:`<!doctype html><html lang="uz"><head><meta charset="utf-8"><title>${esc(sub)}</title><style>${pdfCss()}</style></head><body>${pages.join("")}</body></html>`, n:pages.length, sub };
+}
+async function pdfReady(doc){
+  try { await doc.fonts.ready; } catch(e){}
+  await Promise.all([...doc.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
+  await new Promise(r => setTimeout(r, 120));
+}
+function pdfPrint(frame, name){
+  const old = document.title, win = frame.contentWindow, restore = () => { document.title = old; };
+  document.title = name; try { frame.contentDocument.title = name; } catch(e){}
+  win.onafterprint = restore; setTimeout(restore, 60000); win.focus(); win.print();
+}
+function pdfPane(){
+  const all = [...S.people.values()].sort((a, b) => short(a).localeCompare(short(b)));
+  const def = S.selId && P(S.selId) ? S.selId : (P(S.meId) ? S.meId : (founders()[0]?.id || all[0]?.id));
+  return `<section data-pane="pdf" hidden><div class="ex-grid pdfg"><div style="display:grid;gap:14px;min-width:0;align-content:start">
+    <div class="f-field"><span>${esc(t("pdfScope"))}</span><div class="pill-row" style="flex-direction:column;align-items:stretch">${[["one","pdfOne"],["branch","pdfBranch"],["book","pdfBook"]].map(([k, l], i) => `<label><input type="radio" name="pdfScope" value="${k}"${i === 0 ? " checked" : ""}>${esc(t(l))}</label>`).join("")}</div></div>
+    <label class="f-field" id="pdfWhoW"><span>${esc(t("pdfWho"))}</span><select id="pdfWho">${all.map(p => `<option value="${esc(p.id)}"${p.id === def ? " selected" : ""}>${esc(short(p))}${yrs(p) ? " · " + esc(yrs(p)) : ""}</option>`).join("")}</select></label>
+    <label class="check" id="pdfCoverW"><input type="checkbox" id="pdfCover" checked>${esc(t("pdfCover"))}</label>
+    <div class="actions"><button class="btn gold" id="pdfSave">${esc(t("pdfSave"))}</button></div>
+    <p class="hint" id="pdfMsg">${esc(t("pdfHint"))}</p></div>
+    <div class="preview pdfprev" id="pdfPrev"><iframe id="pdfFrame" title="PDF preview"></iframe></div></div></section>`;
+}
+function pdfWire(m){
+  const frame = $("pdfFrame"); let cur = null;
+  const pick = () => {
+    const scope = m.querySelector("[name=pdfScope]:checked").value, who = $("pdfWho").value;
+    $("pdfWhoW").hidden = scope === "book"; $("pdfCoverW").hidden = scope === "one";
+    const cover = scope !== "one" && $("pdfCover").checked;
+    const list = scope === "one" ? [P(who)].filter(Boolean) : scope === "branch" ? pdfOrder([who]) : pdfOrder(founders().map(f => f.id));
+    const rest = scope === "book" ? [...S.people.values()].filter(p => !list.includes(p)) : []; return { list:[...list, ...rest], cover, scope, who };
+  };
+  const build = async () => {
+    const o = pick(); if (!o.list.length){ $("pdfMsg").textContent = t("noRes"); return; }
+    $("pdfMsg").textContent = t("pdfBuilding");
+    const d = pdfDoc(o.list, o.cover); cur = d; frame.srcdoc = d.html;
+    await new Promise(r => { frame.onload = r; }); await pdfReady(frame.contentDocument);
+    const doc = frame.contentDocument, w = frame.clientWidth - 24, z = Math.min(1, w / (210 / 25.4 * 96));
+    doc.documentElement.style.zoom = z; doc.body.style.padding = "12px 0";
+    $("pdfMsg").textContent = t("pdfPages", { n:d.n }) + " · " + t("pdfHint");
+  };
+  m.querySelectorAll("[name=pdfScope],#pdfWho,#pdfCover").forEach(el => el.onchange = build);
+  $("pdfSave").onclick = async () => { if (!cur) await build(); const name = (o => o.scope === "one" ? short(P(o.who)) : (S.meta.title ? dn(S.meta.title) : t("defTitle")))(pick()); await pdfReady(frame.contentDocument); pdfPrint(frame, "Shajara — " + name); };
+  return build;
+}
+
 /* ---------- Ambient particles (golden motes + drifting leaves) ---------- */
 const FX = (() => {
   const cv = $("fx"), cx = cv.getContext("2d"); let W = 0, H = 0, dpr = 1, ps = [], raf = 0, last = 0;
@@ -1845,7 +2192,7 @@ var renderChrome = function(){
   document.querySelectorAll("[data-t]").forEach(el => el.textContent = t(el.dataset.t));
   document.querySelectorAll("[data-tp]").forEach(el => el.placeholder = t(el.dataset.tp));
   $("scLat").setAttribute("aria-pressed", S.script === "lat"); $("scCyr").setAttribute("aria-pressed", S.script === "cyr");
-  for (const [b, v] of [["vHome","home"],["vTree","tree"],["vFan","fan"],["vList","list"],["vTime","time"],["vMap","map"],["vPhotos","photos"]]) $(b).setAttribute("aria-pressed", S.view === v);
+  for (const [b, v] of [["vHome","home"],["vTree","tree"],["vFan","fan"],["vList","list"],["vTime","time"],["vBday","bday"],["vMap","map"],["vPhotos","photos"]]) $(b).setAttribute("aria-pressed", S.view === v);
   const ttl = S.meta.title ? dn(S.meta.title) : t("defTitle");
   if ($("title")) $("title").textContent = ttl; document.title = ttl;
   const n = S.people.size; let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
@@ -1888,8 +2235,9 @@ function render(fit){
   const plain = PLAIN.has(S.view), lst = $("list");
   $("vp").hidden = plain; lst.hidden = !plain;
   if (S.view !== "time") simStop();
+  if (S.view !== "bday") bdayStop();
   if (S._lastView !== S.view){ S._lastView = S.view; lst.classList.remove("vin"); void lst.offsetWidth; if (plain){ lst.classList.add("vin"); lst.scrollTop = 0; } FX.refill(); }
-  ({ tree:renderTree, fan:renderFan, home:renderHome, list:renderList, time:renderTime, map:renderMap, photos:renderPhotos })[S.view]();
+  ({ tree:renderTree, fan:renderFan, home:renderHome, list:renderList, time:renderTime, map:renderMap, photos:renderPhotos, bday:renderBday })[S.view]();
   if (!plain){
     const key = S.view + ":" + (S.view === "tree" ? S.rootId + (S.paged ? ":p" + S.page : "") : S.focusId);
     if (fit || S.fittedFor !== key){ S.fittedFor = key; requestAnimationFrame(() => PZ.fit()); stageEnter(); }
@@ -1943,12 +2291,16 @@ function renderSheet(){
   const inl = [];
   for (const s of sps) for (const x of [P(s.fatherId), P(s.motherId), ...siblingsOf(s)]) if (x && x.id !== p.id && !inl.includes(x)) inl.push(x);
   const inlLabel = q => { const r = relate(p.id, q.id, "third"); return r ? dn(r.term) : ""; };
+  const kel = [], qud = [];
+  for (const k of ks) for (const sp of spousesOf(k)){ if (!kel.includes(sp)) kel.push(sp); for (const par of [P(sp.fatherId), P(sp.motherId)]) if (par && par.id !== p.id && !qud.includes(par) && !spousesOf(p).includes(par)) qud.push(par); }
   const relTab = `
     ${sps.length ? `<div><p class="sec-t">${esc(t("spouse"))}</p><div class="plist">${sps.map(prow).join("")}</div></div>` : ""}
     ${fa || mo ? `<div><p class="sec-t">${esc(t("parents"))}</p><div class="plist">${[fa, mo].filter(Boolean).map(prow).join("")}</div></div>` : ""}
     ${ks.length ? `<div><p class="sec-t">${esc(t("children"))} (${ks.length})</p>${tiles(ks)}${counts ? `<p class="counts">${esc(counts)}</p>` : ""}</div>` : ""}
     ${sibs.length ? `<div><p class="sec-t">${esc(t("siblings"))} (${sibs.length})</p>${tiles(sibs)}</div>` : ""}
     ${inl.length ? `<div><p class="sec-t">${esc(t("inlaws"))} (${inl.length})</p>${tiles(inl, inlLabel)}</div>` : ""}
+    ${kel.length ? `<div><p class="sec-t">${esc(t("kelin"))} (${kel.length})</p>${tiles(kel, inlLabel)}</div>` : ""}
+    ${qud.length ? `<div><p class="sec-t">${esc(t("qudalar"))} (${qud.length})</p>${tiles(qud, q => { const b = blood(p.id, q.id); return (inlLabel(q) || dn(t("quda"))) + (b ? " · " + dn("qarindosh") : ""); })}</div>` : ""}
     ${!sps.length && !fa && !mo && !ks.length && !sibs.length ? `<p class="note">${esc(t("noRel"))}</p>` : ""}
     <div class="cmp"><p class="sec-t">${esc(t("cmpLbl"))}</p><select class="sel" id="cmpSel" aria-label="${esc(t("cmpLbl"))}"><option value="">${esc(t("none"))}</option>${others.map(q => `<option value="${esc(q.id)}"${q.id === S.cmpId ? " selected" : ""}>${esc(short(q))}</option>`).join("")}</select>
       ${cmpOk ? `<div class="relbox" style="margin-top:10px"><small>${esc(short(P(S.cmpId)))} ${esc(t("cmpFor"))}</small><b>${esc(cmp ? dn(cmp.term) : t("relNone"))}</b>${cmp?.desc ? `<span>${esc(dn(cmp.desc))}</span>` : ""}</div>` : ""}</div>`;
@@ -1961,6 +2313,7 @@ function renderSheet(){
       ${S.meId !== p.id ? `<button class="btn gold" id="isMe">${esc(t("isMe"))}</button>` : `<button class="btn" id="unMe">${esc(t("meClear"))}</button>`}
       <button class="btn" id="goFan">${esc(t(S.view === "fan" ? "showTree" : "showFan"))}</button>
       <button class="btn" id="shareP">${esc(t("shareT"))}</button>
+      <button class="btn" id="pdfP">PDF</button>
       ${S.canEdit ? `<button class="btn primary" id="edit">${esc(t("edit"))}</button>` : ""}
     </div>
     ${S.canEdit ? `<div class="addrow"><span class="lbl">${esc(t("addLbl"))}</span>
@@ -1978,6 +2331,7 @@ function renderSheet(){
   if ($("cmpSel")) $("cmpSel").onchange = e => { S.cmpId = e.target.value || null; renderSheet(); };
   if ($("isMe")) $("isMe").onclick = e => { setMe(p.id); const r = e.currentTarget.getBoundingClientRect(); Confetti.burst(r.left + r.width / 2, r.top + r.height / 2, 80); };
   $("shareP").onclick = () => shareLink(p.id);
+  $("pdfP").onclick = () => { S.selId = p.id; openExport("pdf"); };
   if ($("unMe")) $("unMe").onclick = () => setMe(null);
   $("goFan").onclick = () => {
     if (S.view === "fan"){ S.view = "tree"; S.rootId = topOf(p.id); } else { S.view = "fan"; S.focusId = p.id; }
@@ -1993,20 +2347,20 @@ function renderSheet(){
     try { await removePerson(p.id); S.selId = null; toast(t("deleted")); render(); } catch(e){ toast(t("errSave")); del.disabled = false; }
   };
 }
-function centerId(id){ const e = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]`); if (e) PZ.centerOn(e); }
+function centerId(id){ const e = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]:not(.ghost)`); if (e) PZ.centerOn(e); }
 function select(id, locateIt){
   const wasOpen = !$("sheet").hidden;
   S.selId = id; if (PLAIN.has(S.view)) renderSheet(); else render();
   if (PLAIN.has(S.view)) return;
   if (locateIt) locate(id);
-  else if (!wasOpen && window.innerWidth > 900){ const el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]`); if (el){ const r = el.getBoundingClientRect(), vr = PZ.vp.getBoundingClientRect(); if (r.right > vr.right - PZ.side()) requestAnimationFrame(() => centerId(id)); } }
+  else if (!wasOpen && window.innerWidth > 900){ const el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]:not(.ghost)`); if (el){ const r = el.getBoundingClientRect(), vr = PZ.vp.getBoundingClientRect(); if (r.right > vr.right - PZ.side()) requestAnimationFrame(() => centerId(id)); } }
 }
 function locate(id){
   requestAnimationFrame(() => {
-    let el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]`);
-    if (!el && S.view === "tree" && S.paged){ const pi = pageOfPerson(S._pages || [], id); if (pi >= 0){ S.page = pi; render(true); el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]`); } }
-    if (!el && S.view === "tree"){ S.rootId = topOf(id); render(); el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]`); }
-    if (!el && S.view === "fan"){ S.focusId = id; render(); el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]`); }
+    let el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]:not(.ghost)`);
+    if (!el && S.view === "tree" && S.paged){ const pi = pageOfPerson(S._pages || [], id); if (pi >= 0){ S.page = pi; render(true); el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]:not(.ghost)`); } }
+    if (!el && S.view === "tree"){ S.rootId = topOf(id); render(); el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]:not(.ghost)`); }
+    if (!el && S.view === "fan"){ S.focusId = id; render(); el = PZ.st.querySelector(`[data-id="${CSS.escape(id)}"]:not(.ghost)`); }
     if (el) requestAnimationFrame(() => centerId(id));
   });
 }
@@ -2417,7 +2771,7 @@ function openExport(tab = "poster"){
   const evs = calEvents(), partial = [...S.people.values()].filter(p => { const b = parseDate(p.birthDate); return !(b?.d && b?.m); }).length;
   m.innerHTML = `<div class="form wide" role="dialog" aria-modal="true" aria-labelledby="exH">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:12px"><h2 id="exH">${esc(t("exTitle"))}</h2><button class="icon-btn" id="exClose" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    <div class="tabs" role="tablist">${[["poster","tabPoster"],["cal","tabCal"],["backup","tabBackup"]].map(([k,l]) => `<button role="tab" data-tab="${k}" aria-selected="${tab === k}">${esc(t(l))}</button>`).join("")}</div>
+    <div class="tabs" role="tablist">${[["poster","tabPoster"],["pdf","tabPdf"],["cal","tabCal"],["backup","tabBackup"]].map(([k,l]) => `<button role="tab" data-tab="${k}" aria-selected="${tab === k}">${esc(t(l))}</button>`).join("")}</div>
     <section data-pane="poster"${tab === "poster" ? "" : " hidden"}>
       <div class="ex-grid">
         <div style="display:grid;gap:14px;min-width:0">
@@ -2434,6 +2788,7 @@ function openExport(tab = "poster"){
         <div class="preview" id="pxPrev"><svg class="mark" style="width:72px;height:72px;color:var(--gold)" aria-hidden="true"><use href="#star"/></svg></div>
       </div>
     </section>
+    ${pdfPane()}
     <section data-pane="cal"${tab === "cal" ? "" : " hidden"} style="display:grid;gap:16px">
       <p style="margin:0;max-width:65ch">${esc(t("calIntro"))}</p>
       <p class="note">${esc(t("calCount", { n:evs.length, m:partial }))}</p>
@@ -2451,7 +2806,9 @@ function openExport(tab = "poster"){
   m.hidden = false;
   const close = () => { m.hidden = true; m.innerHTML = ""; if (S._pxUrl){ URL.revokeObjectURL(S._pxUrl); S._pxUrl = null; } };
   $("exClose").onclick = close; m.onclick = e => { if (e.target === m) close(); };
-  m.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { m.querySelectorAll("[data-tab]").forEach(x => x.setAttribute("aria-selected", x === b)); m.querySelectorAll("[data-pane]").forEach(p => p.hidden = p.dataset.pane !== b.dataset.tab); });
+  let pdfBuild = null; const showPdf = () => { if (!pdfBuild) pdfBuild = pdfWire(m); pdfBuild(); };
+  if (tab === "pdf"){ m.querySelector("[data-pane=pdf]").hidden = false; setTimeout(showPdf, 30); }
+  m.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => { m.querySelectorAll("[data-tab]").forEach(x => x.setAttribute("aria-selected", x === b)); m.querySelectorAll("[data-pane]").forEach(p => p.hidden = p.dataset.pane !== b.dataset.tab); if (b.dataset.tab === "pdf") showPdf(); });
   let last = null;
   const optNow = () => ({ rootId:$("pxRoot").value, title:$("pxTitle").value, epigraph:$("pxEpi").value, paper:m.querySelector("[name=pxPaper]:checked").value, theme:m.querySelector("[name=pxTheme]:checked").value, photos:$("pxPhotos").checked });
   const make = async () => {
@@ -2529,6 +2886,8 @@ PZ.st.addEventListener("click", e => {
     else if (act === "add") addRelative(id, "child");
     else if (act === "link") shareLink(id);
     return; }
+  const gh = e.target.closest("[data-ghost]");
+  if (gh){ const id = gh.dataset.ghost; S.selId = id; render(); locate(id); return; }
   const tg = e.target.closest("[data-tog]");
   if (tg){ const id = tg.dataset.tog; S.collapsed.has(id) ? S.collapsed.delete(id) : S.collapsed.add(id); render(true); return; }
   const up = e.target.closest("[data-up]");
@@ -2560,14 +2919,14 @@ document.addEventListener("keydown", e => {
 });
 $("vFan").onclick = () => { if (S.selId) S.focusId = S.selId; setView("fan"); };
 $("vList").onclick = () => setView("list");
-$("vHome").onclick = () => setView("home"); $("vTime").onclick = () => setView("time"); $("vMap").onclick = () => setView("map"); $("vPhotos").onclick = () => setView("photos");
+$("vHome").onclick = () => setView("home"); $("vBday").onclick = () => setView("bday"); $("vTime").onclick = () => setView("time"); $("vMap").onclick = () => setView("map"); $("vPhotos").onclick = () => setView("photos");
 $("scLat").onclick = () => { S.script = "lat"; store.set("shajara.script", "lat"); render(); };
 $("scCyr").onclick = () => { S.script = "cyr"; store.set("shajara.script", "cyr"); render(); };
 $("genSel").onchange = e => { S.maxGen = +e.target.value || 0; store.set("shajara.maxgen", S.maxGen ? String(S.maxGen) : null); S.page = 0; render(true); };
 $("pick").onchange = e => { if (S.view === "tree"){ S.rootId = e.target.value; S.page = 0; } else S.focusId = e.target.value; render(true); };
 $("addBtn").onclick = () => openForm(null, {});
 $("exportBtn").onclick = () => openExport("poster");
-$("todayBtn").onclick = () => setView("home");
+$("todayBtn").onclick = () => setView("bday");
 $("themeBtn").onclick = Theme.toggle; $("shareBtn").onclick = () => shareLink(null);
 $("toTop").onclick = () => $("list").scrollTo({ top:0, behavior:reduceMotion() ? "auto" : "smooth" });
 $("list").addEventListener("scroll", updScroll, { passive:true });
@@ -2591,7 +2950,7 @@ window.addEventListener("resize", () => { clearTimeout(window._rz); window._rz =
 function setMenu(open){ const app = document.querySelector(".app"); app.classList.toggle("menu-open", open); $("scrim").hidden = !open; $("menuBtn").setAttribute("aria-expanded", open); }
 $("menuBtn").onclick = () => setMenu(!document.querySelector(".app").classList.contains("menu-open"));
 $("scrim").onclick = () => setMenu(false);
-["vHome","vTree","vFan","vList","vTime","vMap","vPhotos","exportBtn","todayBtn","meChip"].forEach(id => $(id).addEventListener("click", () => setMenu(false)));
+["vHome","vTree","vFan","vList","vTime","vBday","vMap","vPhotos","exportBtn","todayBtn","meChip"].forEach(id => $(id).addEventListener("click", () => setMenu(false)));
 document.querySelector(".app").addEventListener("wheel", e => { if (e.ctrlKey && !PZ.vp.contains(e.target)) e.preventDefault(); }, { passive:false });
 ["gesturestart", "gesturechange"].forEach(n => document.addEventListener(n, e => { if (e.target.closest && e.target.closest(".app")) e.preventDefault(); }, { passive:false }));
 document.addEventListener("keydown", e => { if ((e.ctrlKey || e.metaKey) && (e.key === "k" || e.key === "K")){ e.preventDefault(); $("q").focus(); } });
@@ -2632,7 +2991,7 @@ renderChrome = function(){ _renderChrome(); renderAuth(); };
 
 /* ================= Boot ================= */
 S.script = store.get("shajara.script") === "cyr" ? "cyr" : "lat";
-S.view = ["home","tree","fan","list","time","map","photos"].includes(store.get("shajara.view")) ? store.get("shajara.view") : "home";
+S.view = ["home","tree","fan","list","time","bday","map","photos"].includes(store.get("shajara.view")) ? store.get("shajara.view") : "home";
 S.paged = store.get("shajara.paged") ? store.get("shajara.paged") === "1" : window.innerWidth < 700; S.page = 0;
 Theme.init(); renderChrome(); FX.start();
 (async () => {
