@@ -1606,7 +1606,7 @@ function evLabel(e){
 }
 function whenLabel(d){ return d === 0 ? t("today") : d === 1 ? t("tomorrow") : t("inDays", { n:d }); }
 /* ================= Pages: home · members · time machine · map · photo archive ================= */
-Object.assign(L, { phone:"Telefon", errPhone:"Telefon raqami noto'g'ri: faqat raqam, +, bo'sh joy va tire yozing.", setPubP:"Telefon raqamlar hammaga ko'rinsin", setPubPh:"O'chiq bo'lsa, telefon raqamlarni faqat siz (egasi) ko'rasiz.", pdfPhoneL:"Telefon raqamlarni ham kiritish", callB:"Qo'ng'iroq", ghostLbl:"Asl o'rni", ghostGo:"Bu inson o'z ota-onasi qatorida ham bor — o'sha joyga o'tish", kelin:"Kelin va kuyovlar", qudalar:"Qudalar", quda:"Quda", themeToDark:"Tungi rejimga o'tish", themeToLight:"Kunduzgi rejimga o'tish", shareT:"Ulashish", shareDone:"Havola nusxalandi", qaFan:"Doirada ko'rish", qaMe:"Bu — men", qaAdd:"Farzand qo'shish", qaLink:"Havolani nusxalash", toTop:"Yuqoriga", stLive:"Tirik", stDead:"Marhum", genLbl2:"Avlodlar", genAll:"Barcha avlod", tgFold:"Shoxni yig'ish", tgOpen:"Shoxni ochish", tgUp:"Ota-onasi tomoni — o'sha oila shajarasini ochish", viewHome:"Bosh sahifa", viewTime:"Tarixiy voqealar", viewMap:"Xarita", viewPhotos:"Fotoarxiv",
+Object.assign(L, { pSibsS:"Aka-uka, opa-singil", pKidsN:"Farzandlari (ismlar)", pMore:"va yana {n} ta", phone:"Telefon", errPhone:"Telefon raqami noto'g'ri: faqat raqam, +, bo'sh joy va tire yozing.", setPubP:"Telefon raqamlar hammaga ko'rinsin", setPubPh:"O'chiq bo'lsa, telefon raqamlarni faqat siz (egasi) ko'rasiz.", pdfPhoneL:"Telefon raqamlarni ham kiritish", callB:"Qo'ng'iroq", ghostLbl:"Asl o'rni", ghostGo:"Bu inson o'z ota-onasi qatorida ham bor — o'sha joyga o'tish", kelin:"Kelin va kuyovlar", qudalar:"Qudalar", quda:"Quda", themeToDark:"Tungi rejimga o'tish", themeToLight:"Kunduzgi rejimga o'tish", shareT:"Ulashish", shareDone:"Havola nusxalandi", qaFan:"Doirada ko'rish", qaMe:"Bu — men", qaAdd:"Farzand qo'shish", qaLink:"Havolani nusxalash", toTop:"Yuqoriga", stLive:"Tirik", stDead:"Marhum", genLbl2:"Avlodlar", genAll:"Barcha avlod", tgFold:"Shoxni yig'ish", tgOpen:"Shoxni ochish", tgUp:"Ota-onasi tomoni — o'sha oila shajarasini ochish", viewHome:"Bosh sahifa", viewTime:"Tarixiy voqealar", viewMap:"Xarita", viewPhotos:"Fotoarxiv",
   heroEyebrow:"Oilaviy meros", heroT1:"Bizning", heroT2:"shajara tariximiz", heroP:"Ajdodlarimizni eslash, o'zligimizni anglash va kelajak avlodlarga meros qoldirish.", heroCta:"Shajara daraxtini ochish",
   hsPhotos:"Suratlar", hsPlaces:"Joylar", recent:"Oila a'zolari", recentSub:"yangi qo'shilganlar", seeAll:"Hammasi",
   fAll:"Hammasi", fM:"Erkaklar", fF:"Ayollar", fLive:"Tirik", fDead:"Marhum", mvCards:"Kartalar", mvTable:"Jadval", noRes:"Hech narsa topilmadi.",
@@ -1999,12 +1999,12 @@ function pdfCss(){ return `
 @font-face{font-family:"Golos Text";font-weight:600;src:url("fonts/golos-600.woff") format("woff")}
 @page{size:A4;margin:0}
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 :root{--g:#12402B;--g2:#1B5A40;--gold:#B8862F;--gold2:#D9B25E;--paper:#FBF6EA;--card:#FFFDF6;--line:#E5D9C0;--ink:#25302A;--mut:#6F7568;--soft:#F5E8C6}
 body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#d9d3c2;font-size:3.5mm;line-height:1.4}
 .page{position:relative;width:210mm;height:297mm;margin:0 auto 8mm;overflow:hidden;background:var(--paper);break-after:page;page-break-after:always;box-shadow:0 6px 30px rgba(0,0,0,.25)}
 .page:last-child{break-after:auto;page-break-after:auto}
-@media print{body{background:none}.page{margin:0;box-shadow:none}html{zoom:1!important}}
+@media print{body{background:none;height:auto!important}.page{margin:0;box-shadow:none}#pv{transform:none!important;margin:0!important;width:auto!important}}
 .ser{font-family:"Alegreya",Georgia,serif}
 .bgp{position:absolute;inset:0;background:linear-gradient(165deg,#FCF7EA 0%,#FAF3E1 55%,#F7EEDA 100%)}
 .hd{position:absolute;left:0;top:0;width:210mm;height:38mm}
@@ -2041,6 +2041,23 @@ body{font-family:"Golos Text",system-ui,sans-serif;color:var(--ink);background:#
 .you small{display:block;font-size:3.2mm;color:#7a5d17;font-weight:600}
 .you b{display:block;font-family:"Alegreya",serif;font-weight:700;font-size:6.6mm;line-height:1.05;color:#1d261f}
 .you span{display:block;font-size:3.2mm;color:#665d3d}
+.fam2{padding:3mm 4mm 2.6mm}
+.tiles2{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2.4mm}
+.tile2{border:.25mm solid #e6dcc0;border-radius:3.2mm;background:linear-gradient(180deg,#FCF7E8,#F7EFD9);padding:2.2mm 2mm;text-align:center;min-width:0}
+.tile2 b{display:block;font-family:"Alegreya",serif;font-weight:800;font-size:7mm;line-height:1;color:var(--g)}
+.tile2 span{display:block;margin-top:.8mm;font-size:3mm;color:#4b564e;line-height:1.2}
+.tile2 small{display:block;margin-top:.5mm;font-size:2.7mm;color:#8a8f84;line-height:1.2}
+.fl-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1.8mm 4mm;margin-top:2.6mm;padding-top:2.4mm;border-top:.2mm solid #ece3cf}
+.tiles2:empty+.fl-wrap{margin-top:0;padding-top:0;border-top:0}
+.fl{min-width:0}.fl.w{grid-column:1/-1}
+.fl label{display:flex;align-items:center;gap:1.3mm;font-size:2.9mm;font-weight:600;color:var(--g);line-height:1.2}
+.fl label .ic{color:#6f8a79}
+.fl .nms{display:block;margin-top:.3mm;font-size:3.4mm;line-height:1.32;color:#1c2820;overflow-wrap:anywhere}
+.page[data-dense="1"] .fam2{padding:2.4mm 3.6mm 2mm}.page[data-dense="1"] .tile2 b{font-size:6mm}.page[data-dense="1"] .fl .nms{font-size:3.15mm}
+.page[data-dense="1"] .rw{padding:.9mm 0}.page[data-dense="1"] .you{padding:2.2mm 5mm}.page[data-dense="1"] .you b{font-size:5.6mm}
+.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .fam2{padding:2mm 3.4mm 1.6mm}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .tile2{padding:1.4mm 1.6mm}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .tile2 b{font-size:5.4mm}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .tile2 small{display:none}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .fl .nms{font-size:2.95mm}
+.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .rw{padding:.7mm 0}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .rw .ib{width:5.8mm;height:5.8mm}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .you{padding:1.8mm 4mm}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .you b{font-size:5mm}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .life{padding:2.6mm 4mm 2.2mm}.page:is([data-dense="2"],[data-dense="3"],[data-dense="4"]) .col-r{gap:2.4mm}
+.page[data-dense="4"] .fl-wrap{margin-top:1.6mm;padding-top:1.4mm}.page[data-dense="4"] .tile2 span{font-size:2.7mm}.page[data-dense="4"] .tl span{font-size:2.8mm}.page[data-dense="4"] .you{display:none}.page[data-dense="4"] .col-r{gap:2mm}
 .ft{padding:1mm 4mm}
 .fr{display:grid;grid-template-columns:34mm 7mm 1fr;gap:2.4mm;align-items:center;padding:1.4mm 0;font-size:3.5mm}
 .fr+.fr{border-top:.2mm solid #ece3cf}
@@ -2108,22 +2125,31 @@ function pdfPersonPage(p, idx, total, sub){
     dead && ["clock", t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"], !dead && age != null && ["clock", t("age"), age + " " + t("age")],
     p.burialPlace && ["grave", t("dplace"), dn(p.burialPlace)], p.occupation && ["job", t("job"), dn(p.occupation)], S._pdfPhone && phoneList(p).length && ["phone", t("phone"), phoneList(p).map(fmtPhone).join(", ")]].filter(Boolean);
   const nm = x => short(x) + (yrs(x) ? ` (${yrs(x)})` : "");
-  const fam = [];
-  if (fx.sps.length) fam.push(["user", t(fx.sps.length > 1 ? "pSpouses" : "pSpouse"), fx.sps.map(nm).join("; ")]);
-  if (fx.par.length) fam.push(["users", t("pParents"), fx.par.map(nm).join("; ")]);
-  if (fx.sib.length) fam.push(["users", t("pSibs"), `${fx.sib.length} ${t("pPpl")}` + (fx.sib.length <= 4 ? " — " + fx.sib.map(first).join(", ") : "")]);
-  { const gs = groupsOf(p.id); if (gs.length) fam.push(["users", t("cDavra"), gs.slice(0, 2).map(g => grpTitle(g) + (g.to ? ` (${g.to})` : "")).join("; ") + (gs.length > 2 ? ` +${gs.length - 2}` : "")]); }
-  if (fx.kids.length) fam.push(["users", t("pKids"), `${fx.kids.length} ${t("pPpl")}` + (fx.m && fx.f ? ` (${fx.m} ${t("pBoys")}, ${fx.f} ${t("pGirls")})` : fx.m ? ` (${fx.m} ${t("pBoys")})` : ` (${fx.f} ${t("pGirls")})`)]);
-  if (fx.gk.length) fam.push(["group", t("pGrand"), `${fx.gk.length} ${t("pPpl")}`]);
-  if (fx.gg.length) fam.push(["group", t("pGreat"), `${fx.gg.length} ${t("pPpl")}`]);
+  /* family block = count tiles (cheap, always fit) + name lines (degrade step by step when the page is full) */
+  const yOf = x => +year(x.birthDate) || 0, fy = x => { const y = yrs(x); return y ? ` (${y})` : ""; };
+  const tiles = [];
+  if (fx.kids.length) tiles.push([fx.kids.length, t("pKids"), fx.m && fx.f ? `${fx.m} ${t("pBoys")} · ${fx.f} ${t("pGirls")}` : fx.m ? `${fx.m} ${t("pBoys")}` : `${fx.f} ${t("pGirls")}`]);
+  if (fx.gk.length) tiles.push([fx.gk.length, t("pGrand"), ""]);
+  if (fx.gg.length) tiles.push([fx.gg.length, t("pGreat"), ""]);
+  if (fx.sib.length) tiles.push([fx.sib.length, t("pSibsS"), ""]);
+  const lines = [];
+  if (fx.sps.length) lines.push(["user", t(fx.sps.length > 1 ? "pSpouses" : "pSpouse"), fx.sps.map(x => short(x) + fy(x)), 1]);
+  if (fx.par.length) lines.push(["users", t("pParents"), fx.par.map(x => short(x) + fy(x)), 1]);
+  if (fx.kids.length) lines.push(["users", t("pKidsN"), fx.kids.map(k => first(k) + (yOf(k) ? ` (${yOf(k)})` : "")), 0]);
+  if (fx.sib.length) lines.push(["users", t("pSibs"), fx.sib.map(x => first(x) + (yOf(x) ? ` (${yOf(x)})` : "")), 0]);
+  { const gs = groupsOf(p.id); if (gs.length) lines.push(["users", t("cDavra"), gs.map(g => grpTitle(g) + (g.to ? ` (${g.to})` : "")), 1]); }
+  const fam = tiles.length || lines.length;
+  const famHtml = !fam ? "" : `<div class="sec"><h3><span class="dot">${pic("tree", 4.6)}</span>${esc(t("pFam"))}</h3><div class="box fam2">
+    ${tiles.length ? `<div class="tiles2">${tiles.map(([n, l, sub]) => `<div class="tile2"><b>${n}</b><span>${esc(l)}</span>${sub ? `<small>${esc(sub)}</small>` : ""}</div>`).join("")}</div>` : ""}
+    ${lines.length ? `<div class="fl-wrap">${lines.map(([ic, l, items, keep]) => `<div class="fl${items.length > 3 || keep ? " w" : ""}" data-keep="${keep}"><label>${pic(ic, 3.4)}${esc(l)}</label><span class="nms" data-n="${esc(JSON.stringify(items))}">${esc(items.slice(0, 10).join(", "))}</span></div>`).join("")}</div>` : ""}</div></div>`;
   const ev = pdfEvents(p, fx);
-  return `<section class="page"><div class="bgp"></div>${PDF_HEAD(sub, t("pTitleP"))}
+  return `<section class="page" data-bio="${esc(p.bio || "")}"><div class="bgp"></div>${PDF_HEAD(sub, t("pTitleP"))}
   <div class="col-l"><div class="pcard">${PDF_FRAME(p, photo)}<div class="pname">${esc(clipTxt(full(p), 70))}</div><div class="pyr">${esc(yrs(p) || "")}</div>${PDF_ORN}</div>
     ${p.bio ? `<div class="bio"><h3>${pic("doc", 5.6)}${esc(t("bioT"))}</h3><p>${esc(clipTxt(p.bio, 430))}</p></div>` : ""}</div>
   <div class="col-r">
     <div class="sec"><h3><span class="dot">${pic("users", 4.6)}</span>${esc(t("pBasic"))}</h3><div class="box">${REGISTAN}<div class="rows">${rows.length ? rows.map(([ic, l, v]) => `<div class="rw"><span class="ib">${pic(ic, 4.2)}</span><span class="lb">${esc(l)}:</span><span class="vl">${esc(v)}</span></div>`).join("") : `<div class="rw" style="grid-template-columns:1fr;color:#6F7568;font-size:3.4mm;padding:3mm 0">${esc(t("pNoData"))}</div>`}</div></div></div>
     ${rel ? `<div class="you">${pic("group", 11)}<div><small>${esc(t("forYou"))}</small><b>${esc(dn(rel.term))}</b>${rel.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div></div>` : ""}
-    ${fam.length ? `<div class="sec"><h3><span class="dot">${pic("tree", 4.6)}</span>${esc(t("pFam"))}</h3><div class="box"><div class="ft">${fam.map(([ic, l, v]) => `<div class="fr"><b>${esc(l)}:</b>${pic(ic, 5.4)}<span>${esc(v)}</span></div>`).join("")}</div></div></div>` : ""}
+    ${famHtml}
     ${ev.length > 1 ? `<div class="sec"><h3><span class="dot">${pic("flag", 4.4)}</span>${esc(t("pLife"))}</h3><div class="box life"><div class="tl">${ev.map(e => `<div><b>${e.y}</b><span>${esc(e.a)}</span></div>`).join("")}</div></div></div>` : ""}
   </div><div class="land"></div>${PDF_BAND}<div class="foot"><span>${esc(sub)}</span><span>${idx} / ${total}</span></div></section>`;
 }
@@ -2153,16 +2179,28 @@ function pdfBook(list, sub, withCover, roman){
 function pdfDoc(list, withCover){
   const sub = S.meta.title ? dn(S.meta.title) : t("defTitle");
   const pages = pdfBook(list, sub, withCover);
-  return { html:`<!doctype html><html lang="uz"><head><meta charset="utf-8"><title>${esc(sub)}</title><style>${pdfCss()}</style></head><body>${pages.join("")}</body></html>`, n:pages.length, sub };
+  return { html:`<!doctype html><html lang="uz"><head><meta charset="utf-8"><title>${esc(sub)}</title><style>${pdfCss()}</style></head><body><div id="pv">${pages.join("")}</div></body></html>`, n:pages.length, sub };
 }
-/* a person with many facts must still fit above the landscape band: shrink the column proportionally (transform, so every renderer agrees) */
+/* A person with many facts must never be cut off. Degrade in steps: 0 normal → 1 tighter → 2–3 compact (fewer names) → 4 minimal (counts only) → last resort: proportional scale. */
+const DENSE_K = [10, 6, 4, 2, 0], DENSE_BIO = [430, 360, 300, 240, 190];
+function pdfDense(page, lvl){
+  page.dataset.dense = lvl;
+  page.querySelectorAll(".nms").forEach(el => {
+    const arr = JSON.parse(el.dataset.n || "[]"), row = el.closest(".fl"), keep = row.dataset.keep === "1";
+    const k = keep ? (lvl < 2 ? 6 : lvl < 4 ? 4 : 2) : DENSE_K[lvl];
+    row.hidden = !keep && k === 0;
+    el.textContent = arr.slice(0, k).join(", ") + (arr.length > k && k > 0 ? " " + t("pMore", { n:arr.length - k }) : "");
+  });
+  const bio = page.querySelector(".bio p"); if (bio){ bio.dataset.full = bio.dataset.full || bio.textContent; bio.textContent = clipTxt(page.dataset.bio || bio.dataset.full, DENSE_BIO[lvl]); }
+}
 function pdfFit(doc){
-  const px = 96 / 25.4, limit = (242 - 42) * px;
-  doc.querySelectorAll(".col-l,.col-r").forEach(col => {
-    if (col.dataset.fit) return; col.dataset.fit = "1"; col.style.transform = ""; col.style.width = "";
-    const h = col.offsetHeight; if (!h || h <= limit) return;
-    const k = Math.max(.72, limit / h), w0 = col.classList.contains("col-r") ? 114 : 66;
-    col.style.width = (w0 / k).toFixed(2) + "mm"; col.style.transform = `scale(${k.toFixed(4)})`;
+  const px = 96 / 25.4, limit = (243 - 42) * px;
+  doc.querySelectorAll(".page").forEach(page => {
+    const cols = [...page.querySelectorAll(".col-l,.col-r")]; if (!cols.length || page.dataset.fit) return; page.dataset.fit = "1";
+    const over = () => cols.some(c => c.offsetHeight > limit + 1);
+    for (let lvl = 0; lvl <= 4; lvl++){ pdfDense(page, lvl); if (!over()) return; }
+    cols.forEach(col => { const h = col.offsetHeight; if (!h || h <= limit) return; const k = Math.max(.72, limit / h), w0 = col.classList.contains("col-r") ? 114 : 66;
+      col.style.width = (w0 / k).toFixed(2) + "mm"; col.style.transform = `scale(${k.toFixed(4)})`; });
   });
 }
 async function pdfReady(doc){
@@ -2227,7 +2265,8 @@ function pdfWire(m){
     await pdfInline(o.list); const d = pdfDoc(o.list, o.cover); cur = d; frame.srcdoc = d.html;
     await new Promise(r => { frame.onload = r; }); await pdfReady(frame.contentDocument);
     const doc = frame.contentDocument, w = frame.clientWidth - 24, z = Math.min(1, w / (210 / 25.4 * 96));
-    doc.documentElement.style.zoom = z; doc.body.style.padding = "12px 0";
+    const pv = doc.getElementById("pv"); pv.style.transformOrigin = "0 0"; pv.style.transform = `scale(${z})`; pv.style.width = "210mm";
+    pv.style.marginLeft = Math.max(0, (frame.clientWidth - 794 * z) / 2) + "px"; pv.style.marginTop = "12px"; doc.body.style.height = (pv.offsetHeight * z + 24) + "px"; doc.body.style.margin = "0";
     $("pdfMsg").textContent = t("pdfPages", { n:d.n }) + " · " + t("pdfHint");
   };
   m.querySelectorAll("[name=pdfScope],#pdfWho,#pdfCover,#pdfPhone").forEach(el => el.onchange = build);
