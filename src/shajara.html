@@ -659,6 +659,16 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 .tl.v{max-width:760px;margin:0}
 .story .bio{font-size:16.5px;line-height:1.7}
 .tel{color:var(--green);font-weight:600;text-decoration:none;border-bottom:1px dotted currentColor}.tel:hover{color:var(--gold)}
+.bd-row{grid-template-columns:26px 54px minmax(0,1fr) auto auto;cursor:pointer}
+.bd-g{white-space:nowrap}
+.bd-who .btn.sm{justify-self:start;margin:2px 0}
+.gr-who{display:flex;gap:14px;align-items:center}.gr-who .av{width:56px;height:56px}
+.gr-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:16px;align-items:start}
+.gr-list{display:grid;gap:6px;max-height:50vh;overflow:auto;padding-right:4px}
+.gr-i{text-align:left;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:8px 12px;font-size:14px;line-height:1.4;color:var(--ink)}
+.gr-i:hover{border-color:var(--gold)}.gr-i.on{border-color:var(--green);background:var(--green-soft);box-shadow:0 0 0 2px color-mix(in srgb,var(--green) 25%,transparent)}
+.gr-ed textarea{min-height:170px;font-size:16px;line-height:1.55}
+.gr-send{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 @keyframes fly{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 120px))}}
 @keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
 
@@ -840,7 +850,8 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
   .pf-hero{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;padding:20px}.portrait.big{width:140px;height:140px}.pf-tags{justify-content:center}.pf-grid{grid-template-columns:minmax(0,1fr)}.pf-tabs{overflow-x:auto;flex-wrap:nowrap}.pf-tabs button{white-space:nowrap}
   .amrow{grid-template-columns:22px minmax(0,1fr) auto}.amrow>span:nth-of-type(1){display:none}
   .bd-hero{grid-template-columns:minmax(0,1fr);padding:18px}.bd-who h2{font-size:26px}.bd-who .av{width:68px;height:68px}.bd-clock{gap:6px}.bd-u{min-width:0;flex:1;padding:10px 4px}.bd-u b{font-size:28px}
-  .bd-row{grid-template-columns:44px minmax(0,1fr) auto;gap:10px;padding:10px 12px}.bd-rk{display:none}.bd-row .av{width:44px;height:44px}.bd-c{min-width:62px}.bd-c b{font-size:22px}
+  .gr-grid{grid-template-columns:minmax(0,1fr)}.gr-list{max-height:28vh}
+  .bd-row{grid-template-columns:44px minmax(0,1fr) auto auto;gap:8px;padding:10px 12px}.bd-g{padding:6px 9px;font-size:13px}.bd-rk{display:none}.bd-row .av{width:44px;height:44px}.bd-c{min-width:62px}.bd-c b{font-size:22px}
   .pdfg{grid-template-columns:minmax(0,1fr)}.pdfprev iframe{height:56vh}
   #themeBtn{margin-left:auto}
   .minimap{display:none}
@@ -1923,12 +1934,14 @@ function renderBday(){
     if (key !== lastKey){ lastKey = key; body += `<h3 class="bd-h reveal">${esc(key === "t" ? t("today") : key === "w" ? t("bdWeek") : capF(monthName(e.date)) + " " + e.date.getFullYear())}</h3>`; }
     const pct = Math.max(4, Math.round((1 - e.diff / 366) * 100)), tone = e.diff === 0 ? "t" : e.diff <= 7 ? "a" : e.diff <= 30 ? "b" : "c";
     const sub = e.dead ? (e.n ? t("bdYears", { n:e.n }) : t("evBirthD")) : (e.n ? t("bdTurns", { n:e.n }) : t("evBirth"));
-    body += `<button class="bd-row reveal ${tone}" data-go="${esc(e.p.id)}"><span class="bd-rk">${i + 1}</span>${avatar(e.p)}
+    const gdone = (e.p.greeted || {})[e.date.getFullYear() - (e.diff > 200 ? 0 : 0)] || (e.p.greeted || {})[new Date().getFullYear()];
+    body += `<div class="bd-row reveal ${tone}" role="button" tabindex="0" data-go="${esc(e.p.id)}"><span class="bd-rk">${i + 1}</span>${avatar(e.p)}
       <span class="bd-w"><b>${esc(short(e.p))}</b><span>${e.date.getDate()}-${esc(monthName(e.date))} · ${esc(sub)}</span><i class="bd-bar"><i style="width:${pct}%"></i></i></span>
-      <span class="bd-c"><b>${e.diff === 0 ? "🎉" : e.diff}</b><small>${esc(e.diff === 0 ? t("today") : e.diff === 1 ? t("bdTomorrow") : t("bdDays"))}</small></span></button>`;
+      ${!e.dead ? `<button class="btn sm ${e.diff <= 7 ? "gold" : ""} bd-g" data-greet="${esc(e.p.id)}">${gdone && e.diff <= 7 ? "✓ " : "🎂 "}${esc(t("grBtn"))}</button>` : ""}
+      <span class="bd-c"><b>${e.diff === 0 ? "🎉" : e.diff}</b><small>${esc(e.diff === 0 ? t("today") : e.diff === 1 ? t("bdTomorrow") : t("bdDays"))}</small></span></div>`;
   });
   const hero = nearest ? `<section class="bd-hero reveal" id="bdHero"><div class="bd-hl"><span class="eyebrow">${esc(t("bdNext"))}</span>
-      <div class="bd-who">${avatar(nearest.p)}<div><h2>${esc(short(nearest.p))}</h2><p>${nearest.date.getDate()}-${esc(monthName(nearest.date))}${nearest.n ? " · " + esc(nearest.dead ? t("bdYears", { n:nearest.n }) : t("bdTurns", { n:nearest.n })) : ""}</p></div></div></div>
+      <div class="bd-who">${avatar(nearest.p)}<div><h2>${esc(short(nearest.p))}</h2>${!nearest.dead ? `<button class="btn gold sm" data-greet="${esc(nearest.p.id)}">🎂 ${esc(t("grBtn"))}</button>` : ""}<p>${nearest.date.getDate()}-${esc(monthName(nearest.date))}${nearest.n ? " · " + esc(nearest.dead ? t("bdYears", { n:nearest.n }) : t("bdTurns", { n:nearest.n })) : ""}</p></div></div></div>
       <div class="bd-clock" id="bdClock" data-t="${nearest.date.getTime()}" aria-live="off">${["bdDays","bdHours","bdMin","bdSec"].map((k, i) => `<div class="bd-u"><b id="bdU${i}">0</b><span>${esc(t(k))}</span></div>`).join("")}</div></section>` : "";
   $("list").innerHTML = `<div class="lv-grid"><section>${hero}
     <div class="lvbar" style="margin-top:6px"><h2 class="lv-h">${esc(t("bdTitle"))} <small>${esc(t("bdSub"))} · ${rows.length}</small></h2></div>
@@ -1941,6 +1954,8 @@ function renderBday(){
   root.querySelectorAll("[data-bk]").forEach(b => b.onclick = () => { S.bdKind = b.dataset.bk; renderBday(); });
   root.querySelectorAll("[data-br]").forEach(b => b.onclick = () => { S.bdRange = +b.dataset.br; renderBday(); });
   root.querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openForm(b.dataset.edit));
+  root.querySelectorAll("[data-greet]").forEach(b => b.onclick = e => { e.stopPropagation(); openGreet(b.dataset.greet); });
+  root.querySelectorAll(".bd-row").forEach(r => r.onkeydown = e => { if ((e.key === "Enter" || e.key === " ") && e.target === r){ e.preventDefault(); select(r.dataset.go, false); } });
   if ($("bdOpen")) $("bdOpen").onclick = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:true }); toast(t("bdOpened")); } catch(e){ toast(t("errSave")); } };
   reveal(root);
   bdayStop(); const clock = $("bdClock");
@@ -2296,7 +2311,7 @@ Object.assign(L, { viewCircles:"Do'stlar davrasi", crTitle:"Do'stlar davrasi", c
   gEdit:"Davrani tahrirlash", gDel:"Davrani o'chirish", gDelC:"Ha, davra o'chirilsin (odamlar qoladi)", gSaved:"Davra saqlandi", gDup:"Shunga o'xshash davra allaqachon bor:", gOpenDup:"Mavjudini ochish", gMakeAnyway:"Baribir yaratish",
   gMembers:"A'zolar", gAddM:"A'zo qo'shish", gAddList:"Ro'yxatdan qo'shish", gEmptyM:"Hali a'zo yo'q.", gRoleMember:"A'zo", gRoleTeacher:"Ustoz / o'qituvchi", gRoleHead:"Sinf rahbari / kurator", gRemove:"Davradan chiqarish", gRel:"qarindosh",
   gSince:"Tugatganiga {n} yil", gSinceL:"yil o'tdi", gReunion:"{n} yillik uchrashuvga {m} yil qoldi", gReunionNow:"Bu yil {n} yillik uchrashuv!", gYears:"{a} – {b}", gYearsFrom:"{a} yildan",
-  amTabE:"Mavjud odam", amTabN:"Yangi odam", amTabL:"Ro'yxatdan", amSearch:"Ism bo'yicha qidiring…", amRole:"Roli", amAdd:"Qo'shish", amNone:"Hech kim topilmadi.", amNew1:"Ism", amNew2:"Familiya", amBirthY:"Tug'ilgan yil", amListHint:"Har qatorga bitta odam. Masalan: «Karimov Aziz, 1990». Raqam va tire ishlamaydi.", amOrderLF:"Familiya Ism", amOrderFL:"Ism Familiya", amParse:"Tekshirish", amListLines:"{n} ta odam topildi", amExists:"bazada bor — ulanadi", amNewTag:"yangi", amSave:"Hammasini saqlash", amAdded:"{n} ta odam qo'shildi", amSkip:"o'tkazib yuborish",
+  amTabE:"Mavjud odam", amTabN:"Yangi odam", amTabL:"Ro'yxatdan", amSearch:"Ism bo'yicha qidiring…", amRole:"Roli", amAdd:"Qo'shish", amNone:"Hech kim topilmadi.", amNew1:"Ism", amNew2:"Familiya", amBirthY:"Tug'ilgan yil", amBirthD:"Tug'ilgan sana (kk.oo.yyyy)", amListHint:"Har qatorga bitta odam. Masalan: «Karimov Aziz, 12.05.1998, +998901234567, @aziz». Sana, telefon va @username ixtiyoriy.", amOrderLF:"Familiya Ism", amOrderFL:"Ism Familiya", amParse:"Tekshirish", amListLines:"{n} ta odam topildi", amExists:"bazada bor — ulanadi", amNewTag:"yangi", amSave:"Hammasini saqlash", amAdded:"{n} ta odam qo'shildi", amSkip:"o'tkazib yuborish",
   tabCirc:"Davra", cDavra:"Davralari", cNone:"Hech qaysi davraga qo'shilmagan.", cAddTo:"Davraga qo'shish", cPick:"— davrani tanlang —", cNewFor:"Yangi davra yaratish", cFriendTag:"Do'st davrasi", cAddFriend:"Do'st / sinfdosh qo'shish", cMates:"Shu davralardagi odamlar",
   setT:"Sozlamalar", setPubB:"Tirik qarindoshlarning tug'ilgan kun va oyi hammaga ko'rinsin", setPubBh:"O'chiq bo'lsa, mehmonlar faqat tug'ilgan yilni ko'radi. Alohida odam uchun kartochkada «Kun va oyini yashirish»ni belgilash mumkin.", setPubC:"Do'stlar davrasi hammaga ko'rinsin", setPubCh:"O'chiq bo'lsa, sinfdosh/kursdoshlar faqat sizga (egasiga) ko'rinadi.", setOn:"Yoqilgan", setSaved:"Sozlama saqlandi", privBirth:"Kun va oyini mehmonlardan yashirish",
   bdFriends:"Do'stlar", bdFill:"Kun va oyini to'ldirish", bdFillSub:"Sanasi to'liq emas — kiriting, hisoblagich ishga tushadi", bdBannerV:"Egasi tirik qarindoshlarning kun va oyini mehmonlardan yashirgan. Ko'ringan sanalar: faqat marhumlar tavalludi.", bdBannerE:"Hozir mehmonlar tirik odamlarning faqat tug'ilgan yilini ko'radi.", bdOpenAll:"Hammaga ochish", bdOpened:"Endi hamma ko'ra oladi",
@@ -2456,16 +2471,23 @@ function parseNames(text, order){
   const out = [];
   for (let raw of String(text).split(/\r?\n/)){
     raw = raw.replace(/^\s*(?:\d+\s*[.)\-:]|[-•*·])\s*/, "").trim(); if (!raw) continue;
-    let yr = ""; const ym = raw.match(/[,;\s]+((?:19|20)\d{2})\s*$/); if (ym){ yr = ym[1]; raw = raw.slice(0, ym.index).trim(); }
-    const tok = raw.split(/[\s,]+/).filter(Boolean); if (!tok.length) continue;
+    let phone = "", tg = "", ig = "", date = "";
+    raw = raw.replace(/\b(?:ig|instagram)\s*[:=]?\s*@?([A-Za-z0-9_.]{2,})/i, (m, u) => { ig = u; return " "; });
+    raw = raw.replace(/\b(?:tg|telegram)\s*[:=]?\s*@?([A-Za-z0-9_.]{2,})/i, (m, u) => { tg = u; return " "; });
+    raw = raw.replace(/@([A-Za-z0-9_.]{3,})/, (m, u) => { if (!tg) tg = u; return " "; });
+    raw = raw.replace(/(\+?\d[\d\s()\-]{7,}\d)/, m => { if (m.replace(/\D/g, "").length >= 9){ phone = m.trim(); return " "; } return m; });
+    raw = raw.replace(/\b(\d{1,2})[./-](\d{1,2})[./-]((?:19|20)\d{2})\b/, (m, d, mo, y) => { date = serDate({ d:+d, m:+mo, y:+y }); return " "; });
+    if (!date) raw = raw.replace(/\b(\d{1,2})[./-](\d{1,2})\b/, (m, d, mo) => { if (+mo >= 1 && +mo <= 12 && +d >= 1 && +d <= 31){ date = serDate({ d:+d, m:+mo }); return " "; } return m; });
+    if (!date){ const ym = raw.match(/[,;\s]+((?:19|20)\d{2})\s*$/); if (ym){ date = ym[1]; raw = raw.slice(0, ym.index); } }
+    const tok = raw.split(/[\s,;]+/).filter(Boolean); if (!tok.length) continue;
     const a = tok[0], b = tok[1] || "", rest = tok.slice(2).join(" ");
     const first = !b ? a : order === "LF" ? b : a, last = !b ? "" : order === "LF" ? a : b;
-    out.push({ first, last, patr:rest, gender: femGuess(last || first, rest) ? "f" : "m", year:yr });
+    out.push({ first, last, patr:rest, gender: femGuess(last || first, rest) ? "f" : "m", date, phone, tg, ig });
   }
   return out;
 }
 function openAddMembers(gid, tab0){
-  const g = S.groups.get(gid); if (!g) return; const m = $("modal"); let tab = tab0 || "e", role = "member", order = "LF", pick = new Set(), rowsL = [];
+  const g = S.groups.get(gid); if (!g) return; const m = $("modal"); m.hidden = false; let tab = tab0 || "e", role = "member", order = "LF", pick = new Set(), rowsL = [];
   const have = () => new Set((S.groups.get(gid)?.members || []).map(x => x.id));
   const roles = `<label class="f-field" style="max-width:260px"><span>${esc(t("amRole"))}</span><select id="amRole">${["member", "teacher", "head"].map(r => `<option value="${r}"${role === r ? " selected" : ""}>${esc(roleLbl(r))}</option>`).join("")}</select></label>`;
   const draw = () => {
@@ -2489,15 +2511,16 @@ function openAddMembers(gid, tab0){
       $("amGo").onclick = async () => { $("amGo").disabled = true; try { const n = await addMembersTo(gid, [...pick], role); toast(t("amAdded", { n })); openGroup(gid); } catch(e){ toast(t("errSave")); $("amGo").disabled = false; } };
       setTimeout(() => $("amQ").focus(), 30);
     } else if (tab === "n"){
-      B.innerHTML = `<div class="grid3"><label class="f-field"><span>${esc(t("amNew1"))} *</span><input id="nF" autocomplete="off"></label><label class="f-field"><span>${esc(t("amNew2"))}</span><input id="nL" autocomplete="off"></label><label class="f-field"><span>${esc(t("amBirthY"))}</span><input id="nY" inputmode="numeric" maxlength="4"></label></div>
+      B.innerHTML = `<div class="grid3"><label class="f-field"><span>${esc(t("amNew1"))} *</span><input id="nF" autocomplete="off"></label><label class="f-field"><span>${esc(t("amNew2"))}</span><input id="nL" autocomplete="off"></label><label class="f-field"><span>${esc(t("amBirthD"))}</span><input id="nD" inputmode="numeric" placeholder="12.05.1998" maxlength="10"></label>
+          <label class="f-field"><span>${esc(t("phone"))}</span><input id="nP" type="tel" inputmode="tel" placeholder="+998 90 123 45 67"></label><label class="f-field"><span>${esc(t("tgL"))}</span><input id="nT" placeholder="@username"></label><label class="f-field"><span>${esc(t("igL"))}</span><input id="nI" placeholder="@username"></label></div>
         <div class="seg" role="group"><button type="button" id="nGm" aria-pressed="true">${esc(t("male"))}</button><button type="button" id="nGf" aria-pressed="false">${esc(t("female"))}</button></div><p class="err" id="nE" hidden></p>
         <div class="actions"><button class="btn gold" id="nGo">${esc(t("amAdd"))}</button></div>`;
       let gen = "m"; $("nGm").onclick = () => { gen = "m"; $("nGm").setAttribute("aria-pressed", true); $("nGf").setAttribute("aria-pressed", false); }; $("nGf").onclick = () => { gen = "f"; $("nGf").setAttribute("aria-pressed", true); $("nGm").setAttribute("aria-pressed", false); };
       $("nL").oninput = () => { if (femGuess($("nL").value)){ $("nGf").click(); } };
       $("nGo").onclick = async () => { const fn = $("nF").value.trim(); if (!fn){ $("nE").textContent = t("errName"); $("nE").hidden = false; return; }
-        const y = $("nY").value.trim(); if (y && !/^\d{4}$/.test(y)){ $("nE").textContent = t("errYear"); $("nE").hidden = false; return; }
+        const dv = $("nD").value.trim(), po = dv ? parseDate(dv) : null; if (dv && !po){ $("nE").textContent = t("errDate"); $("nE").hidden = false; return; }
         $("nGo").disabled = true;
-        try { const id = newId("people"); await S.db.collection("people").doc(id).set(circleData({ first:fn, last:$("nL").value.trim(), gender:gen, year:y })); await addMembersTo(gid, [id], role); toast(t("saved")); openGroup(gid); } catch(e){ $("nE").textContent = t("errSave"); $("nE").hidden = false; $("nGo").disabled = false; } };
+        try { const id = newId("people"); await S.db.collection("people").doc(id).set(circleData({ first:fn, last:$("nL").value.trim(), gender:gen, date:serDate(po), phone:$("nP").value.trim(), tg:$("nT").value.trim(), ig:$("nI").value.trim() })); await addMembersTo(gid, [id], role); toast(t("saved")); openGroup(gid); } catch(e){ $("nE").textContent = t("errSave"); $("nE").hidden = false; $("nGo").disabled = false; } };
       setTimeout(() => $("nF").focus(), 30);
     } else {
       B.innerHTML = `<p class="hint">${esc(t("amListHint"))}</p><div class="seg" role="group" style="margin:6px 0"><button type="button" data-o="LF" aria-pressed="${order === "LF"}">${esc(t("amOrderLF"))}</button><button type="button" data-o="FL" aria-pressed="${order === "FL"}">${esc(t("amOrderFL"))}</button></div>
@@ -2507,19 +2530,19 @@ function openAddMembers(gid, tab0){
       const matchRows = () => { for (const r of rowsL){ const key = norm(r.first + " " + r.last), key2 = norm(r.last + " " + r.first); r.match = [...S.people.values()].find(p => { const a = norm((p.firstName || "") + " " + (p.lastName || "")); return a === key || a === key2; }) || null; } };
       const preview = () => { matchRows();
         $("amPrev").innerHTML = rowsL.length ? `<h3 class="sec-t" style="margin:10px 0 6px">${esc(t("amListLines", { n:rowsL.length }))}</h3><div class="amtb">${rowsL.map((r, i) => `<div class="amrow${r.skip ? " off" : ""}"><input type="checkbox" data-i="${i}" ${r.skip ? "" : "checked"} aria-label="${esc(t("amAdd"))}">
-          <b>${esc(r.last)} ${esc(r.first)}${r.patr ? " " + esc(r.patr) : ""}</b><span>${r.year || ""}</span>
+          <b>${esc(r.last)} ${esc(r.first)}${r.patr ? " " + esc(r.patr) : ""}</b><span>${esc(r.date ? fmtDate(r.date) : "")}${r.phone || r.tg || r.ig ? " · 📇" : ""}</span>
           ${r.match ? `<em class="ex">${esc(t("amExists"))}: ${esc(short(r.match))}</em>` : `<span class="seg sm"><button type="button" data-g="${i}:m" aria-pressed="${r.gender === "m"}">${esc(t("male"))}</button><button type="button" data-g="${i}:f" aria-pressed="${r.gender === "f"}">${esc(t("female"))}</button></span>`}</div>`).join("")}</div>
           <div class="actions" style="margin-top:12px"><button class="btn gold" id="amSaveL">${esc(t("amSave"))}</button></div>` : `<p class="note">${esc(t("amNone"))}</p>`;
         $("amPrev").querySelectorAll("[data-i]").forEach(c => c.onchange = () => { rowsL[+c.dataset.i].skip = !c.checked; c.closest(".amrow").classList.toggle("off", !c.checked); });
         $("amPrev").querySelectorAll("[data-g]").forEach(b => b.onclick = () => { const [i, v] = b.dataset.g.split(":"); rowsL[+i].gender = v; b.parentElement.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); });
         if ($("amSaveL")) $("amSaveL").onclick = async () => { $("amSaveL").disabled = true; try { const ids = []; let made = 0;
-            for (const r of rowsL){ if (r.skip) continue; if (r.match){ ids.push(r.match.id); continue; } const id = newId("people"); await S.db.collection("people").doc(id).set(circleData({ first:r.first, last:r.last, patr:r.patr, gender:r.gender, year:r.year })); ids.push(id); made++; }
+            for (const r of rowsL){ if (r.skip) continue; if (r.match){ ids.push(r.match.id); continue; } const id = newId("people"); await S.db.collection("people").doc(id).set(circleData(r)); ids.push(id); made++; }
             await addMembersTo(gid, ids, role); toast(t("amAdded", { n:ids.length })); openGroup(gid); } catch(e){ toast(t("errSave")); $("amSaveL").disabled = false; } }; };
     }
   };
   draw();
 }
-const circleData = ({ first, last, patr, gender, year }) => ({ firstName:first, lastName:last || "", patronymic:patr || "", gender:gender || "m", birthDate:year || "", birthPlace:"", deathDate:"", deceased:false, burialPlace:"", occupation:"", bio:"", photo:null, photoId:null, fatherId:null, motherId:null, spouses:[], circle:true, createdAt:Date.now() });
+const circleData = ({ first, last, patr, gender, date, phone, tg, ig }) => ({ firstName:first, lastName:last || "", patronymic:patr || "", gender:gender || "m", birthDate:date || "", phone:phone || "", tg:tg || "", ig:ig || "", birthPlace:"", deathDate:"", deceased:false, burialPlace:"", occupation:"", bio:"", photo:null, photoId:null, fatherId:null, motherId:null, spouses:[], circle:true, createdAt:Date.now() });
 
 /* ---------- Sheet: "Davra" tab ---------- */
 function circTabHtml(p){
@@ -2566,7 +2589,7 @@ function renderProfile(){
   if (!tabs.some(x => x[0] === S.ptab)) S.ptab = "info";
   const facts = [p.birthDate && [ICON.cal, t("bdate"), fmtDate(p.birthDate)], p.birthPlace && [ICON.pin, t("bplace"), dn(p.birthPlace)],
     dead && [ICON.clock, t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"], !dead && age != null && [ICON.clock, t("age"), age + " " + t("age")],
-    p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)], p.occupation && [ICON.job, t("job"), dn(p.occupation)], phoneList(p).length && [ICON.phone, t("phone"), phoneHtml(p)]].filter(Boolean);
+    p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)], p.occupation && [ICON.job, t("job"), dn(p.occupation)], phoneList(p).length && [ICON.phone, t("phone"), phoneHtml(p)], p.tg && [ICON.chat, t("tgL"), { html:`<a class="tel" href="https://t.me/${esc(tgUser(p.tg))}" target="_blank" rel="noopener">@${esc(tgUser(p.tg))}</a>` }], p.ig && [ICON.chat, t("igL"), { html:`<a class="tel" href="https://instagram.com/${esc(igUser(p.ig))}" target="_blank" rel="noopener">@${esc(igUser(p.ig))}</a>` }]].filter(Boolean);
   const lab = q => { const r = relate(p.id, q.id, "third"); return r ? dn(r.term) : ""; };
   let pane = "";
   if (S.ptab === "info"){
@@ -2592,7 +2615,7 @@ function renderProfile(){
   } else pane = `<div class="pf-circ">${circTabHtml(p)}</div>`;
   const tags = [circ ? t("cFriendTag") : (p.gender === "f" ? t("female") : t("male")), g0 != null && !circ ? genLbl(g0) : "", p.occupation ? dn(p.occupation) : "", dead ? t("stDead") : t("stLive")].filter(Boolean);
   $("list").innerHTML = `<div class="prof"><div class="pf-bar"><button class="btn sm" id="pfBack">← ${esc(t("profBack"))}</button><span class="tb-spacer"></span>
-      ${phoneList(p).length ? `<a class="btn sm" href="${esc(telHref(phoneList(p)[0]))}">📞 ${esc(t("callB"))}</a>` : ""}<button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${S.canEdit ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
+      ${phoneList(p).length ? `<a class="btn sm" href="${esc(telHref(phoneList(p)[0]))}">📞 ${esc(t("callB"))}</a>` : ""}${!dead ? `<button class="btn sm" id="pfGr">🎂 ${esc(t("grBtn"))}</button>` : ""}<button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${S.canEdit ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
     <section class="pf-hero reveal"><div class="portrait big">${avatar(p)}</div><div class="pf-id"><h1>${esc(full(p))}</h1><div class="psub">${esc(yrs(p))}${age != null && !dead ? ` · ${age} ${esc(t("age"))}` : ""}</div>
       <div class="pf-tags">${tags.map(x => `<i class="ptag">${esc(x)}</i>`).join("")}</div>${quote ? `<blockquote>“${esc(quote)}”</blockquote>` : ""}</div></section>
     <div class="stabs pf-tabs" role="tablist">${tabs.map(([k, l]) => `<button role="tab" data-pt="${k}" aria-selected="${S.ptab === k}">${esc(t(l))}</button>`).join("")}</div>
@@ -2601,12 +2624,91 @@ function renderProfile(){
   root.querySelectorAll("[data-pt]").forEach(b => b.onclick = () => { S.ptab = b.dataset.pt; renderProfile(); });
   root.querySelectorAll(".tl-card[data-g]").forEach(b => b.onclick = () => openGroup(b.dataset.g));
   $("pfBack").onclick = () => { S.selId = p.id; setView(S.prevView && S.prevView !== "profile" ? S.prevView : "home"); };
+  if ($("pfGr")) $("pfGr").onclick = () => openGreet(p.id);
   $("pfShare").onclick = () => shareLink(p.id); $("pfPdf").onclick = () => { S.selId = p.id; openExport("pdf"); };
   if ($("pfTree")) $("pfTree").onclick = () => { S.selId = p.id; S.rootId = topOf(p.id); setView("tree"); };
   if ($("pfEdit")) $("pfEdit").onclick = () => openForm(p.id);
   reveal(root);
 }
 function openProfile(id){ S.selId = null; S.profId = id; S.ptab = "info"; if (S.view !== "profile") S.prevView = S.view; S.view = "profile"; render(true); }
+
+
+/* ================= Greetings: 30 templates, Telegram / Instagram / SMS / WhatsApp ================= */
+Object.assign(L, { grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
+  grTg:"Telegram", grIg:"Instagram", grSms:"SMS", grWa:"WhatsApp", grCopy:"Nusxalash", grCopied:"Matn nusxalandi", grPasteTg:"Matn nusxalandi — Telegram chatiga yopishtiring", grPasteIg:"Matn nusxalandi — Instagram chatiga yopishtiring",
+  grDone:"Tabriklandi", grDoneL:"Tabriklangan sana belgilandi", grNoContact:"Aloqa ma'lumoti yo'q — avval telefon, Telegram yoki Instagram kiriting.", grMark:"Tabriklandi deb belgilash", grBtn:"Tabriklash", grToday:"Bugun tug'ilgan kun", tgL:"Telegram", igL:"Instagram", tgPh:"@username yoki telefon", igPh:"@username" });
+const GREET = [
+  ["f","Hurmatli {ism}! Tavallud kuningiz muborak bo'lsin. Sizga mustahkam sog'liq, oilaviy baxt va ishlaringizda doimiy muvaffaqiyat tilayman."],
+  ["f","Aziz {ism}, tug'ilgan kuningiz bilan chin qalbimdan tabriklayman! Hayotingiz ezgu ishlar va yorqin zafarlarga boy bo'lsin."],
+  ["f","Hurmatli {ism}, sizni tug'ilgan kuningiz bilan samimiy tabriklayman. Har bir kuningiz xursandchilik va barakaga to'la bo'lsin!"],
+  ["f","{ism}, bu qutlug' kun muborak! Sizga uzoq umr, sog'lom tan va maqsadlaringizga erishish nasib etsin."],
+  ["f","Hurmat bilan tabriklayman, {ism}! Yangi yoshingiz sizga yangi imkoniyatlar, tinchlik va farovonlik olib kelsin."],
+  ["f","Tavallud ayyomingiz muborak, {ism}! Orzu-niyatlaringiz ushalsin, yaqinlaringiz doim yoningizda bo'lsin."],
+  ["f","Aziz {ism}! Bu muborak kunda sizga ko'ngil xotirjamligi, rizq-nasiba butunligi va omad tilayman. Tug'ilgan kuningiz muborak!"],
+  ["w","{ism}, tug'ilgan kuningiz bilan! Maktab/universitet yillarimiz yodimda — sizdek do'stim borligidan faxrlanaman. Doim baxtli bo'ling!"],
+  ["w","Salom, {ism}! Tug'ilgan kuning muborak bo'lsin, do'stim! Sog'lik, baxt va ko'ngildagidek hayot tilayman."],
+  ["w","{ism}, tug'ilgan kuning bilan chin dildan tabriklayman! Yoshing qancha bo'lsa ham, qalbing yosh bo'lib qolsin."],
+  ["w","Qadrdonim {ism}, bugun sening kuning! Hamma orzularing ushalsin, yonimda doim shunday ochiq yuzli odam bo'lib qol."],
+  ["w","Tug'ilgan kun muborak, {ism}! Birga o'tgan kunlarimiz uchun rahmat. Yangi yoshingda yana ko'proq quvonch ko'r!"],
+  ["w","{ism}, tabriklayman! Senga sog'lik, oilangga baraka, yo'llaringga ochiqlik tilayman. Ko'rishguncha omon bo'l!"],
+  ["w","Aziz do'stim {ism}, tavallud kuning muborak! Bu yil senga o'zgacha omad va quvonchli yangiliklar keltirsin."],
+  ["w","{ism}, bugun eng yaxshi tilaklar faqat sen uchun! Tug'ilgan kuning bilan, sinfdoshim/kursdoshim. Hech qachon charchama!"],
+  ["w","Tug'ilgan kuning muborak bo'lsin, {ism}! Yuragingda doim shodlik, uyingda esa tinchlik va to'kinlik bo'lsin."],
+  ["w","{ism}, yangi yosh — yangi cho'qqilar demak! Tug'ilgan kuning bilan, do'stim. Orzularingga qanot bo'lsin!"],
+  ["h","{ism}, tug'ilgan kuning bilan! Yosh ulg'ayyapti, lekin aql ham ortyapti degan umiddaman 😄 Sog'-salomat bo'l!"],
+  ["h","Tabriklayman, {ism}! Bugun tort ham, sovg'a ham sening hisobingdan emas — yeb-ichib, xursand bo'l 🎂"],
+  ["h","{ism}, yoshing o'tdi deb xafa bo'lma — asal kabi, yillar o'tgan sari qadring ortyapti 🍯 Tug'ilgan kuning muborak!"],
+  ["h","Tug'ilgan kuning muborak, {ism}! Shamlar ko'p bo'lsa ham, sening nurlaring ko'proq 🔥 Omading chopsin!"],
+  ["h","{ism}, bugun rasman «bahona» kuning: istagan narsangni so'rashing mumkin! Tug'ilgan kuning bilan 🎉"],
+  ["p","Tug'ilgan kun — yangi umid, yangi orzu,\nSog'lik, baxt va omad bo'lsin sizga, {ism}, doim to'la.\nTug'ilgan kuningiz muborak!"],
+  ["p","Quyosh kabi porla, yulduzdek yon,\nDaryo kabi to'lib, hayotda oqib o't.\nTavallud kuning muborak, {ism}!"],
+  ["p","Sog'lik bo'lsin, baxtu iqbol bo'lsin,\nUyinga hamisha tinchlik, baraka to'lsin.\nTug'ilgan kun muborak, aziz {ism}!"],
+  ["p","Yil o'tar, kunlar o'tar, mehr qolar,\nDo'stlik — eng aziz boylik, bu yodda qolar.\nSeni tug'ilgan kuning bilan tabriklayman, {ism}!"],
+  ["p","Gullar ochilsin yo'llaringda har bahor,\nOrzularing bo'lsin oltin kabi benuqson.\nTug'ilgan kuning muborak, {ism}!"],
+  ["p","Ona zamin kabi bag'ri keng bo'lsin,\nKo'ngling doim chiroyli va bahor bo'lsin.\nTavallud kuning bilan, {ism}!"],
+  ["f","{ism}, bugun siz uchun alohida kun! Tug'ilgan kuningiz bilan chin yurakdan tabriklayman, ezgu tilaklarim sizga hamroh bo'lsin."],
+  ["w","{ism}, {yosh} yoshing muborak bo'lsin! Sog'lik, omad va quvonch hamisha yoningda bo'lsin!"]
+];
+const GTONES = [["a", "grAll"], ["f", "grFormal"], ["w", "grWarm"], ["h", "grFun"], ["p", "grPoem"]];
+const hasAgeTok = x => x.includes("{yosh}");
+function fillGreet(tpl, p){ const age = ageAt(p); return dn(tpl.replace(/\{ism\}/g, first(p)).replace(/\{yosh\}/g, age != null ? String(age) : "")); }
+function ageAt(p){ const b = parseDate(p.birthDate); if (!b?.y) return null; const now = new Date(), cy = now.getFullYear(); let n = cy - b.y; if (b.m && b.d && new Date(cy, b.m - 1, b.d) < new Date(now.getFullYear(), now.getMonth(), now.getDate())) n += 1; return n; }
+const igUser = v => String(v || "").trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/^@/, "").replace(/[/?#].*$/, "");
+const tgUser = v => String(v || "").trim().replace(/^https?:\/\/(t|telegram)\.me\//i, "").replace(/^@/, "").replace(/[/?#].*$/, "");
+const isIOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
+async function copyText(x){ try { await navigator.clipboard.writeText(x); return true; } catch(e){ const ta = document.createElement("textarea"); ta.value = x; ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand("copy"); } catch(_){} ta.remove(); return ok; } }
+function openGreet(pid){
+  const p = P(pid); if (!p) return; const m = $("modal"), ages = ageAt(p), ph = phoneList(p)[0] || "", tg = tgUser(p.tg), ig = igUser(p.ig);
+  let tone = store.get("shajara.gtone") || "a", idx = -1, text = "", touched = false;
+  const list = () => GREET.map((g, i) => ({ g, i })).filter(({ g }) => (tone === "a" || g[0] === tone) && (ages != null || !hasAgeTok(g[1])));
+  const mark = async ch => { const y = String(new Date().getFullYear()); try { await S.db.collection("people").doc(pid).update({ greeted:{ ...(p.greeted || {}), [y]:ch } }); } catch(e){} };
+  const draw = () => {
+    const items = list(); if (idx < 0 || !items.some(x => x.i === idx)) idx = items.length ? items[Math.floor(Math.random() * items.length)].i : -1;
+    if (idx >= 0 && !touched) text = fillGreet(GREET[idx][1], p);
+    m.innerHTML = `<div class="form wide gr" role="dialog" aria-modal="true"><div class="gh-top"><div class="gr-who">${avatar(p)}<div><h2>${esc(t("grTitle"))}: ${esc(short(p))}</h2><p class="note">${esc(fmtDate(p.birthDate))}${ages != null ? " · " + esc(t("bdTurns", { n:ages })) : ""}</p></div></div><button class="icon-btn" id="grX" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+      <div class="chips">${GTONES.map(([k, l]) => `<button class="chipb sm" data-tone="${k}" aria-pressed="${tone === k}">${esc(t(l))}</button>`).join("")}<button class="chipb sm" id="grRnd">🎲 ${esc(t("grRandom"))}</button></div>
+      <div class="gr-grid"><div class="gr-list">${items.map(({ g, i }) => `<button class="gr-i${i === idx ? " on" : ""}" data-i="${i}">${esc(fillGreet(g[1], p).replace(/\n/g, " ").slice(0, 120))}</button>`).join("")}</div>
+      <div class="gr-ed"><label class="f-field"><span>${esc(t("grText"))}</span><textarea id="grT">${esc(text)}</textarea></label>
+        <div class="gr-send">${tg || ph ? `<button class="btn gold" data-ch="tg">${esc(t("grTg"))}</button>` : `<button class="btn" data-ch="tg" title="${esc(t("tgPh"))}">${esc(t("grTg"))}</button>`}
+          <button class="btn" data-ch="ig"${ig ? "" : " disabled"}>${esc(t("grIg"))}</button><button class="btn" data-ch="sms"${ph ? "" : " disabled"}>${esc(t("grSms"))}</button><button class="btn" data-ch="wa"${ph ? "" : " disabled"}>${esc(t("grWa"))}</button><button class="btn" data-ch="copy">${esc(t("grCopy"))}</button></div>
+        ${!tg && !ph && !ig ? `<p class="hint">${esc(t("grNoContact"))}</p>` : ""}${(p.greeted || {})[new Date().getFullYear()] ? `<p class="note">✓ ${esc(t("grDone"))}: ${esc((p.greeted || {})[new Date().getFullYear()])}</p>` : ""}</div></div></div>`;
+    $("grX").onclick = () => { m.hidden = true; m.innerHTML = ""; }; m.onclick = e => { if (e.target === m){ m.hidden = true; m.innerHTML = ""; } };
+    m.querySelectorAll("[data-tone]").forEach(b => b.onclick = () => { tone = b.dataset.tone; store.set("shajara.gtone", tone); idx = -1; text = ""; touched = false; draw(); });
+    $("grRnd").onclick = () => { const it = list(); idx = it[Math.floor(Math.random() * it.length)]?.i ?? -1; text = ""; touched = false; draw(); };
+    m.querySelectorAll("[data-i]").forEach(b => b.onclick = () => { idx = +b.dataset.i; text = ""; touched = false; draw(); });
+    $("grT").oninput = e => { text = e.target.value; touched = true; };
+    m.querySelectorAll("[data-ch]").forEach(b => b.onclick = async () => {
+      const msg = $("grT").value.trim(), enc = encodeURIComponent(msg), ch = b.dataset.ch, num = ph ? telHref(ph).slice(4) : "";
+      if (!msg) return;
+      if (ch === "copy"){ if (await copyText(msg)) toast(t("grCopied")); return; }
+      if (ch === "sms"){ location.href = `sms:${num}${isIOS() ? "&" : "?"}body=${enc}`; await mark("sms"); }
+      else if (ch === "wa"){ window.open(`https://wa.me/${num.replace(/\D/g, "")}?text=${enc}`, "_blank", "noopener"); await mark("whatsapp"); }
+      else if (ch === "tg"){ await copyText(msg); toast(t("grPasteTg")); window.open(tg ? `https://t.me/${tg}` : ph ? `https://t.me/${num.startsWith("+") ? num : "+" + num}` : `https://t.me/share/url?url=%20&text=${enc}`, "_blank", "noopener"); await mark("telegram"); }
+      else if (ch === "ig"){ await copyText(msg); toast(t("grPasteIg")); window.open(`https://ig.me/m/${ig}`, "_blank", "noopener"); await mark("instagram"); }
+    });
+  };
+  m.hidden = false; draw();
+}
 
 /* ---------- Ambient particles (golden motes + drifting leaves) ---------- */
 const FX = (() => {
@@ -2709,6 +2811,7 @@ function setMe(id){
   render();
 }
 const ICON = {
+  chat:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg>',
   phone:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>',
   cal:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
   pin:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.4"/></svg>',
@@ -2734,7 +2837,7 @@ function renderSheet(){
     isDead(p) && [ICON.clock, t("ddate"), p.deathDate ? fmtDate(p.deathDate) + (age != null ? ` (${age} ${t("age")})` : "") : "†"],
     p.burialPlace && [ICON.pin, t("dplace"), dn(p.burialPlace)],
     p.occupation && [ICON.job, t("job"), dn(p.occupation)],
-    phoneList(p).length && [ICON.phone, t("phone"), phoneHtml(p)]
+    phoneList(p).length && [ICON.phone, t("phone"), phoneHtml(p)], p.tg && [ICON.chat, t("tgL"), { html:`<a class="tel" href="https://t.me/${esc(tgUser(p.tg))}" target="_blank" rel="noopener">@${esc(tgUser(p.tg))}</a>` }], p.ig && [ICON.chat, t("igL"), { html:`<a class="tel" href="https://instagram.com/${esc(igUser(p.ig))}" target="_blank" rel="noopener">@${esc(igUser(p.ig))}</a>` }]
   ].filter(Boolean);
   const relBoxF = hasMe ? (S.meId === p.id ? `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(dn("Siz"))}</b></div>`
       : `<div class="relbox"><small>${esc(t("forYou"))}</small><b>${esc(rel ? dn(rel.term) : t("relNone"))}</b>${rel?.desc ? `<span>${esc(dn(rel.desc))}</span>` : ""}</div>`)
@@ -2774,6 +2877,7 @@ function renderSheet(){
       ${isC ? "" : S.meId !== p.id ? `<button class="btn gold" id="isMe">${esc(t("isMe"))}</button>` : `<button class="btn" id="unMe">${esc(t("meClear"))}</button>`}
       ${isC ? "" : `<button class="btn" id="goFan">${esc(t(S.view === "fan" ? "showTree" : "showFan"))}</button>`}
       <button class="btn" id="profP">${esc(t("profFull"))}</button>
+      ${!isDead(p) ? `<button class="btn" id="grP">🎂 ${esc(t("grBtn"))}</button>` : ""}
       <button class="btn" id="shareP">${esc(t("shareT"))}</button>
       ${isC ? "" : `<button class="btn" id="pdfP">PDF</button>`}
       ${S.canEdit ? `<button class="btn primary" id="edit">${esc(t("edit"))}</button>` : ""}
@@ -2795,6 +2899,7 @@ function renderSheet(){
   $("profP").onclick = () => openProfile(p.id);
   if ($("isMe")) $("isMe").onclick = e => { setMe(p.id); const r = e.currentTarget.getBoundingClientRect(); Confetti.burst(r.left + r.width / 2, r.top + r.height / 2, 80); };
   $("shareP").onclick = () => shareLink(p.id);
+  if ($("grP")) $("grP").onclick = () => openGreet(p.id);
   if ($("pdfP")) $("pdfP").onclick = () => { S.selId = p.id; openExport("pdf"); };
   if ($("unMe")) $("unMe").onclick = () => setMe(null);
   if ($("goFan")) $("goFan").onclick = () => {
@@ -2936,10 +3041,12 @@ function openForm(id, preset = {}){
       <div class="f-field"><span>${esc(t("gender"))}</span><div class="seg" role="group" style="justify-self:start"><button type="button" id="gM" aria-pressed="${d.gender !== "f"}">${esc(t("male"))}</button><button type="button" id="gF" aria-pressed="${d.gender === "f"}">${esc(t("female"))}</button></div></div>
       <label class="f-field"><span>${esc(t("job"))}</span><input id="fJob" value="${esc(d.occupation || "")}" placeholder="${esc(t("jobPh"))}"></label>
       <label class="f-field"><span>${esc(t("phone"))}</span><input id="fPhone" type="tel" inputmode="tel" autocomplete="off" value="${esc(d.phone || "")}" placeholder="+998 90 123 45 67"></label>
+      <label class="f-field"><span>${esc(t("tgL"))}</span><input id="fTg" autocomplete="off" value="${esc(d.tg || "")}" placeholder="${esc(t("tgPh"))}"></label>
+      <label class="f-field"><span>${esc(t("igL"))}</span><input id="fIg" autocomplete="off" value="${esc(d.ig || "")}" placeholder="${esc(t("igPh"))}"></label>
       ${dateField("fB", t("bdate"), d.birthDate)}
       <label class="f-field"><span>${esc(t("bplace"))}</span><input id="fBp" value="${esc(d.birthPlace)}"></label>
-      <div class="f-field">${dateField("fX", t("ddate"), d.deathDate)}<label class="check"><input type="checkbox" id="fDead"${isDead(d) ? " checked" : ""}>${esc(t("deceased"))}</label></div>
-      <label class="f-field"><span>${esc(t("dplace"))}</span><input id="fDp" value="${esc(d.burialPlace)}"></label>
+      <div class="f-field"${circ ? " hidden" : ""}>${dateField("fX", t("ddate"), d.deathDate)}<label class="check"><input type="checkbox" id="fDead"${isDead(d) ? " checked" : ""}>${esc(t("deceased"))}</label></div>
+      <label class="f-field"${circ ? " hidden" : ""}><span>${esc(t("dplace"))}</span><input id="fDp" value="${esc(d.burialPlace)}"></label>
       <label class="f-field"${circ ? " hidden" : ""}><span>${esc(t("father"))}</span><select id="fFa">${opt("m", d.fatherId)}</select></label>
       <label class="f-field"${circ ? " hidden" : ""}><span>${esc(t("mother"))}</span><select id="fMo">${opt("f", d.motherId)}</select></label>
     </div>
@@ -3003,7 +3110,7 @@ function openForm(id, preset = {}){
     } catch(x){ err("photoUpErr"); $("fSave").disabled = false; $("fSave").textContent = t("save"); return; }
     const data = { firstName:fn, lastName:$("fLast").value.trim(), patronymic:$("fPatr").value.trim(), gender:d.gender,
       birthDate:serDate(bd.o), birthPlace:$("fBp").value.trim(), deathDate:serDate(dd.o), deceased:$("fDead").checked || !!dd.o, burialPlace:$("fDp").value.trim(),
-      occupation:$("fJob").value.trim(), phone:$("fPhone").value.trim(), bio:$("fBio").value.trim(), photo, photoId, fatherId:$("fFa").value || null, motherId:$("fMo").value || null,
+      occupation:$("fJob").value.trim(), phone:$("fPhone").value.trim(), tg:$("fTg").value.trim(), ig:$("fIg").value.trim(), ...(p?.greeted ? { greeted:p.greeted } : {}), bio:$("fBio").value.trim(), photo, photoId, fatherId:$("fFa").value || null, motherId:$("fMo").value || null,
       spouses:[...new Set(d.spouses)].filter(x => x !== nid), createdAt:p?.createdAt || Date.now(), ...(circ ? { circle:true } : {}), ...($("fPriv").checked ? { privBirth:true } : {}) };
     try {
       await writePerson(nid, data, prevSp);

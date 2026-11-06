@@ -124,7 +124,7 @@ export async function onRequest(ctx) {
       if (!admin) {
         if (!meta.circlesPublic) { people = people.filter(p => !p.circle); groups = []; }
         people = people.map(p => forViewer(p, !!meta.birthPublic));
-        if (!meta.phonesPublic) people = people.map(p => { if (!p.phone) return p; const { phone, ...rest } = p; return rest; });
+        if (!meta.phonesPublic) people = people.map(p => { if (!p.phone && !p.tg && !p.ig) return p; const { phone, tg, ig, ...rest } = p; return rest; });
         delete meta.meId;
       }
       return json({ people, groups, meta, rev: upd + ":" + people.length + ":" + groups.length + ":" + JSON.stringify(meta).length, admin });
