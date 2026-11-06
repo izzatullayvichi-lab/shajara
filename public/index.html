@@ -2707,7 +2707,7 @@ function openProfile(id){ S.selId = null; S.profId = id; S.ptab = "info"; if (S.
 
 
 /* ================= Greetings: 30 templates, Telegram / Instagram / SMS / WhatsApp ================= */
-Object.assign(L, { setPubVc:"Saytni yopsangiz, havolani olgan odamlar ham shajarani ko'ra olmaydi — faqat login qilganlar kiradi. Davom etasizmi?", lockT:"Yopiq shajara", usersT:"Foydalanuvchilar", usersSub:"Yordamchi hisoblar: faqat o'z shoxi yoki faqat do'stlar bo'limiga kiradi.", usNew:"Yangi hisob", usName:"Ism", usLogin:"Login", usPass:"Parol", usPassKeep:"o'zgartirmaslik uchun bo'sh qoldiring", usFam:"Oila shajarasi", usCirc:"Do'stlar davrasi", usNone:"Ko'rmaydi", usView:"Faqat ko'radi", usEdit:"Tahrirlaydi", usAllBr:"Butun shajara", usSelBr:"Faqat tanlangan shoxlar (shu odam va avlodlari)", usPick:"Shox boshini qo'shing…", usOff:"Hisobni o'chirib qo'yish", usPre:"Tayyor variantlar", usPre1:"Faqat do'stlar davrasi", usPre2:"Shox yordamchisi", usPre3:"Kuzatuvchi", usDelC:"Ha, hisob o'chirilsin", usSaved:"Hisob saqlandi", usNoUsers:"Hozircha yordamchi hisob yo'q.", setPubV:"Havolani olgan har kim shajarani ko'ra olsin", setPubVh:"O'chiq bo'lsa, sayt yopiladi: faqat login qilganlar (egasi va yordamchilar) o'z ruxsati doirasida ko'radi.", loginL:"Login", loginHint2:"Egasi bo'lsangiz login maydonini bo'sh qoldiring. Yordamchi hisob uchun login va parolni kiriting.", dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
+Object.assign(L, { pWall:"Devor (nafis, tavsiya)", setPubVc:"Saytni yopsangiz, havolani olgan odamlar ham shajarani ko'ra olmaydi — faqat login qilganlar kiradi. Davom etasizmi?", lockT:"Yopiq shajara", usersT:"Foydalanuvchilar", usersSub:"Yordamchi hisoblar: faqat o'z shoxi yoki faqat do'stlar bo'limiga kiradi.", usNew:"Yangi hisob", usName:"Ism", usLogin:"Login", usPass:"Parol", usPassKeep:"o'zgartirmaslik uchun bo'sh qoldiring", usFam:"Oila shajarasi", usCirc:"Do'stlar davrasi", usNone:"Ko'rmaydi", usView:"Faqat ko'radi", usEdit:"Tahrirlaydi", usAllBr:"Butun shajara", usSelBr:"Faqat tanlangan shoxlar (shu odam va avlodlari)", usPick:"Shox boshini qo'shing…", usOff:"Hisobni o'chirib qo'yish", usPre:"Tayyor variantlar", usPre1:"Faqat do'stlar davrasi", usPre2:"Shox yordamchisi", usPre3:"Kuzatuvchi", usDelC:"Ha, hisob o'chirilsin", usSaved:"Hisob saqlandi", usNoUsers:"Hozircha yordamchi hisob yo'q.", setPubV:"Havolani olgan har kim shajarani ko'ra olsin", setPubVh:"O'chiq bo'lsa, sayt yopiladi: faqat login qilganlar (egasi va yordamchilar) o'z ruxsati doirasida ko'radi.", loginL:"Login", loginHint2:"Egasi bo'lsangiz login maydonini bo'sh qoldiring. Yordamchi hisob uchun login va parolni kiriting.", dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
   grTg:"Telegram", grIg:"Instagram", grSms:"SMS", grWa:"WhatsApp", grCopy:"Nusxalash", grCopied:"Matn nusxalandi", grPasteTg:"Matn nusxalandi — Telegram chatiga yopishtiring", grPasteIg:"Matn nusxalandi — Instagram chatiga yopishtiring",
   grDone:"Tabriklandi", grDoneL:"Tabriklangan sana belgilandi", grNoContact:"Aloqa ma'lumoti yo'q — avval telefon, Telegram yoki Instagram kiriting.", grMark:"Tabriklandi deb belgilash", grBtn:"Tabriklash", grToday:"Bugun tug'ilgan kun", tgL:"Telegram", igL:"Instagram", tgPh:"@username yoki telefon", igPh:"@username" });
 const GREET = [
@@ -3286,7 +3286,7 @@ const FONT = { loaded:null };
 function loadScript(src){ return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = () => rej(new Error("script")); document.head.appendChild(s); }); }
 async function loadFonts(){
   if (!FONT.loaded) FONT.loaded = (async () => {
-    if (!window.opentype) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js");
+    if (!window.opentype) await loadScript("/vendor/opentype.min.js");
     const names = { sR:"alegreya-400", sB:"alegreya-700", sX:"alegreya-800", gR:"golos-400", gM:"golos-500" };
     await Promise.all(Object.entries(names).map(async ([k, f]) => { const r = await fetch("/fonts/" + f + ".woff"); if (!r.ok) throw new Error("font " + f); FONT[k] = opentype.parse(await r.arrayBuffer()); }));
   })().catch(e => { FONT.loaded = null; throw e; });
@@ -3315,6 +3315,7 @@ function starPath(cx, cy, r){
 }
 function sq(cx, cy, h, rot){ const pts = []; for (let i = 0; i < 4; i++){ const a = rot + Math.PI / 2 * i; pts.push((cx + h * Math.SQRT2 * Math.cos(a)).toFixed(2) + " " + (cy + h * Math.SQRT2 * Math.sin(a)).toFixed(2)); } return "M" + pts.join("L") + "Z"; }
 async function buildPoster(opt, progress = () => {}){
+  if (opt.theme === "wall") return buildWall(opt, progress);
   await loadFonts(); progress(0.12);
   const th = opt.theme === "light"
     ? { bg1:"#FCFAF4", bg2:"#EFE7D4", ink:"#14244F", muted:"#5B6682", gold:"#A47A26", gold2:"#C9A24F", chip:"#E1E7F4", chipF:"#D6ECE8", inkF:"#0C6E6B", line:"#B48D45", corner:"#14244F" }
@@ -3418,6 +3419,124 @@ async function buildPoster(opt, progress = () => {}){
   return { svg:o.join("\n"), mmW, mmH, n:Lt.nodes.length };
 }
 
+
+/* ================= Wall hanging (devor) — ornate SVG ================= */
+async function buildWall(opt, progress = () => {}){
+  await loadFonts(); progress(0.1);
+  const C = { p1:"#FBF5E6", p2:"#EEE0C0", em:"#0F3B2B", em2:"#082A1F", em3:"#1B6A4E", gold:"#B8862F", goldL:"#E8C86E", goldD:"#7C5818", ink:"#1E2A24", mut:"#6B6F5F", rose:"#B8576B", lap:"#2B6A8F", ivory:"#FFFDF6" };
+  const D = { w:236, h:388, coupleGap:70, gap:40, rowGap:150, busStep:13, pw:176, ph:214 }; D.knotY = 26 + D.ph * 0.5;
+  let Lt = layoutTree(opt.rootId, D);
+  if (!Lt.nodes.length) throw new Error("bo'sh");
+  const imgs = new Map();
+  if (opt.photos){ let i = 0; for (const n of Lt.nodes){ const p = P(n.id), u = await photoData(p); if (u) imgs.set(p.id, u); progress(0.1 + 0.5 * (++i / Lt.nodes.length)); } }
+  const title = (opt.title || "").trim() || t("defTitle"), epi = (opt.epigraph || "").trim();
+  const BW = 74, FR = 46, side = 250, topPad = 120, botPad = 330;
+  let W0 = Lt.W + side * 2;
+  const tSize = Math.max(120, Math.min(260, W0 * 0.05)), titleUp = dn(title).toUpperCase();
+  const tW = tw(FONT.sX, titleUp, tSize, tSize * 0.05); W0 = Math.max(W0, tW + 2 * (side + 60), 2600);
+  const headH = topPad + 40 + 150 + tSize * 0.78 + 78 + 86 + (epi ? 78 : 0) + 150;
+  let H0 = headH + Lt.H + botPad; const off = FR + BW + 44;
+  let W = W0 + 2 * off, H = H0 + 2 * off, mmW = null, mmH = null;
+  const PAPER = { A3:[420,297], A2:[594,420], A1:[841,594], A0:[1189,841] };
+  if (PAPER[opt.paper]){ let [pw, ph] = PAPER[opt.paper]; if (W < H) [pw, ph] = [ph, pw]; const r = pw / ph; if (W / H > r) H = W / r; else W = H * r; mmW = pw; mmH = ph; }
+  // a tall paper leaves spare height: spend it on generation spacing instead of blank margins
+  if (mmW && Lt.maxDepth > 0){ const extra = H - (H0 + 2 * off); if (extra > 0){ D.rowGap = Math.min(150 + extra * 0.85 / Lt.maxDepth, 400); Lt = layoutTree(opt.rootId, D); H0 = headH + Lt.H + botPad; } }
+  const ox = (W - W0) / 2, oy = (H - H0) / 2, treeX = ox + (W0 - Lt.W) / 2, treeY = oy + headH, midX = ox + W0 / 2;
+  const F = v => v.toFixed(1), o = [];
+  const arch = (x, y, w, h) => { const r = w * 0.56; return `M${F(x)} ${F(y + h)}V${F(y + r)}C${F(x)} ${F(y + r * 0.34)} ${F(x + w * 0.36)} ${F(y + r * 0.1)} ${F(x + w / 2)} ${F(y)}C${F(x + w * 0.64)} ${F(y + r * 0.1)} ${F(x + w)} ${F(y + r * 0.34)} ${F(x + w)} ${F(y + r)}V${F(y + h)}Z`; };
+  const leaf = (x, y, rot, s, fill) => `<path transform="translate(${F(x)} ${F(y)}) rotate(${rot}) scale(${s})" d="M0 0C8-16 30-18 44 0C30 14 8 14 0 0Z" fill="${fill}"/><path transform="translate(${F(x)} ${F(y)}) rotate(${rot}) scale(${s})" d="M2 0H40" stroke="${C.p1}" stroke-width="1.4" opacity=".55"/>`;
+  o.push(`<?xml version="1.0" encoding="UTF-8"?>`);
+  o.push(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" ${mmW ? `width="${mmW}mm" height="${mmH}mm"` : `width="${Math.round(W)}" height="${Math.round(H)}"`} viewBox="0 0 ${F(W)} ${F(H)}">`);
+  o.push(`<title>${esc(dn(title))}</title>`);
+  const S8 = 56;
+  o.push(`<defs>
+    <radialGradient id="wp" cx="50%" cy="38%" r="80%"><stop offset="0" stop-color="${C.p1}"/><stop offset="1" stop-color="${C.p2}"/></radialGradient>
+    <linearGradient id="wg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${C.goldL}"/><stop offset=".5" stop-color="${C.gold}"/><stop offset="1" stop-color="${C.goldL}"/></linearGradient>
+    <linearGradient id="we" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${C.em3}"/><stop offset="1" stop-color="${C.em2}"/></linearGradient>
+    <linearGradient id="wf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${C.ivory}"/><stop offset="1" stop-color="#F4E9CE"/></linearGradient>
+    <pattern id="wl" patternUnits="userSpaceOnUse" width="${S8 * 2}" height="${S8 * 2}"><g fill="none" stroke="${C.gold}" stroke-width="1.2" opacity=".5"><path d="${sq(S8, S8, S8 * .5, Math.PI / 4)}"/><path d="${sq(S8, S8, S8 * .5, 0)}"/><circle cx="${S8}" cy="${S8}" r="${S8 * .16}"/></g></pattern>
+    <pattern id="wb" patternUnits="userSpaceOnUse" x="${FR}" y="${FR}" width="${BW}" height="${BW}"><g fill="none" stroke="${C.goldL}" stroke-width="1.6" stroke-linejoin="round"><path d="${sq(BW / 2, BW / 2, BW * .24, Math.PI / 4)}"/><path d="${sq(BW / 2, BW / 2, BW * .24, 0)}"/><circle cx="${BW / 2}" cy="${BW / 2}" r="${BW * .09}"/><path d="M0 ${BW / 2}h${BW * .1}M${BW * .9} ${BW / 2}h${BW * .1}M${BW / 2} 0v${BW * .1}M${BW / 2} ${BW * .9}v${BW * .1}"/></g></pattern>
+  </defs>`);
+  o.push(`<rect width="${F(W)}" height="${F(H)}" fill="url(#wp)"/><rect width="${F(W)}" height="${F(H)}" fill="url(#wl)" opacity=".16"/>`);
+  // emerald frame with gold lattice
+  const x1 = FR, y1 = FR, x2 = W - FR, y2 = H - FR;
+  o.push(`<path fill="url(#we)" fill-rule="evenodd" d="M${x1} ${y1}H${F(x2)}V${F(y2)}H${x1}ZM${x1 + BW} ${y1 + BW}V${F(y2 - BW)}H${F(x2 - BW)}V${y1 + BW}Z"/>`);
+  o.push(`<path fill="url(#wb)" fill-rule="evenodd" d="M${x1} ${y1}H${F(x2)}V${F(y2)}H${x1}ZM${x1 + BW} ${y1 + BW}V${F(y2 - BW)}H${F(x2 - BW)}V${y1 + BW}Z"/>`);
+  o.push(`<g fill="none" stroke="url(#wg)"><rect x="${x1}" y="${y1}" width="${F(x2 - x1)}" height="${F(y2 - y1)}" stroke-width="5"/><rect x="${x1 - 16}" y="${y1 - 16}" width="${F(x2 - x1 + 32)}" height="${F(y2 - y1 + 32)}" stroke-width="1.8"/>
+    <rect x="${x1 + BW}" y="${y1 + BW}" width="${F(x2 - x1 - 2 * BW)}" height="${F(y2 - y1 - 2 * BW)}" stroke-width="4"/><rect x="${x1 + BW + 16}" y="${y1 + BW + 16}" width="${F(x2 - x1 - 2 * BW - 32)}" height="${F(y2 - y1 - 2 * BW - 32)}" stroke-width="1.4"/></g>`);
+  for (const [cx, cy] of [[x1 + BW / 2, y1 + BW / 2], [x2 - BW / 2, y1 + BW / 2], [x1 + BW / 2, y2 - BW / 2], [x2 - BW / 2, y2 - BW / 2]]){
+    const c = BW * 1.05; o.push(`<rect x="${F(cx - c)}" y="${F(cy - c)}" width="${F(2 * c)}" height="${F(2 * c)}" fill="${C.em2}" stroke="url(#wg)" stroke-width="3.5"/>`);
+    o.push(`<path d="${starPath(cx, cy, c * .86)}" fill="url(#wg)"/><circle cx="${F(cx)}" cy="${F(cy)}" r="${F(c * .24)}" fill="${C.em2}"/><circle cx="${F(cx)}" cy="${F(cy)}" r="${F(c * .1)}" fill="${C.goldL}"/>`);
+  }
+  // ---- header ----
+  let y = oy + topPad + 40;
+  o.push(`<circle cx="${F(midX)}" cy="${F(y + 40)}" r="64" fill="${C.em}" stroke="url(#wg)" stroke-width="5"/><circle cx="${F(midX)}" cy="${F(y + 40)}" r="52" fill="none" stroke="${C.goldL}" stroke-width="1.6"/>`);
+  o.push(`<g fill="none" stroke="${C.goldL}" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(${F(midX - 40)} ${F(y)}) scale(1.25)"><path d="M32 58V30M32 44l-9-8M32 40l9-9M32 34l-6-7M32 34l6-7M20 58h24" transform="translate(0 -12)"/><path d="M32 6c-4 4-4 9 0 13 4-4 4-9 0-13zM20 12c-1 5 1 9 6 11 1-5-1-9-6-11zM44 12c1 5-1 9-6 11-1-5 1-9 6-11z" transform="translate(0 -4)"/></g>`);
+  y += 150 + tSize * 0.78;
+  const tt = tp(FONT.sX, titleUp, midX, y, tSize, { tracking: tSize * 0.05 });
+  o.push(`<path fill="${C.em}" d="${tt.d}"/><path fill="none" stroke="url(#wg)" stroke-width="2.2" d="${tt.d}" opacity=".0"/>`);
+  y += 78; const ow = Math.min(tt.w * 0.62, 1200);
+  o.push(`<g stroke="url(#wg)" stroke-width="3.2" fill="none" stroke-linecap="round"><path d="M${F(midX - ow / 2)} ${F(y)}H${F(midX - 56)}M${F(midX + 56)} ${F(y)}H${F(midX + ow / 2)}"/><path d="M${F(midX - ow / 2 + 70)} ${F(y + 14)}H${F(midX - 74)}M${F(midX + 74)} ${F(y + 14)}H${F(midX + ow / 2 - 70)}" stroke-width="1.4"/></g>`);
+  o.push(`<path d="${starPath(midX, y, 36)}" fill="url(#wg)"/><circle cx="${F(midX)}" cy="${F(y)}" r="9" fill="${C.p1}"/>`);
+  y += 86; let gmax = 0; for (const n of Lt.nodes) gmax = Math.max(gmax, n.depth + 1);
+  o.push(`<path fill="${C.mut}" d="${tp(FONT.gM, `${gmax} ${t("gen")} · ${Lt.nodes.length} ${t("ppl")}`.toUpperCase(), midX, y, 34, { tracking: 8 }).d}"/>`);
+  if (epi){ y += 78; o.push(`<path fill="${C.gold}" d="${tp(FONT.sR, dn(epi), midX, y, 52).d}"/>`); }
+  progress(0.7);
+  // ---- generation bands + medallions ----
+  const rowsD = [...new Set(Lt.nodes.map(n => n.depth))].sort((a, b) => a - b);
+  for (const dep of rowsD){
+    const top = treeY + dep * (D.h + D.rowGap) - 34, hh = D.h + 68, xl = x1 + BW + 22, xr = x2 - BW - 22;
+    o.push(`<rect x="${F(xl)}" y="${F(top)}" width="${F(xr - xl)}" height="${F(hh)}" rx="46" fill="${dep % 2 ? C.em : C.gold}" opacity="${dep % 2 ? ".05" : ".07"}"/>`);
+    const cy = top + hh / 2, cx = ox + 120;
+    o.push(`<circle cx="${F(cx)}" cy="${F(cy)}" r="66" fill="${C.em}" stroke="url(#wg)" stroke-width="5"/><circle cx="${F(cx)}" cy="${F(cy)}" r="55" fill="none" stroke="${C.goldL}" stroke-width="1.5"/>`);
+    o.push(`<path fill="${C.goldL}" d="${tp(FONT.sX, ROMAN[dep] || String(dep + 1), cx, cy + 4, 54, { maxW: 100, min: 28 }).d}"/>`);
+    o.push(`<path fill="${C.goldL}" d="${tp(FONT.gM, t("gen").toUpperCase(), cx, cy + 36, 15, { tracking: 4 }).d}"/>`);
+  }
+  // ---- branches: ribbon connectors, junction dots and leaves ----
+  const tr = `translate(${F(treeX)} ${F(treeY)})`;
+  o.push(`<g fill="none" stroke-linecap="round" stroke-linejoin="round" transform="${tr}">`);
+  for (const f of Lt.families) o.push(`<path d="${linkPath(f, 30)}" stroke="${C.goldD}" stroke-width="8.5" opacity=".92"/>`);
+  for (const f of Lt.families) o.push(`<path d="${linkPath(f, 30)}" stroke="url(#wg)" stroke-width="4.4"/>`);
+  for (const m of Lt.marriages) o.push(`<path d="M${F(m.x1 - 4)} ${F(m.y)}H${F(m.x2 + 4)}" stroke="${C.goldD}" stroke-width="8.5"/><path d="M${F(m.x1 - 4)} ${F(m.y)}H${F(m.x2 + 4)}" stroke="url(#wg)" stroke-width="4.4"/>`);
+  o.push(`</g>`);
+  for (const f of Lt.families){
+    for (const k of f.kids) o.push(`<circle cx="${F(treeX + k.x)}" cy="${F(treeY + k.y - 16)}" r="9" fill="${C.ivory}" stroke="${C.gold}" stroke-width="3.2"/>`);
+    o.push(leaf(treeX + f.ax, treeY + f.ay + 18, 52, .75, C.em3) + leaf(treeX + f.ax, treeY + f.ay + 18, 128, .75, C.em));
+  }
+  for (const m of Lt.marriages){ const kx = treeX + m.kx, ky = treeY + m.y;
+    o.push(`<circle cx="${F(kx)}" cy="${F(ky)}" r="27" fill="${C.p1}" stroke="${C.gold}" stroke-width="2"/><g fill="none" stroke="url(#wg)" stroke-width="5"><circle cx="${F(kx - 9)}" cy="${F(ky)}" r="14"/><circle cx="${F(kx + 9)}" cy="${F(ky)}" r="14"/></g>`); }
+  // ---- people: mehrob niches + name plaques ----
+  let ci = 0;
+  for (const n of Lt.nodes){
+    const p = P(n.id), f = p.gender === "f", acc = f ? C.rose : C.lap;
+    const px = treeX + n.x + (D.w - D.pw) / 2, py = treeY + n.y + 24, cx = px + D.pw / 2;
+    o.push(`<path d="${arch(px - 16, py - 16, D.pw + 32, D.ph + 32)}" fill="url(#wf)" stroke="url(#wg)" stroke-width="${n.inLaw ? 3 : 5.4}"${n.inLaw ? ` stroke-dasharray="3 9" stroke-linecap="round"` : ""}/>`);
+    o.push(`<path d="${arch(px - 7, py - 7, D.pw + 14, D.ph + 14)}" fill="none" stroke="${C.goldL}" stroke-width="1.8"/>`);
+    o.push(`<path d="${arch(px, py, D.pw, D.ph)}" fill="${f ? "#F4DDE3" : "#DCE9F2"}"/>`);
+    const img = imgs.get(p.id);
+    if (img){ ci++; o.push(`<clipPath id="w${ci}"><path d="${arch(px, py, D.pw, D.ph)}"/></clipPath><image x="${F(px)}" y="${F(py)}" width="${D.pw}" height="${D.ph}" preserveAspectRatio="xMidYMid slice" clip-path="url(#w${ci})" href="${img}" xlink:href="${img}"/>`); }
+    else { o.push(`<path d="${arch(px, py, D.pw, D.ph)}" fill="${f ? C.rose : C.lap}" opacity=".18"/>`); o.push(`<path fill="${acc}" d="${tp(FONT.sX, initials(p), cx, py + D.ph * 0.62, 78, { maxW: D.pw - 40, min: 40 }).d}"/>`); }
+    o.push(`<path d="${arch(px, py, D.pw, D.ph)}" fill="none" stroke="${acc}" stroke-width="3.6"/>`);
+    o.push(`<path d="${starPath(cx, py - 24, 13)}" fill="url(#wg)"/>`);
+    const bw = D.w - 6, bx = treeX + n.x + 3, by = py + D.ph + 20, bh = 118;
+    o.push(`<rect x="${F(bx)}" y="${F(by)}" width="${F(bw)}" height="${bh}" rx="26" fill="url(#wf)" stroke="url(#wg)" stroke-width="3.6"/><rect x="${F(bx + 7)}" y="${F(by + 7)}" width="${F(bw - 14)}" height="${bh - 14}" rx="20" fill="none" stroke="${C.goldL}" stroke-width="1.3"/>`);
+    let ty = by + 46;
+    o.push(`<path fill="${C.ink}" d="${tp(FONT.sB, first(p), cx, ty, 38, { maxW: bw - 34, min: 22 }).d}"/>`);
+    if (p.lastName){ ty += 33; o.push(`<path fill="${C.mut}" d="${tp(FONT.sR, dn(p.lastName), cx, ty, 25, { maxW: bw - 40, min: 16 }).d}"/>`); }
+    const yy = yrs(p); if (yy){ ty += 32; o.push(`<path fill="${C.gold}" d="${tp(FONT.gM, yy, cx, ty, 21, { tracking: 1.6, maxW: bw - 40 }).d}"/>`); }
+  }
+  // ---- footer ----
+  const dt = new Date(), foot = t("madeOn") + ": " + pad2(dt.getDate()) + "." + pad2(dt.getMonth() + 1) + "." + dt.getFullYear();
+  const fy = oy + H0 - 150;
+  o.push(`<g stroke="url(#wg)" stroke-width="3" fill="none" stroke-linecap="round"><path d="M${F(midX - 520)} ${F(fy)}H${F(midX - 60)}M${F(midX + 60)} ${F(fy)}H${F(midX + 520)}"/><path d="M${F(midX - 470)} ${F(fy + 14)}H${F(midX - 80)}M${F(midX + 80)} ${F(fy + 14)}H${F(midX + 470)}" stroke-width="1.3"/></g><path d="${starPath(midX, fy, 32)}" fill="url(#wg)"/><circle cx="${F(midX)}" cy="${F(fy)}" r="8" fill="${C.p1}"/>`);
+  const lg = [[C.lap, t("male")], [C.rose, t("female")]]; let lx = midX - 230;
+  for (const [c, lbl] of lg){ o.push(`<path d="${arch(lx - 14, fy + 56, 28, 36)}" fill="none" stroke="${c}" stroke-width="3.4"/><path fill="${C.mut}" d="${tp(FONT.gM, lbl.toUpperCase(), lx + 44 + 54, fy + 84, 22, { tracking: 3 }).d}"/>`); lx += 280; }
+  o.push(`<path fill="${C.mut}" d="${tp(FONT.gR, foot, midX, fy + 142, 24, { tracking: 3 }).d}"/>`);
+  o.push(`</svg>`);
+  progress(1);
+  return { svg:o.join("\n"), mmW, mmH, n:Lt.nodes.length };
+}
+
 /* ================= Export modal ================= */
 function openExport(tab = "poster"){
   const m = $("modal"), roots = founders();
@@ -3432,7 +3551,7 @@ function openExport(tab = "poster"){
           <label class="f-field"><span>${esc(t("pTitle"))}</span><input id="pxTitle" value="${esc(dn(S.meta.title || L.defTitle))}"></label>
           <label class="f-field"><span>${esc(t("pEpi"))}</span><input id="pxEpi" value="${esc(t("epiDefault"))}"></label>
           <div class="f-field"><span>${esc(t("pPaper"))}</span><div class="pill-row">${["A3","A2","A1","A0","auto"].map(k => `<label><input type="radio" name="pxPaper" value="${k}"${k === "A1" ? " checked" : ""}>${k === "auto" ? esc(t("pAuto")) : k}</label>`).join("")}</div></div>
-          <div class="f-field"><span>${esc(t("pTheme"))}</span><div class="pill-row"><label><input type="radio" name="pxTheme" value="dark" checked>${esc(t("pDark"))}</label><label><input type="radio" name="pxTheme" value="light">${esc(t("pLight"))}</label></div></div>
+          <div class="f-field"><span>${esc(t("pTheme"))}</span><div class="pill-row"><label><input type="radio" name="pxTheme" value="wall" checked>${esc(t("pWall"))}</label><label><input type="radio" name="pxTheme" value="dark">${esc(t("pDark"))}</label><label><input type="radio" name="pxTheme" value="light">${esc(t("pLight"))}</label></div></div>
           <label class="check"><input type="checkbox" id="pxPhotos" checked>${esc(t("pPhotos"))}</label>
           <div class="actions"><button class="btn" id="pxMake">${esc(t("pMake"))}</button><button class="btn gold" id="pxSave">${esc(t("pSave"))}</button></div>
           <div class="progress" id="pxProg" hidden><i></i></div>
