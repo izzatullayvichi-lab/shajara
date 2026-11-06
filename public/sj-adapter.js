@@ -21,7 +21,7 @@
   }
   async function refresh(force) {
     const r = await call("/api/data");
-    st.admin = !!r.admin;
+    st.admin = !!r.admin; st.me = r.me || null; st.locked = !!r.locked;
     if (!force && r.rev === st.rev && JSON.stringify(r.meta) === JSON.stringify(st.meta)) return;
     st.rev = r.rev; st.meta = r.meta || {};
     st.people = new Map(r.people.map(p => { const { id, ...rest } = p; return [id, rest]; }));
@@ -75,9 +75,10 @@
     }
   };
   let meP = null;
-  const me = () => (meP = meP || call("/api/me").then(r => { st.admin = !!r.admin; st.configured = !!r.configured; return r; }).catch(() => ({ admin: false })));
+  const me = () => (meP = meP || call("/api/me").then(r => { st.admin = !!r.admin; st.user = r.user || null; st.configured = !!r.configured; return r; }).catch(() => ({ admin: false })));
+  const editAny = () => !!(st.admin || (st.user && (st.user.perms.family === "edit" || st.user.perms.circles === "edit")));
   const user = {
-    isOwner: async () => (await me()).admin, canEdit: async () => (await me()).admin,
+    isOwner: async () => (await me()).admin, canEdit: async () => { await me(); return editAny(); },
     can: async n => (await me()).admin, id: async () => null,
     me: async () => ({ id: null, name: "", email: null, isOwner: st.admin, canEdit: st.admin })
   };
@@ -99,7 +100,7 @@
     use: async name => {
       if (name === "db") return db;
       if (name === "user") { await me(); return user; }
-      if (name === "assets") { await me(); return st.admin ? assets : null; }
+      if (name === "assets") { await me(); return editAny() ? assets : null; }
       if (name === "downloads") return downloads;
       return null;
     }
@@ -107,7 +108,9 @@
   window.SJ = {
     get admin() { return st.admin; },
     get configured() { return st.configured !== false; },
-    async login(password) { try { await call("/api/login", { method: "POST", json: { password } }); return true; } catch (e) { if (e.status === 401) return false; throw e; } },
+    get loggedIn() { return !!st.user; }, get role() { return st.admin ? "owner" : st.user ? "user" : null; }, get name() { return st.user ? st.user.name : ""; },
+    get perms() { return st.user ? st.user.perms : null; }, get locked() { return !!st.locked; },
+    async login(password, login) { try { await call("/api/login", { method: "POST", json: { password, login } }); return true; } catch (e) { if (e.status === 401) return false; throw e; } },
     async logout() { await call("/api/logout", { method: "POST" }); }
   };
 })();

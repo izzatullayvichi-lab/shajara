@@ -683,6 +683,9 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 .gr-i:hover{border-color:var(--gold)}.gr-i.on{border-color:var(--green);background:var(--green-soft);box-shadow:0 0 0 2px color-mix(in srgb,var(--green) 25%,transparent)}
 .gr-ed textarea{min-height:170px;font-size:16px;line-height:1.55}
 .gr-send{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.urow{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:14px;padding:8px 12px;background:var(--card);margin-bottom:6px}
+.urow small{display:block;color:var(--muted);font-size:12.5px}
+.urow .muted{font-style:normal}
 @keyframes fly{from{transform:translateX(0)}to{transform:translateX(calc(100vw + 120px))}}
 @keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
 
@@ -1458,7 +1461,7 @@ const QA_IC = {
 };
 function QA(p, x, y){
   const b = (act, key) => `<button data-qa-act="${act}" aria-label="${esc(t(key))}" title="${esc(t(key))}">${QA_IC[act]}</button>`;
-  return `<div class="qa" data-qa="${esc(p.id)}" style="left:${x}px;top:${y}px">${b("fan", "qaFan")}${S.meId === p.id ? "" : b("me", "qaMe")}${S.canEdit ? b("add", "qaAdd") : ""}${b("link", "qaLink")}</div>`;
+  return `<div class="qa" data-qa="${esc(p.id)}" style="left:${x}px;top:${y}px">${b("fan", "qaFan")}${S.meId === p.id ? "" : b("me", "qaMe")}${S.canFam ? b("add", "qaAdd") : ""}${b("link", "qaLink")}</div>`;
 }
 function renderTree(){
   if (!P(S.rootId)){ const f = founders()[0]; S.rootId = f ? f.id : null; }
@@ -1576,7 +1579,7 @@ function renderFan(){
       if (j === 0) chain += `<path class="chain" d="${ann(r0, r1, a0, a1)}"${id ? "" : ' stroke-dasharray="4 5" opacity=".6"'}/>`;
       if (!p){
         const child = anc[i >> 1];
-        if (child && S.canEdit){ const [px, py] = pt(rm, m);
+        if (child && S.canFam){ const [px, py] = pt(rm, m);
           body += `<g class="empty add" data-add="${i % 2 ? "mother" : "father"}" data-child="${esc(child)}" role="button" tabindex="0"><path d="${ann(r0, r1, a0, a1)}"/><text class="plus" x="${px}" y="${py}" text-anchor="middle" dominant-baseline="central">+</text></g>`;
         } else body += `<g class="empty"><path d="${ann(r0, r1, a0, a1)}"/></g>`;
         continue;
@@ -1692,7 +1695,7 @@ function renderHome(){
   const photos = all.filter(photoSrc).length;
   const ups = upcoming(30).slice(0, 4);
   const recent = [...all].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).slice(0, 8);
-  const hs = [[g, "genCount", "gens", "tree"], [all.length, "viewList", "ppl", "list"], [photos, "hsPhotos", "photo", "photos"], ...(S.canEdit || S.groups.size ? [[S.groups.size, "viewCircles", "pin", "circles"]] : [])];
+  const hs = [[g, "genCount", "gens", "tree"], [all.length, "viewList", "ppl", "list"], [photos, "hsPhotos", "photo", "photos"], ...(S.canCirc || S.groups.size ? [[S.groups.size, "viewCircles", "pin", "circles"]] : [])];
   $("list").innerHTML = `<div class="home">
     <section class="hero reveal" id="hero"><div class="hero-bg"></div><div class="hero-shade"></div>
       <svg class="hero-orn" viewBox="0 0 48 48" aria-hidden="true"><use href="#star"/></svg>
@@ -1965,7 +1968,7 @@ function renderBday(){
     <div class="chips" style="margin:0 0 16px">${[[0,"bdAny"],[7,"bd7"],[30,"bd30"],[90,"bd90"]].map(([k, l]) => `<button class="chipb sm" data-br="${k}" aria-pressed="${S.bdRange === k}">${esc(t(l))}</button>`).join("")}</div>
     ${body ? `<div class="bd-list">${body}</div>` : emptyBox(t("bdNone"))}
     ${S.canEdit && missing.length ? `<details class="bd-fill"><summary>${esc(t("bdFill"))} · ${missing.length}</summary><p class="note">${esc(t("bdFillSub"))}</p><div class="minis">${missing.slice(0, 60).map(p => `<button class="mini" data-edit="${esc(p.id)}">${avatar(p)}<span class="n">${esc(first(p))}</span><small>${esc(yrs(p) || "—")}</small></button>`).join("")}</div></details>` : partial ? `<p class="note" style="margin-top:14px">${esc(t("bdPartial", { n:partial }))}</p>` : ""}
-    ${!S.meta.birthPublic ? (S.canEdit ? `<div class="bd-ban"><span>${esc(t("bdBannerE"))}</span><button class="btn sm gold" id="bdOpen">${esc(t("bdOpenAll"))}</button></div>` : `<p class="note" style="margin-top:10px">${esc(t("bdBannerV"))}</p>`) : ""}</section></div>`;
+    ${!S.meta.birthPublic ? (S.isOwner ? `<div class="bd-ban"><span>${esc(t("bdBannerE"))}</span><button class="btn sm gold" id="bdOpen">${esc(t("bdOpenAll"))}</button></div>` : `<p class="note" style="margin-top:10px">${esc(t("bdBannerV"))}</p>`) : ""}</section></div>`;
   const root = $("list"); wireGo(root);
   root.querySelectorAll("[data-bk]").forEach(b => b.onclick = () => { S.bdKind = b.dataset.bk; renderBday(); });
   root.querySelectorAll("[data-br]").forEach(b => b.onclick = () => { S.bdRange = +b.dataset.br; renderBday(); });
@@ -2341,6 +2344,7 @@ const kIc = (k, sz = 22) => `<svg width="${sz}" height="${sz}" viewBox="0 0 24 2
 Object.assign(ICO, { circles:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M2.5 19c.6-3 2.7-4.8 5.5-4.8s4.9 1.8 5.5 4.8M14.5 14.4c3 0 4.7 1.7 5.2 4.6"/></svg>' });
 
 const isCircle = p => !!(p && p.circle);
+const canEditP = p => isCircle(p) ? S.canCirc : S.canFam;
 /* phone numbers: one field, several numbers allowed (comma / semicolon / slash) */
 const phoneList = p => String(p?.phone || "").split(/[,;/]+/).map(x => x.trim()).filter(Boolean);
 function fmtPhone(x){ const d = x.replace(/\D/g, ""); if (/^998\d{9}$/.test(d)) return `+998 ${d.slice(3, 5)} ${d.slice(5, 8)} ${d.slice(8, 10)} ${d.slice(10)}`; if (/^\d{9}$/.test(d)) return `+998 ${d.slice(0, 2)} ${d.slice(2, 5)} ${d.slice(5, 7)} ${d.slice(7)}`; return x; }
@@ -2399,12 +2403,12 @@ function renderCircles(){
       <span class="gfoot"><b>${(g.members || []).length}</b> ${esc(t("people"))}${r ? `<em>${esc(r.now ? t("gReunionNow", { n:r.y }) : t("gSince", { n:r.y }))}</em>` : ""}</span></button>`; };
   const mini = (p, sub) => `<button class="mini reveal" data-go="${esc(p.id)}">${avatar(p)}<span class="n">${esc(first(p))}</span><small>${esc(sub)}</small></button>`;
   $("list").innerHTML = `<div class="lv-grid"><section><div class="lvbar"><h2 class="lv-h">${esc(t("crTitle"))} <small>${esc(t("crSub"))}</small></h2>
-    ${S.canEdit ? `<button class="btn gold" id="crNew">+ ${esc(t("crNew"))}</button>` : ""}</div>
+    ${S.canCirc ? `<button class="btn gold" id="crNew">+ ${esc(t("crNew"))}</button>` : ""}</div>
     ${all.length ? `<div class="chips" style="margin:6px 0 16px"><button class="chipb" data-ck="all" aria-pressed="${S.crKind === "all"}">${esc(t("bdAll"))} · ${cnt("all")}</button>${kinds.filter(k => cnt(k)).map(k => `<button class="chipb" data-ck="${k}" aria-pressed="${S.crKind === k}">${esc(t(KCAP(k)))} · ${cnt(k)}</button>`).join("")}</div>
       ${me && mine.length && S.crKind === "all" ? `<h3 class="sec-t" style="margin:4px 0 8px">${esc(t("crMine"))}</h3><div class="gwrap">${mine.map(card).join("")}</div>` : ""}
       ${close.length && S.crKind === "all" ? `<h3 class="sec-t" style="margin:18px 0 8px">${esc(t("crClose"))} <small class="muted">${esc(t("crCloseSub"))}</small></h3><div class="minis">${close.map(e => mini(e.p, e.gs.length + " " + t("gYearsN"))).join("")}</div>` : ""}
       <h3 class="sec-t" style="margin:18px 0 8px">${esc(S.crKind === "all" ? t("bdAll") : t(KCAP(S.crKind)))}</h3><div class="gwrap">${rows.map(card).join("")}</div>`
-      : emptyBox(t("crNone")) + (S.canEdit ? `<p style="text-align:center;margin-top:14px"><button class="btn gold" id="crNew2">+ ${esc(t("crNew"))}</button></p>` : "")}</section></div>`;
+      : emptyBox(t("crNone")) + (S.canCirc ? `<p style="text-align:center;margin-top:14px"><button class="btn gold" id="crNew2">+ ${esc(t("crNew"))}</button></p>` : "")}</section></div>`;
   const root = $("list"); wireGo(root);
   root.querySelectorAll("[data-g]").forEach(b => b.onclick = () => openGroup(b.dataset.g));
   root.querySelectorAll("[data-ck]").forEach(b => b.onclick = () => { S.crKind = b.dataset.ck; renderCircles(); });
@@ -2426,16 +2430,16 @@ function openGroup(id){
     ${g.note ? `<p class="bio" style="margin:0">${esc(g.note)}</p>` : ""}
     <div class="gstats"><div><b>${ms.length}</b><span>${esc(t("gMembers"))}</span></div>
       ${r ? `<div><b>${r.y}</b><span>${esc(t("gSinceL"))}</span></div><div class="${r.now ? "hot" : ""}"><b>${r.now ? "🎉" : r.left}</b><span>${esc(r.now ? t("gReunionNow", { n:r.y }) : t("gReunion", { n:r.next, m:r.left }))}</span></div>` : ""}</div>
-    <div class="actions">${S.canEdit ? `<button class="btn gold" id="gAdd">+ ${esc(t("gAddM"))}</button><button class="btn" id="gList">${esc(t("gAddList"))}</button><button class="btn" id="gEd">${esc(t("gEdit"))}</button><button class="btn danger" id="gDel">${esc(t("gDel"))}</button>` : ""}</div>
+    <div class="actions">${S.canCirc ? `<button class="btn gold" id="gAdd">+ ${esc(t("gAddM"))}</button><button class="btn" id="gList">${esc(t("gAddList"))}</button><button class="btn" id="gEd">${esc(t("gEdit"))}</button><button class="btn danger" id="gDel">${esc(t("gDel"))}</button>` : ""}</div>
     ${ms.length ? `<div class="gmem">${ms.map(x => `<div class="gm"><button class="gmb" data-go="${esc(x.p.id)}">${avatar(x.p)}<span class="gmt"><b>${esc(short(x.p))}</b><small>${esc(yrs(x.p))}${x.role !== "member" ? ` · ${esc(roleLbl(x.role))}` : ""}</small>
-        <span class="tags">${isCircle(x.p) ? "" : `<i class="tg fam">${esc(t("gRel"))}</i>`}${S.canEdit && phoneList(x.p)[0] ? `<i class="tg">📞 ${esc(fmtPhone(phoneList(x.p)[0]))}</i>` : ""}${soon.has(x.p.id) ? `<i class="tg bd">🎂 ${soon.get(x.p.id) === 0 ? esc(t("today")) : soon.get(x.p.id) + " " + esc(t("bdDays"))}</i>` : ""}</span></span></button>
-        ${S.canEdit ? `<button class="gx" data-rm="${esc(x.p.id)}" aria-label="${esc(t("gRemove"))}" title="${esc(t("gRemove"))}">✕</button>` : ""}</div>`).join("")}</div>` : `<p class="note">${esc(t("gEmptyM"))}</p>`}
+        <span class="tags">${isCircle(x.p) ? "" : `<i class="tg fam">${esc(t("gRel"))}</i>`}${S.canCirc && phoneList(x.p)[0] ? `<i class="tg">📞 ${esc(fmtPhone(phoneList(x.p)[0]))}</i>` : ""}${soon.has(x.p.id) ? `<i class="tg bd">🎂 ${soon.get(x.p.id) === 0 ? esc(t("today")) : soon.get(x.p.id) + " " + esc(t("bdDays"))}</i>` : ""}</span></span></button>
+        ${S.canCirc ? `<button class="gx" data-rm="${esc(x.p.id)}" aria-label="${esc(t("gRemove"))}" title="${esc(t("gRemove"))}">✕</button>` : ""}</div>`).join("")}</div>` : `<p class="note">${esc(t("gEmptyM"))}</p>`}
   </div>`;
   m.hidden = false;
   const close = () => { m.hidden = true; m.innerHTML = ""; };
   $("gClose").onclick = close; m.onclick = e => { if (e.target === m) close(); };
   m.querySelectorAll("[data-go]").forEach(b => b.onclick = () => { close(); select(b.dataset.go, true); });
-  if (!S.canEdit) return;
+  if (!S.canCirc) return;
   $("gAdd").onclick = () => openAddMembers(id, "e"); $("gList").onclick = () => openAddMembers(id, "l"); $("gEd").onclick = () => openGroupForm(id, {});
   m.querySelectorAll("[data-rm]").forEach(b => b.onclick = async () => { await setMembers(g, (g.members || []).filter(x => x.id !== b.dataset.rm)); openGroup(id); });
   const del = $("gDel"); del.onclick = async () => { if (!del.classList.contains("armed")){ del.classList.add("armed"); del.textContent = t("gDelC"); setTimeout(() => { if (del.isConnected){ del.classList.remove("armed"); del.textContent = t("gDel"); } }, 4000); return; }
@@ -2567,7 +2571,7 @@ function circTabHtml(p){
   return `${gs.length ? gs.map(g => { const r = reunion(g); return `<div class="gline" style="--k:${(KINDS[g.kind] || KINDS.friends).c}"><button class="gl" data-g="${esc(g.id)}"><span class="gk">${kIc(g.kind, 18)}</span><span><b>${esc(grpTitle(g))}</b><small>${esc([t(KONE(g.kind)), roleOf(g, p.id) !== "member" ? roleLbl(roleOf(g, p.id)) : "", grpYears(g)].filter(Boolean).join(" · "))}${r && r.now ? " · 🎉 " + esc(t("gReunionNow", { n:r.y })) : ""}</small></span><i>${(g.members || []).length}</i></button></div>`; }).join("")
       : `<p class="note">${esc(t("cNone"))}</p>`}
     ${mates.length ? `<div><p class="sec-t">${esc(t("cMates"))} (${mates.length})</p>${tiles(mates.slice(0, 18))}</div>` : ""}
-    ${S.canEdit ? `<div class="actions"><button class="btn gold" id="cAdd">+ ${esc(t("cAddTo"))}</button></div>` : ""}`;
+    ${S.canCirc ? `<div class="actions"><button class="btn gold" id="cAdd">+ ${esc(t("cAddTo"))}</button></div>` : ""}`;
 }
 function wireCircTab(sh, p){
   sh.querySelectorAll("[data-g]").forEach(b => b.onclick = () => openGroup(b.dataset.g));
@@ -2583,13 +2587,60 @@ function wireCircTab(sh, p){
 }
 
 /* ---------- Settings (owner) ---------- */
+/* ---------- Helper accounts (owner only) ---------- */
+const apiJ = async (method, url, body) => { const r = await fetch(url, { method, credentials:"same-origin", headers:{ "x-sj":"1", "content-type":"application/json" }, body: body ? JSON.stringify(body) : undefined }); let j = null; try { j = await r.json(); } catch(e){} if (!r.ok) throw new Error((j && j.error) || ("HTTP " + r.status)); return j; };
+const permSum = u => { const pm = u.perms, md = x => t(x === "edit" ? "usEdit" : x === "view" ? "usView" : "usNone");
+  return `${t("usFam")}: ${md(pm.family)}${pm.family !== "none" ? (pm.branches === "all" ? " (" + t("usAllBr") + ")" : " (" + (pm.branches || []).map(i => P(i) ? first(P(i)) : "?").join(", ") + ")") : ""} · ${t("usCirc")}: ${md(pm.circles)}`; };
+async function loadUsers(){
+  const box = $("usbox"); if (!box) return;
+  let list = []; try { list = (await apiJ("GET", "/api/users")).users; } catch(e){ box.innerHTML = ""; return; }
+  box.innerHTML = `<h3 class="sec-t" style="margin:12px 0 4px">${esc(t("usersT"))}</h3><p class="hint" style="margin:0 0 8px">${esc(t("usersSub"))}</p>
+    ${list.length ? list.map(u => `<div class="urow"><span><b>${esc(u.name)}</b> <i class="muted">@${esc(u.login)}${u.disabled ? " · ⛔" : ""}</i><small>${esc(permSum(u))}</small></span><button class="btn sm" data-ue="${esc(u.id)}">${esc(t("edit"))}</button></div>`).join("") : `<p class="note">${esc(t("usNoUsers"))}</p>`}
+    <button class="btn sm gold" id="usNew" style="margin-top:8px">+ ${esc(t("usNew"))}</button>`;
+  box.querySelectorAll("[data-ue]").forEach(b => b.onclick = () => openUserForm(list.find(u => u.id === b.dataset.ue)));
+  $("usNew").onclick = () => openUserForm(null);
+}
+function openUserForm(u){
+  const m = $("modal"), d = u ? JSON.parse(JSON.stringify(u)) : { id:"u" + Math.random().toString(36).slice(2, 10), name:"", login:"", perms:{ family:"none", branches:[], circles:"edit" }, disabled:false };
+  const pm = d.perms, md = (id, cur) => `<select id="${id}">${[["none", "usNone"], ["view", "usView"], ["edit", "usEdit"]].map(([v, l]) => `<option value="${v}"${cur === v ? " selected" : ""}>${esc(t(l))}</option>`).join("")}</select>`;
+  m.innerHTML = `<form class="form" id="uf" novalidate><h2>${esc(t(u ? "edit" : "usNew"))}</h2>
+    <div class="chips"><span class="muted" style="align-self:center">${esc(t("usPre"))}:</span><button type="button" class="chipb sm" data-pre="1">${esc(t("usPre1"))}</button><button type="button" class="chipb sm" data-pre="2">${esc(t("usPre2"))}</button><button type="button" class="chipb sm" data-pre="3">${esc(t("usPre3"))}</button></div>
+    <div class="grid2"><label class="f-field"><span>${esc(t("usName"))}</span><input id="uN" value="${esc(d.name)}" autocomplete="off"></label>
+      <label class="f-field"><span>${esc(t("usLogin"))}</span><input id="uL" value="${esc(d.login)}" autocomplete="off" autocapitalize="off"></label>
+      <label class="f-field"><span>${esc(t("usPass"))}</span><input id="uP" type="password" autocomplete="new-password" placeholder="${u ? esc(t("usPassKeep")) : "min 8"}"></label><span></span>
+      <label class="f-field"><span>${esc(t("usFam"))}</span>${md("uF", pm.family)}</label><label class="f-field"><span>${esc(t("usCirc"))}</span>${md("uC", pm.circles)}</label></div>
+    <div class="f-field" id="uBr"><div class="pill-row"><label><input type="radio" name="ubr" value="all"${pm.branches === "all" ? " checked" : ""}>${esc(t("usAllBr"))}</label><label><input type="radio" name="ubr" value="sel"${pm.branches !== "all" ? " checked" : ""}>${esc(t("usSelBr"))}</label></div>
+      <div class="chips" id="uChips" style="margin-top:8px"></div><input class="amq" id="uQ" placeholder="${esc(t("usPick"))}" autocomplete="off"><div class="amr" id="uR" style="max-height:20vh"></div></div>
+    <label class="check"><input type="checkbox" id="uOff"${d.disabled ? " checked" : ""}>${esc(t("usOff"))}</label>
+    <p class="err" id="uE" hidden></p>
+    <div class="form-foot">${u ? `<button type="button" class="btn danger" id="uDel" style="margin-right:auto">${esc(t("del"))}</button>` : ""}<button type="button" class="btn" id="uNo">${esc(t("cancel"))}</button><button class="btn primary" id="uSave">${esc(t("save"))}</button></div></form>`;
+  m.hidden = false; let sel = Array.isArray(pm.branches) ? [...pm.branches] : [];
+  const back = () => openSettings(), err = x => { $("uE").textContent = x || ""; $("uE").hidden = !x; };
+  const vis = () => { const f = $("uF").value !== "none"; $("uBr").hidden = !f; const all = m.querySelector("[name=ubr]:checked").value === "all"; $("uQ").hidden = $("uR").hidden = $("uChips").hidden = all; };
+  const chips = () => { $("uChips").innerHTML = sel.map(id => P(id) ? `<button type="button" class="chip" data-x="${esc(id)}">${avatar(P(id))}<span>${esc(short(P(id)))} ✕</span></button>` : "").join(""); $("uChips").querySelectorAll("[data-x]").forEach(b => b.onclick = () => { sel = sel.filter(x => x !== b.dataset.x); chips(); }); };
+  const find = () => { const q = norm($("uQ").value.trim()); $("uR").innerHTML = !q ? "" : famVals().filter(p => !sel.includes(p.id) && norm([p.firstName, p.lastName].join(" ")).includes(q)).slice(0, 8).map(p => `<button type="button" class="amp" data-a="${esc(p.id)}">${avatar(p)}<span><b>${esc(short(p))}</b><small>${esc(yrs(p))} · ${descCount(p.id)} ${esc(t("ppl"))}</small></span></button>`).join("");
+    $("uR").querySelectorAll("[data-a]").forEach(b => b.onclick = () => { sel.push(b.dataset.a); $("uQ").value = ""; $("uR").innerHTML = ""; chips(); }); };
+  $("uQ").oninput = find; $("uF").onchange = vis; m.querySelectorAll("[name=ubr]").forEach(r => r.onchange = vis); chips(); vis();
+  m.querySelectorAll("[data-pre]").forEach(b => b.onclick = () => { const k = b.dataset.pre; $("uF").value = k === "1" ? "none" : k === "2" ? "edit" : "view"; $("uC").value = k === "1" ? "edit" : k === "2" ? "none" : "view"; if (k !== "1") m.querySelector("[name=ubr][value=" + (k === "3" ? "all" : "sel") + "]").checked = true; vis(); });
+  $("uNo").onclick = back; m.onclick = e => { if (e.target === m) back(); };
+  if ($("uDel")) $("uDel").onclick = async () => { if (!$("uDel").classList.contains("armed")){ $("uDel").classList.add("armed"); $("uDel").textContent = t("usDelC"); return; } try { await apiJ("DELETE", "/api/users/" + d.id); back(); } catch(e){ err(e.message); } };
+  $("uf").onsubmit = async e => { e.preventDefault(); err("");
+    const f = $("uF").value, all = m.querySelector("[name=ubr]:checked").value === "all";
+    if (f !== "none" && !all && !sel.length){ err(t("usPick")); return; }
+    try { await apiJ("PUT", "/api/users/" + d.id, { name:$("uN").value.trim(), login:$("uL").value.trim(), password:$("uP").value || undefined, disabled:$("uOff").checked, perms:{ family:f, branches: f === "none" ? [] : all ? "all" : sel, circles:$("uC").value } }); toast(t("usSaved")); back(); }
+    catch(x){ err(x.message); } };
+  setTimeout(() => $("uN").focus(), 30);
+}
 function openSettings(){
   const m = $("modal"), sw = (id, on, lbl, hint) => `<label class="swrow"><input type="checkbox" id="${id}"${on ? " checked" : ""}><i class="sw"></i><span><b>${esc(t(lbl))}</b><small>${esc(t(hint))}</small></span></label>`;
   m.innerHTML = `<div class="form" role="dialog" aria-modal="true"><div class="gh-top"><h2>${esc(t("setT"))}</h2><button class="icon-btn" id="stX" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    ${sw("stB", !!S.meta.birthPublic, "setPubB", "setPubBh")}${sw("stC", !!S.meta.circlesPublic, "setPubC", "setPubCh")}${sw("stP", !!S.meta.phonesPublic, "setPubP", "setPubPh")}<div class="dbst" id="dbst"><p class="note">…</p></div></div>`;
+    ${sw("stB", !!S.meta.birthPublic, "setPubB", "setPubBh")}${sw("stC", !!S.meta.circlesPublic, "setPubC", "setPubCh")}${sw("stP", !!S.meta.phonesPublic, "setPubP", "setPubPh")}${sw("stV", S.meta.publicView !== false, "setPubV", "setPubVh")}
+    <div class="usbox" id="usbox"></div><div class="dbst" id="dbst"><p class="note">…</p></div></div>`;
   m.hidden = false; const close = () => { m.hidden = true; m.innerHTML = ""; }; $("stX").onclick = close; m.onclick = e => { if (e.target === m) close(); };
-  const save = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:$("stB").checked, circlesPublic:$("stC").checked, phonesPublic:$("stP").checked }); toast(t("setSaved")); } catch(e){ toast(t("errSave")); } };
+  const save = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:$("stB").checked, circlesPublic:$("stC").checked, phonesPublic:$("stP").checked, publicView:$("stV").checked }); toast(t("setSaved")); } catch(e){ toast(t("errSave")); } };
   $("stB").onchange = save; $("stC").onchange = save; $("stP").onchange = save;
+  $("stV").onchange = async e => { if (!e.target.checked && !confirm(t("setPubVc"))){ e.target.checked = true; return; } save(); };
+  loadUsers();
   fetch("/api/stats", { cache:"no-store", credentials:"same-origin" }).then(r => r.ok ? r.json() : null).then(d => {
     const el = $("dbst"); if (!el) return; if (!d){ el.innerHTML = ""; return; }
     const mb = x => (x / 1048576).toFixed(x < 1048576 * 10 ? 2 : 1), pc = Math.max(0.5, d.totalBytes / d.limitBytes * 100);
@@ -2637,7 +2688,7 @@ function renderProfile(){
   } else pane = `<div class="pf-circ">${circTabHtml(p)}</div>`;
   const tags = [circ ? t("cFriendTag") : (p.gender === "f" ? t("female") : t("male")), g0 != null && !circ ? genLbl(g0) : "", p.occupation ? dn(p.occupation) : "", dead ? t("stDead") : t("stLive")].filter(Boolean);
   $("list").innerHTML = `<div class="prof"><div class="pf-bar"><button class="btn sm" id="pfBack">← ${esc(t("profBack"))}</button><span class="tb-spacer"></span>
-      ${phoneList(p).length ? `<a class="btn sm" href="${esc(telHref(phoneList(p)[0]))}">📞 ${esc(t("callB"))}</a>` : ""}${!dead ? `<button class="btn sm" id="pfGr">🎂 ${esc(t("grBtn"))}</button>` : ""}<button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${S.canEdit ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
+      ${phoneList(p).length ? `<a class="btn sm" href="${esc(telHref(phoneList(p)[0]))}">📞 ${esc(t("callB"))}</a>` : ""}${!dead ? `<button class="btn sm" id="pfGr">🎂 ${esc(t("grBtn"))}</button>` : ""}<button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${canEditP(p) ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
     <section class="pf-hero reveal"><div class="portrait big">${avatar(p)}</div><div class="pf-id"><h1>${esc(full(p))}</h1><div class="psub">${esc(yrs(p))}${age != null && !dead ? ` · ${age} ${esc(t("age"))}` : ""}</div>
       <div class="pf-tags">${tags.map(x => `<i class="ptag">${esc(x)}</i>`).join("")}</div>${quote ? `<blockquote>“${esc(quote)}”</blockquote>` : ""}</div></section>
     <div class="stabs pf-tabs" role="tablist">${tabs.map(([k, l]) => `<button role="tab" data-pt="${k}" aria-selected="${S.ptab === k}">${esc(t(l))}</button>`).join("")}</div>
@@ -2656,7 +2707,7 @@ function openProfile(id){ S.selId = null; S.profId = id; S.ptab = "info"; if (S.
 
 
 /* ================= Greetings: 30 templates, Telegram / Instagram / SMS / WhatsApp ================= */
-Object.assign(L, { dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
+Object.assign(L, { setPubVc:"Saytni yopsangiz, havolani olgan odamlar ham shajarani ko'ra olmaydi — faqat login qilganlar kiradi. Davom etasizmi?", lockT:"Yopiq shajara", usersT:"Foydalanuvchilar", usersSub:"Yordamchi hisoblar: faqat o'z shoxi yoki faqat do'stlar bo'limiga kiradi.", usNew:"Yangi hisob", usName:"Ism", usLogin:"Login", usPass:"Parol", usPassKeep:"o'zgartirmaslik uchun bo'sh qoldiring", usFam:"Oila shajarasi", usCirc:"Do'stlar davrasi", usNone:"Ko'rmaydi", usView:"Faqat ko'radi", usEdit:"Tahrirlaydi", usAllBr:"Butun shajara", usSelBr:"Faqat tanlangan shoxlar (shu odam va avlodlari)", usPick:"Shox boshini qo'shing…", usOff:"Hisobni o'chirib qo'yish", usPre:"Tayyor variantlar", usPre1:"Faqat do'stlar davrasi", usPre2:"Shox yordamchisi", usPre3:"Kuzatuvchi", usDelC:"Ha, hisob o'chirilsin", usSaved:"Hisob saqlandi", usNoUsers:"Hozircha yordamchi hisob yo'q.", setPubV:"Havolani olgan har kim shajarani ko'ra olsin", setPubVh:"O'chiq bo'lsa, sayt yopiladi: faqat login qilganlar (egasi va yordamchilar) o'z ruxsati doirasida ko'radi.", loginL:"Login", loginHint2:"Egasi bo'lsangiz login maydonini bo'sh qoldiring. Yordamchi hisob uchun login va parolni kiriting.", dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
   grTg:"Telegram", grIg:"Instagram", grSms:"SMS", grWa:"WhatsApp", grCopy:"Nusxalash", grCopied:"Matn nusxalandi", grPasteTg:"Matn nusxalandi — Telegram chatiga yopishtiring", grPasteIg:"Matn nusxalandi — Instagram chatiga yopishtiring",
   grDone:"Tabriklandi", grDoneL:"Tabriklangan sana belgilandi", grNoContact:"Aloqa ma'lumoti yo'q — avval telefon, Telegram yoki Instagram kiriting.", grMark:"Tabriklandi deb belgilash", grBtn:"Tabriklash", grToday:"Bugun tug'ilgan kun", tgL:"Telegram", igL:"Instagram", tgPh:"@username yoki telefon", igPh:"@username" });
 const GREET = [
@@ -2779,8 +2830,9 @@ var renderChrome = function(){
   const n = famVals().length; let g = 0; for (const f of founders()) g = Math.max(g, depth(f.id));
   $("stats").textContent = S.loaded ? `${n} ${t("ppl")} · ${g} ${t("gens")}` : " ";
   $("genN").textContent = S.loaded ? g : "–"; $("pplN").textContent = S.loaded ? t("pplOf", { n }) : "";
-  $("addBtn").hidden = !S.canEdit || !S.loaded; if ($("titleEditBtn")) $("titleEditBtn").hidden = !S.canEdit;
-  $("exportBtn").hidden = !S.loaded || !n; $("setBtn").hidden = !S.canEdit || !S.loaded; $("vCircles").hidden = !S.canEdit && !S.groups.size;
+  $("addBtn").hidden = !S.canFam || !S.loaded; if ($("titleEditBtn")) $("titleEditBtn").hidden = !S.isOwner;
+  $("exportBtn").hidden = !S.loaded || !n; $("setBtn").hidden = !S.isOwner || !S.loaded; $("vCircles").hidden = (S.perms && S.perms.circles === "none") || (!S.canCirc && !S.groups.size);
+  if (S.famNone){ ["vHome","vTree","vFan","vList","vTime","vPhotos","exportBtn"].forEach(i => $(i).hidden = true); $("stats").textContent = " "; if (!["bday","circles","profile"].includes(S.view)) S.view = "circles"; }
   const today = S.loaded ? upcoming(0).length : 0;
   $("todayBtn").hidden = !today;
   if (today) $("todayBtn").innerHTML = `<span class="today-dot">${today}</span>${esc(t("todayDates"))}`;
@@ -2802,12 +2854,13 @@ var renderChrome = function(){
 function renderState(){
   const st = $("state");
   if (!S.loaded){ st.hidden = false; return; }
-  if (famVals().length){ st.hidden = true; return; }
+  if (S.locked){ st.hidden = false; st.innerHTML = `<div class="box"><svg class="mark" aria-hidden="true"><use href="#star"/></svg><h2>${esc(t("lockT"))}</h2><p>${esc(t("signin"))}</p><button class="btn primary" id="lockGo">${esc(t("login"))}</button></div>`; $("lockGo").onclick = () => openLogin(); return; }
+  if (famVals().length || S.famNone){ st.hidden = true; return; }
   st.hidden = false;
   st.innerHTML = `<div class="box"><svg class="mark" aria-hidden="true"><use href="#star"/></svg>
-    <h2>${esc(t(S.canEdit ? "emptyOT" : "emptyVT"))}</h2><p>${esc(t(S.canEdit ? "emptyOP" : "emptyVP"))}</p>
-    ${S.canEdit ? `<button class="btn primary" id="emptyAdd">${esc(t("emptyAdd"))}</button>` : ""}</div>`;
-  if (S.canEdit) $("emptyAdd").onclick = () => openForm(null, {});
+    <h2>${esc(t(S.canFam ? "emptyOT" : "emptyVT"))}</h2><p>${esc(t(S.canFam ? "emptyOP" : "emptyVP"))}</p>
+    ${S.canFam ? `<button class="btn primary" id="emptyAdd">${esc(t("emptyAdd"))}</button>` : ""}</div>`;
+  if (S.canFam) $("emptyAdd").onclick = () => openForm(null, {});
 }
 function render(fit){
   S.relCache = null;
@@ -2903,9 +2956,9 @@ function renderSheet(){
       ${!isDead(p) ? `<button class="btn" id="grP">🎂 ${esc(t("grBtn"))}</button>` : ""}
       <button class="btn" id="shareP">${esc(t("shareT"))}</button>
       ${isC ? "" : `<button class="btn" id="pdfP">PDF</button>`}
-      ${S.canEdit ? `<button class="btn primary" id="edit">${esc(t("edit"))}</button>` : ""}
+      ${canEditP(p) ? `<button class="btn primary" id="edit">${esc(t("edit"))}</button>` : ""}
     </div>
-    ${S.canEdit ? `${isC ? "" : `<div class="addrow"><span class="lbl">${esc(t("addLbl"))}</span>
+    ${canEditP(p) ? `${isC ? "" : `<div class="addrow"><span class="lbl">${esc(t("addLbl"))}</span>
       ${!fa ? `<button class="btn sm" data-rel="father">+ ${esc(t("father"))}</button>` : ""}
       ${!mo ? `<button class="btn sm" data-rel="mother">+ ${esc(t("mother"))}</button>` : ""}
       <button class="btn sm" data-rel="spouse">+ ${esc(t("spouse"))}</button>
@@ -2929,7 +2982,7 @@ function renderSheet(){
     if (S.view === "fan"){ S.view = "tree"; S.rootId = topOf(p.id); } else { S.view = "fan"; S.focusId = p.id; }
     store.set("shajara.view", S.view); render(true); locate(p.id);
   };
-  if (!S.canEdit) return;
+  if (!canEditP(p)) return;
   $("edit").onclick = () => openForm(p.id);
   sh.querySelectorAll("[data-rel]").forEach(b => b.onclick = () => addRelative(p.id, b.dataset.rel));
   const del = $("del");
@@ -3399,7 +3452,7 @@ function openExport(tab = "poster"){
     <section data-pane="backup"${tab === "backup" ? "" : " hidden"} style="display:grid;gap:16px">
       <p style="margin:0;max-width:65ch">${esc(t("bkIntro"))}</p>
       <div class="actions"><button class="btn gold" id="bkSave">${esc(t("bkSave"))}</button>
-        ${S.canEdit ? `<label class="btn file-btn">${esc(t("bkRestore"))}<input type="file" id="bkFile" accept="application/json,.json"></label>` : ""}</div>
+        ${S.isOwner ? `<label class="btn file-btn">${esc(t("bkRestore"))}<input type="file" id="bkFile" accept="application/json,.json"></label>` : ""}</div>
       <div id="bkMsg"></div>
     </section>
   </div>`;
@@ -3564,14 +3617,15 @@ function renderAuth(){
   const b = $("authBtn"); if (!b) return;
   if (!window.SJ || !S.loaded){ b.hidden = true; return; }
   b.hidden = false;
-  b.innerHTML = SJ.admin
+  b.innerHTML = (SJ.admin || SJ.loggedIn)
     ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/></svg><span>${esc(t("logout"))}</span>`
     : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg><span>${esc(t("login"))}</span>`;
 }
 function openLogin(){
   const m = $("modal");
   m.innerHTML = `<form class="form" id="lf" novalidate style="width:min(420px,100%)">
-    <h2>${esc(t("loginTitle"))}</h2><p class="hint">${esc(t(SJ.configured ? "loginHint" : "loginNoPw"))}</p>
+    <h2>${esc(t("loginTitle"))}</h2><p class="hint">${esc(t(SJ.configured ? "loginHint2" : "loginNoPw"))}</p>
+    <label class="f-field"><span>${esc(t("loginL"))}</span><input id="llg" autocomplete="username" autocapitalize="off" placeholder="owner"></label>
     <label class="f-field"><span>${esc(t("pw"))}</span><input id="lpw" type="password" autocomplete="current-password" required></label>
     <p class="err" id="lerr" hidden></p>
     <div class="form-foot"><button type="button" class="btn" id="lcancel">${esc(t("cancel"))}</button><button class="btn primary" id="lgo">${esc(t("login"))}</button></div></form>`;
@@ -3581,12 +3635,12 @@ function openLogin(){
   $("lf").onsubmit = async e => {
     e.preventDefault(); const pw = $("lpw").value; if (!pw) return;
     $("lgo").disabled = true; $("lgo").textContent = t("loginBusy");
-    try { if (await SJ.login(pw)){ location.reload(); return; } $("lerr").textContent = t("loginErr"); }
+    try { if (await SJ.login(pw, $("llg").value.trim())){ location.reload(); return; } $("lerr").textContent = t("loginErr"); }
     catch(x){ $("lerr").textContent = t(SJ.configured ? "errSave" : "loginNoPw"); }
     $("lerr").hidden = false; $("lgo").disabled = false; $("lgo").textContent = t("login");
   };
 }
-$("authBtn").onclick = async () => { if (!window.SJ) return; if (SJ.admin){ await SJ.logout(); location.reload(); } else openLogin(); };
+$("authBtn").onclick = async () => { if (!window.SJ) return; if (SJ.admin || SJ.loggedIn){ await SJ.logout(); location.reload(); } else openLogin(); };
 const _renderChrome = renderChrome;
 renderChrome = function(){ _renderChrome(); renderAuth(); };
 
@@ -3604,6 +3658,9 @@ Theme.init(); renderChrome(); FX.start();
   S.db = db; S.assets = assets; S.downloads = downloads;
   S.canEdit = user ? await user.canEdit() : false;
   S.isOwner = user ? await user.isOwner() : false;
+  S.perms = window.SJ && SJ.perms ? SJ.perms : null; S.locked = !!(window.SJ && SJ.locked);
+  S.canFam = S.isOwner || !S.perms ? S.canEdit : S.perms.family === "edit"; S.canCirc = S.isOwner || !S.perms ? S.canEdit : S.perms.circles === "edit";
+  S.famNone = !!(S.perms && !S.isOwner && S.perms.family === "none");
   S.meId = store.get("shajara.me");
   db.doc("meta/info").onSnapshot(snap => {
     S.meta = snap.exists ? { ...snap.data() } : {};
@@ -3614,7 +3671,7 @@ Theme.init(); renderChrome(); FX.start();
   db.collection("people").onSnapshot(snap => {
     S.people = new Map(snap.docs.map(d => [d.id, { id:d.id, ...d.data() }]));
     if (S.meId && !P(S.meId)) S.meId = null;
-    const firstLoad = !S.loaded; S.loaded = true; render(firstLoad); if (firstLoad) openHash();
+    const firstLoad = !S.loaded; S.loaded = true; S.locked = !!(window.SJ && SJ.locked); render(firstLoad); if (firstLoad) openHash();
   }, () => { S.loaded = true; $("state").hidden = false; $("state").innerHTML = `<div class="box"><p>${esc(t("errSave"))}</p></div>`; });
 })();
 </script>

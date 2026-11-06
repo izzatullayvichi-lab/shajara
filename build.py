@@ -21,14 +21,15 @@ function renderAuth(){
   const b = $("authBtn"); if (!b) return;
   if (!window.SJ || !S.loaded){ b.hidden = true; return; }
   b.hidden = false;
-  b.innerHTML = SJ.admin
+  b.innerHTML = (SJ.admin || SJ.loggedIn)
     ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/></svg><span>${esc(t("logout"))}</span>`
     : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></svg><span>${esc(t("login"))}</span>`;
 }
 function openLogin(){
   const m = $("modal");
   m.innerHTML = `<form class="form" id="lf" novalidate style="width:min(420px,100%)">
-    <h2>${esc(t("loginTitle"))}</h2><p class="hint">${esc(t(SJ.configured ? "loginHint" : "loginNoPw"))}</p>
+    <h2>${esc(t("loginTitle"))}</h2><p class="hint">${esc(t(SJ.configured ? "loginHint2" : "loginNoPw"))}</p>
+    <label class="f-field"><span>${esc(t("loginL"))}</span><input id="llg" autocomplete="username" autocapitalize="off" placeholder="owner"></label>
     <label class="f-field"><span>${esc(t("pw"))}</span><input id="lpw" type="password" autocomplete="current-password" required></label>
     <p class="err" id="lerr" hidden></p>
     <div class="form-foot"><button type="button" class="btn" id="lcancel">${esc(t("cancel"))}</button><button class="btn primary" id="lgo">${esc(t("login"))}</button></div></form>`;
@@ -38,12 +39,12 @@ function openLogin(){
   $("lf").onsubmit = async e => {
     e.preventDefault(); const pw = $("lpw").value; if (!pw) return;
     $("lgo").disabled = true; $("lgo").textContent = t("loginBusy");
-    try { if (await SJ.login(pw)){ location.reload(); return; } $("lerr").textContent = t("loginErr"); }
+    try { if (await SJ.login(pw, $("llg").value.trim())){ location.reload(); return; } $("lerr").textContent = t("loginErr"); }
     catch(x){ $("lerr").textContent = t(SJ.configured ? "errSave" : "loginNoPw"); }
     $("lerr").hidden = false; $("lgo").disabled = false; $("lgo").textContent = t("login");
   };
 }
-$("authBtn").onclick = async () => { if (!window.SJ) return; if (SJ.admin){ await SJ.logout(); location.reload(); } else openLogin(); };
+$("authBtn").onclick = async () => { if (!window.SJ) return; if (SJ.admin || SJ.loggedIn){ await SJ.logout(); location.reload(); } else openLogin(); };
 const _renderChrome = renderChrome;
 renderChrome = function(){ _renderChrome(); renderAuth(); };
 '''

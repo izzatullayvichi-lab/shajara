@@ -23,6 +23,7 @@ function init(env) {
       env.DB.prepare("CREATE TABLE IF NOT EXISTS people (id TEXT PRIMARY KEY, data TEXT NOT NULL, updated INTEGER NOT NULL)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, data TEXT NOT NULL)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS groups (id TEXT PRIMARY KEY, data TEXT NOT NULL, updated INTEGER NOT NULL)"),
+      env.DB.prepare("CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, login TEXT NOT NULL UNIQUE, data TEXT NOT NULL, updated INTEGER NOT NULL)"),
       env.DB.prepare("CREATE TABLE IF NOT EXISTS photos (id TEXT PRIMARY KEY, type TEXT NOT NULL, b64 TEXT NOT NULL, created INTEGER NOT NULL)"),
     ]);
     const seeded = await env.DB.prepare("SELECT k FROM meta WHERE k = 'seeded'").first();
@@ -60,6 +61,51 @@ async function isAdmin(req, env) {
   if (!exp || !sig || +exp < Date.now()) return false;
   return safeEq(sig, await hmac(env.ADMIN_PASSWORD, "admin." + exp));
 }
+/* ---------- yordamchi hisoblar: parol xeshi, sessiya, ruxsatlar ---------- */
+async function pbkdf2(password, saltHex) {
+  const salt = Uint8Array.from(saltHex.match(/../g).map(h => parseInt(h, 16)));
+  const key = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveBits"]);
+  const bits = await crypto.subtle.deriveBits({ name: "PBKDF2", salt, iterations: 100000, hash: "SHA-256" }, key, 256);
+  return [...new Uint8Array(bits)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+const PERM_MODES = ["none", "view", "edit"];
+function cleanPerms(p) {
+  p = p && typeof p === "object" ? p : {};
+  const fam = PERM_MODES.includes(p.family) ? p.family : "none", cir = PERM_MODES.includes(p.circles) ? p.circles : "none";
+  const br = p.branches === "all" ? "all" : Array.isArray(p.branches) ? [...new Set(p.branches.filter(x => typeof x === "string" && ID_RE.test(x)))].slice(0, 200) : [];
+  return { family: fam, branches: fam === "none" ? [] : br, circles: cir };
+}
+// foydalanuvchi sessiyasi: "u.<id>.<exp>.<sig>", sig xeshning boshiga bog'langan — parol almashsa eski sessiyalar o'chadi
+async function getUser(req, env) {
+  if (!env.ADMIN_PASSWORD) return null;
+  const v = readCookie(req, COOKIE); if (!v || !v.startsWith("u.")) return null;
+  const [, uid, exp, sig] = v.split(".");
+  if (!uid || !exp || !sig || +exp < Date.now() || !ID_RE.test(uid)) return null;
+  const row = await env.DB.prepare("SELECT id, login, data FROM users WHERE id = ?").bind(uid).first(); if (!row) return null;
+  const d = JSON.parse(row.data); if (d.disabled) return null;
+  if (!safeEq(sig, await hmac(env.ADMIN_PASSWORD, "user." + uid + "." + exp + "." + String(d.hash).slice(0, 12)))) return null;
+  return { id: row.id, login: row.login, name: d.name || row.login, perms: cleanPerms(d.perms) };
+}
+// ko'rinadigan odamlar: oila (butun yoki tanlangan shoxlar: avlodlar + turmush o'rtoqlari) va do'stlar davrasi
+function computeScope(people, perms) {
+  const byId = new Map(people.map(p => [p.id, p])), fam = new Set(), cir = new Set();
+  for (const p of people) if (p.circle) { if (perms.circles !== "none") cir.add(p.id); }
+  if (perms.family !== "none") {
+    if (perms.branches === "all") { for (const p of people) if (!p.circle) fam.add(p.id); }
+    else {
+      const kids = new Map();
+      for (const p of people) for (const par of [p.fatherId, p.motherId]) if (par) { if (!kids.has(par)) kids.set(par, []); kids.get(par).push(p.id); }
+      const q = perms.branches.filter(id => byId.has(id) && !byId.get(id).circle);
+      for (const r of q) fam.add(r);
+      while (q.length) {
+        const id = q.pop(), p = byId.get(id);
+        for (const k of kids.get(id) || []) if (!fam.has(k)) { fam.add(k); q.push(k); }
+        for (const s of (p && p.spouses) || []) if (byId.has(s) && !byId.get(s).circle) fam.add(s);
+      }
+    }
+  }
+  return { fam, cir, byId };
+}
 const secureFlag = req => new URL(req.url).protocol === "https:" ? "; Secure" : "";
 
 /* ---------- privacy: viewers see only the birth year of living people ---------- */
@@ -84,6 +130,35 @@ async function readBodyJson(req) {
 function b64FromBuf(buf) { let s = ""; const u = new Uint8Array(buf); for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); }
 function randomId(n = 16) { return [...crypto.getRandomValues(new Uint8Array(n))].map(b => b.toString(16).padStart(2, "0")).join(""); }
 
+/* yordamchi hisob yozishi mumkinmi? null = ha, aks holda sabab matni */
+async function guardWrite(env, user, tbl, id, method, body) {
+  const pm = user.perms;
+  if (tbl === "groups") return pm.circles === "edit" ? null : "Do'stlar davrasini tahrirlash ruxsati yo'q";
+  const rows = (await env.DB.prepare("SELECT id, data FROM people").all()).results || [];
+  const people = rows.map(r => ({ id: r.id, ...JSON.parse(r.data) }));
+  const sc = computeScope(people, pm), cur = sc.byId.get(id) || null;
+  const isCircleDoc = cur ? !!cur.circle : !!body.circle;
+  if (cur && method !== "DELETE" && body.circle !== undefined && !!body.circle !== !!cur.circle) return "Turini o'zgartirib bo'lmaydi";
+  if (isCircleDoc) {
+    if (pm.circles !== "edit") return "Do'stlar davrasini tahrirlash ruxsati yo'q";
+    if (body.fatherId || body.motherId || (body.spouses && body.spouses.length)) return "Do'st qarindoshlik bog'lamaydi";
+    return null;
+  }
+  if (pm.family !== "edit") return "Oilani tahrirlash ruxsati yo'q";
+  const inFam = x => sc.fam.has(x);
+  const refsOk = () => [body.fatherId, body.motherId, ...(Array.isArray(body.spouses) ? body.spouses : [])].filter(Boolean).every(inFam);
+  if (cur) {
+    if (!inFam(id)) return "Bu shox sizga ochiq emas";
+    if (method === "DELETE") return null;
+    return refsOk() ? null : "Bog'langan odam sizga ochiq emas";
+  }
+  if (method === "DELETE") return null;
+  const linked = [body.fatherId, body.motherId, ...(Array.isArray(body.spouses) ? body.spouses : [])].filter(Boolean);
+  if (pm.branches === "all" && !linked.length) return null;
+  if (!linked.length || !linked.some(inFam)) return "Yangi odamni ruxsat etilgan shoxga bog'lang";
+  return refsOk() ? null : "Bog'langan odam sizga ochiq emas";
+}
+
 export async function onRequest(ctx) {
   const { request: req, env, params } = ctx;
   const seg = [].concat(params.path || []);
@@ -91,28 +166,38 @@ export async function onRequest(ctx) {
   try {
     await init(env);
     const admin = await isAdmin(req, env);
+    const user = admin ? null : await getUser(req, env);
     const mutating = method !== "GET" && method !== "HEAD";
     if (mutating && req.headers.get("x-sj") !== "1") return fail(400, "Bad request");
 
     // GET /api/me
-    if (seg[0] === "me" && method === "GET") return json({ admin, configured: !!env.ADMIN_PASSWORD });
+    if (seg[0] === "me" && method === "GET") return json({ admin, user: user ? { id: user.id, name: user.name, perms: user.perms } : null, configured: !!env.ADMIN_PASSWORD });
 
-    // POST /api/login {password}
+    // POST /api/login {login?, password} — login bo'sh yoki "owner" bo'lsa: egasi (ADMIN_PASSWORD); aks holda yordamchi hisob
     if (seg[0] === "login" && method === "POST") {
       if (!env.ADMIN_PASSWORD) return fail(503, "ADMIN_PASSWORD o'rnatilmagan");
-      const { password } = await readBodyJson(req);
-      const ok = typeof password === "string" && safeEq(await hmac("cmp", password), await hmac("cmp", env.ADMIN_PASSWORD));
-      if (!ok) { await new Promise(r => setTimeout(r, 1200)); return fail(401, "Parol noto'g'ri"); }
+      const { password, login } = await readBodyJson(req), lg = String(login || "").trim().toLowerCase();
+      if (typeof password !== "string") return fail(400, "Parol kerak");
+      const cookie = v => `${COOKIE}=${v}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${SESSION_DAYS * 86400}${secureFlag(req)}`;
       const exp = Date.now() + SESSION_DAYS * 864e5;
-      const v = exp + "." + await hmac(env.ADMIN_PASSWORD, "admin." + exp);
-      return json({ admin: true }, 200, { "set-cookie": `${COOKIE}=${v}; Path=/; HttpOnly; SameSite=Strict; Max-Age=${SESSION_DAYS * 86400}${secureFlag(req)}` });
+      if (!lg || lg === "owner") {
+        const ok = safeEq(await hmac("cmp", password), await hmac("cmp", env.ADMIN_PASSWORD));
+        if (!ok) { await new Promise(r => setTimeout(r, 1200)); return fail(401, "Parol noto'g'ri"); }
+        return json({ admin: true }, 200, { "set-cookie": cookie(exp + "." + await hmac(env.ADMIN_PASSWORD, "admin." + exp)) });
+      }
+      const row = await env.DB.prepare("SELECT id, data FROM users WHERE login = ?").bind(lg).first();
+      const d = row ? JSON.parse(row.data) : null;
+      const ok = d && !d.disabled && safeEq(await pbkdf2(password, d.salt), d.hash);
+      if (!ok) { await new Promise(r => setTimeout(r, 1200)); return fail(401, "Login yoki parol noto'g'ri"); }
+      return json({ admin: false, user: { id: row.id, name: d.name } }, 200, { "set-cookie": cookie(`u.${row.id}.${exp}.` + await hmac(env.ADMIN_PASSWORD, "user." + row.id + "." + exp + "." + String(d.hash).slice(0, 12))) });
     }
     // POST /api/logout
     if (seg[0] === "logout" && method === "POST")
       return json({ admin: false }, 200, { "set-cookie": `${COOKIE}=; Path=/; HttpOnly; SameSite=Strict; Max-Age=0${secureFlag(req)}` });
 
     // GET /api/data
-    // Egasi: hammasi. Mehmon: tirik odamlarning kun/oyi yashirin (meta.birthPublic bo'lmasa); do'stlar davrasi faqat meta.circlesPublic bo'lsa.
+    // Egasi: hammasi. Yordamchi: faqat ruxsat etilgan shox/bo'lim. Mehmon: ochiq bo'lsa (meta.publicView !== false) oila,
+    // tirik odamlarning kun/oyi va telefonlari yashirin (meta.birthPublic / phonesPublic bo'lmasa); do'stlar davrasi faqat meta.circlesPublic bo'lsa.
     if (seg[0] === "data" && method === "GET") {
       const rows = (await env.DB.prepare("SELECT id, data, updated FROM people").all()).results || [];
       const grows = (await env.DB.prepare("SELECT id, data, updated FROM groups").all()).results || [];
@@ -121,13 +206,37 @@ export async function onRequest(ctx) {
       let upd = 0;
       let people = rows.map(r => { upd = Math.max(upd, r.updated); return { id: r.id, ...JSON.parse(r.data) }; });
       let groups = grows.map(r => { upd = Math.max(upd, r.updated); return { id: r.id, ...JSON.parse(r.data) }; });
+      let me = admin ? { role: "owner" } : null;
       if (!admin) {
-        if (!meta.circlesPublic) { people = people.filter(p => !p.circle); groups = []; }
-        people = people.map(p => forViewer(p, !!meta.birthPublic));
-        if (!meta.phonesPublic) people = people.map(p => { if (!p.phone && !p.tg && !p.ig) return p; const { phone, tg, ig, ...rest } = p; return rest; });
         delete meta.meId;
+        const strip = p => { if (!p.phone && !p.tg && !p.ig) return p; const { phone, tg, ig, ...rest } = p; return rest; };
+        if (user) {
+          me = { role: "user", name: user.name, perms: user.perms };
+          const sc = computeScope(people, user.perms);
+          people = people.filter(p => sc.fam.has(p.id) || sc.cir.has(p.id));
+          const vis = new Set(people.map(p => p.id));
+          groups = user.perms.circles === "none" ? [] : groups.map(g => ({ ...g, members: (g.members || []).filter(x => vis.has(x.id)) }));
+          people = people.map(p => {
+            const canEditP = p.circle ? user.perms.circles === "edit" : user.perms.family === "edit";
+            if (canEditP) return p;
+            p = forViewer(p, !!meta.birthPublic); return meta.phonesPublic ? p : strip(p);
+          });
+        } else if (meta.publicView === false) {
+          return json({ people: [], groups: [], meta: { title: meta.title, publicView: false }, rev: "locked", admin: false, locked: true });
+        } else {
+          if (!meta.circlesPublic) { people = people.filter(p => !p.circle); groups = []; }
+          people = people.map(p => forViewer(p, !!meta.birthPublic));
+          if (!meta.phonesPublic) people = people.map(strip);
+        }
       }
-      return json({ people, groups, meta, rev: upd + ":" + people.length + ":" + groups.length + ":" + JSON.stringify(meta).length, admin });
+      return json({ people, groups, meta, me, rev: upd + ":" + people.length + ":" + groups.length + ":" + JSON.stringify(meta).length + ":" + (user ? user.id : ""), admin });
+    }
+
+    // GET /api/users (faqat egasi)
+    if (seg[0] === "users" && method === "GET") {
+      if (!admin) return fail(403, "Faqat egasi");
+      const us = (await env.DB.prepare("SELECT id, login, data FROM users ORDER BY login").all()).results || [];
+      return json({ users: us.map(r => { const d = JSON.parse(r.data); return { id: r.id, login: r.login, name: d.name, perms: cleanPerms(d.perms), disabled: !!d.disabled }; }) });
     }
 
     // GET /api/stats — baza hajmi (faqat egasi). D1 bepul tarifi: bitta baza 500 MB, qator 2 MB, akkaunt bo'yicha 5 GB.
@@ -157,13 +266,50 @@ export async function onRequest(ctx) {
     }
 
     if (!mutating) return fail(404, "Not found");
-    if (!admin) return fail(403, "Tahrirlash uchun kiring");
+    const canAny = admin || (user && (user.perms.family === "edit" || user.perms.circles === "edit"));
+    if (!canAny) return fail(403, "Tahrirlash uchun kiring");
+
+    // ---- foydalanuvchilar (faqat egasi) ----
+    if (seg[0] === "users") {
+      if (!admin) return fail(403, "Faqat egasi");
+      if (seg.length === 1 && method === "GET") { /* quyida GET bo'limida */ }
+      if (seg[1] && ID_RE.test(seg[1]) && seg.length === 2) {
+        const id = seg[1], now = Date.now();
+        if (method === "DELETE") { await env.DB.prepare("DELETE FROM users WHERE id = ?").bind(id).run(); return json({ ok: true }); }
+        if (method === "PUT") {
+          const b = await readBodyJson(req), lg = String(b.login || "").trim().toLowerCase();
+          if (!/^[a-z0-9._-]{3,32}$/.test(lg) || lg === "owner") return fail(400, "Login 3–32 belgi: a–z, 0–9, . _ -");
+          const cur = await env.DB.prepare("SELECT data FROM users WHERE id = ?").bind(id).first(), old = cur ? JSON.parse(cur.data) : null;
+          let salt = old && old.salt, hash = old && old.hash;
+          if (b.password) {
+            if (typeof b.password !== "string" || b.password.length < 8) return fail(400, "Parol kamida 8 belgi");
+            salt = randomId(16); hash = await pbkdf2(b.password, salt);
+          }
+          if (!hash) return fail(400, "Parol kerak");
+          const dup = await env.DB.prepare("SELECT id FROM users WHERE login = ? AND id != ?").bind(lg, id).first();
+          if (dup) return fail(409, "Bu login band");
+          const data = { name: String(b.name || lg).slice(0, 80), salt, hash, perms: cleanPerms(b.perms), disabled: !!b.disabled, createdAt: (old && old.createdAt) || now };
+          await env.DB.prepare("INSERT INTO users (id, login, data, updated) VALUES (?1, ?2, ?3, ?4) ON CONFLICT(id) DO UPDATE SET login = ?2, data = ?3, updated = ?4").bind(id, lg, JSON.stringify(data), now).run();
+          return json({ ok: true });
+        }
+      }
+      return fail(404, "Not found");
+    }
+    if (seg[0] === "meta" && !admin) return fail(403, "Faqat egasi");
+
 
     // PUT/PATCH/DELETE /api/people/:id  va  /api/groups/:id
     if ((seg[0] === "people" || seg[0] === "groups") && seg[1] && ID_RE.test(seg[1]) && seg.length === 2) {
       const tbl = seg[0] === "groups" ? "groups" : "people", id = seg[1], now = Date.now();
-      if (method === "DELETE") { await env.DB.prepare(`DELETE FROM ${tbl} WHERE id = ?`).bind(id).run(); return json({ ok: true }); }
-      const body = await readBodyJson(req); delete body.id;
+      if (method === "DELETE") {
+        if (user) { const g = await guardWrite(env, user, tbl, id, "DELETE", {}); if (g) return fail(403, g); }
+        await env.DB.prepare(`DELETE FROM ${tbl} WHERE id = ?`).bind(id).run(); return json({ ok: true });
+      }
+      const body = method === "DELETE" ? {} : await readBodyJson(req); delete body.id;
+      if (user) {
+        const g = await guardWrite(env, user, tbl, id, method, body);
+        if (g) return fail(403, g);
+      }
       if (method === "PUT") {
         await env.DB.prepare(`INSERT INTO ${tbl} (id, data, updated) VALUES (?1, ?2, ?3) ON CONFLICT(id) DO UPDATE SET data = ?2, updated = ?3`).bind(id, JSON.stringify(body), now).run();
         return json({ ok: true });
