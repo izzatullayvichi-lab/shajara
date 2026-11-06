@@ -487,6 +487,7 @@ body{background:radial-gradient(900px 620px at 0% 0%,rgba(60,170,120,.28),transp
 #addBtn:hover{color:#fff;filter:brightness(1.15)}
 #zFit{box-shadow:inset 0 0 0 2px var(--green);color:var(--green)}
 /* blood-relative spouses (quda between relatives) */
+.card.unk{border-style:dashed;opacity:.82}.card.unk .av{filter:grayscale(.6)}
 .card.ghost{border-style:dashed;background:linear-gradient(180deg,color-mix(in srgb,var(--gold-soft) 55%,var(--card)),var(--card))}
 .card.ghost::after{content:"↔";display:grid;place-items:center;color:#fff;font:700 12px/1 var(--sans)}
 .gh{position:absolute;z-index:3;transform:translate(-50%,-50%);padding:3px 11px;border-radius:999px;border:1.5px dashed var(--gold);background:var(--card);color:var(--gold);font:600 12px/1.2 var(--sans);box-shadow:var(--shadow-s);white-space:nowrap;transition:transform .2s var(--ease),background .2s}
@@ -1100,7 +1101,7 @@ function ageOf(p, at = new Date()){
   if (b.m){ const em = end.getMonth()+1, ed = end.getDate(); if (em < b.m || (em === b.m && b.d && ed < b.d)) a--; }
   return a >= 0 && a < 130 ? a : null;
 }
-function first(p){ return dn(p.firstName) || t("noName"); }
+function first(p){ return p.unknown ? t("unkName") : (dn(p.firstName) || t("noName")); }
 function full(p){ return [p.lastName, p.firstName, p.patronymic].filter(Boolean).map(dn).join(" ") || t("noName"); }
 function short(p){ return [p.firstName, p.lastName].filter(Boolean).map(dn).join(" ") || t("noName"); }
 function initials(p){ const a = dn(p.firstName||"").charAt(0), b = dn(p.lastName||"").charAt(0); return (a + b).toUpperCase() || "?"; }
@@ -1493,7 +1494,7 @@ function renderTree(){
   let cards = "";
   for (const n of Lt.nodes){
     const p = P(n.id), rel = relOf(n.id);
-    cards += `<button class="card ${p.gender === "f" ? "f" : "m"}${n.inLaw ? " in-law" : ""}${n.ghost ? " ghost" : ""}${S.selId === p.id ? " sel" : ""}${S.meId === p.id ? " me" : ""}${hl ? (hl.rel.has(p.id) ? (hl.chain.has(p.id) ? " anc" : "") : " dim") : ""}" data-id="${esc(p.id)}" title="${esc(full(p) + (yrs(p) ? " · " + yrs(p) : "") + (rel ? " · " + dn(rel.term) : ""))}" style="left:${n.x + padL}px;top:${n.y + pad}px;width:${TD.w}px;height:${TD.h}px">
+    cards += `<button class="card ${p.gender === "f" ? "f" : "m"}${n.inLaw ? " in-law" : ""}${n.ghost ? " ghost" : ""}${p.unknown ? " unk" : ""}${S.selId === p.id ? " sel" : ""}${S.meId === p.id ? " me" : ""}${hl ? (hl.rel.has(p.id) ? (hl.chain.has(p.id) ? " anc" : "") : " dim") : ""}" data-id="${esc(p.id)}" title="${esc(full(p) + (yrs(p) ? " · " + yrs(p) : "") + (rel ? " · " + dn(rel.term) : ""))}" style="left:${n.x + padL}px;top:${n.y + pad}px;width:${TD.w}px;height:${TD.h}px">
       ${rel ? `<span class="rel" title="${esc(dn(rel.term))}">${esc(dn(rel.term))}</span>` : ""}
       ${avatar(p)}<span class="nm">${esc(first(p))}</span>${p.lastName ? `<span class="sn">${esc(dn(p.lastName))}</span>` : ""}<span class="yr">${yrs(p) ? "(" + esc(yrs(p)) + ")" : "&nbsp;"}</span></button>`;
     if (!n.ghost) cards += QA(p, n.x + padL + TD.w - 10, n.y + pad + 34);
@@ -1911,6 +1912,7 @@ Object.assign(L, { viewBday:"Tug'ilgan kunlar", bdTitle:"Tug'ilgan kunlargacha",
 function birthdayList(){
   const now = new Date(), t0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), out = [], missing = []; let partial = 0;
   for (const p of S.people.values()){
+    if (p.unknown) continue;
     const b = parseDate(p.birthDate); if (!(b?.d && b?.m)){ partial++; if (!isDead(p)) missing.push(p); continue; }
     let yy = t0.getFullYear(), dt;
     for (let k = 0; k < 2; k++){ let dd = b.d; if (b.m === 2 && dd === 29 && !isLeap(yy)) dd = 28; dt = new Date(yy, b.m - 1, dd); if (dt >= t0) break; yy++; }
@@ -2335,7 +2337,7 @@ function fmtPhone(x){ const d = x.replace(/\D/g, ""); if (/^998\d{9}$/.test(d)) 
 function telHref(x){ const d = x.replace(/[^\d+]/g, ""); return "tel:" + (/^\+/.test(d) ? d : /^998\d{9}$/.test(d) ? "+" + d : /^\d{9}$/.test(d) ? "+998" + d : d); }
 const phoneHtml = p => ({ html: phoneList(p).map(x => `<a class="tel" href="${esc(telHref(x))}">${esc(fmtPhone(x))}</a>`).join(" · ") });
 const fv = v => v && v.html ? v.html : esc(v);
-const famVals = () => [...S.people.values()].filter(p => !p.circle);
+const famVals = () => [...S.people.values()].filter(p => !p.circle && !p.unknown);
 const grpTitle = g => g.name || [g.inst, g.label].filter(Boolean).join(", ") || t(KCAP(g.kind));
 const grpYears = g => g.from && g.to ? t("gYears", { a:g.from, b:g.to }) : g.to ? String(g.to) : g.from ? t("gYearsFrom", { a:g.from }) : "";
 const groupsOf = pid => [...S.groups.values()].filter(g => (g.members || []).some(m => m.id === pid)).sort((a, b) => (+b.to || 0) - (+a.to || 0));
@@ -2672,7 +2674,7 @@ function renderProfile(){
   } else pane = `<div class="pf-circ">${circTabHtml(p)}</div>`;
   const tags = [circ ? t("cFriendTag") : (p.gender === "f" ? t("female") : t("male")), g0 != null && !circ ? genLbl(g0) : "", p.occupation ? dn(p.occupation) : "", dead ? t("stDead") : t("stLive")].filter(Boolean);
   $("list").innerHTML = `<div class="prof"><div class="pf-bar"><button class="btn sm" id="pfBack">← ${esc(t("profBack"))}</button><span class="tb-spacer"></span>
-      ${phoneList(p).length ? `<a class="btn sm" href="${esc(telHref(phoneList(p)[0]))}">📞 ${esc(t("callB"))}</a>` : ""}${!dead ? `<button class="btn sm" id="pfGr">🎂 ${esc(t("grBtn"))}</button>` : ""}<button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${canEditP(p) ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
+      ${phoneList(p).length ? `<a class="btn sm" href="${esc(telHref(phoneList(p)[0]))}">📞 ${esc(t("callB"))}</a>` : ""}${!dead ? `<button class="btn sm" id="pfGr">🎂 ${esc(t("grBtn"))}</button>` : ""}<button class="btn sm" id="pfShare">${esc(t("shareT"))}</button><button class="btn sm" id="pfPdf">PDF</button>${circ ? "" : `<button class="btn sm" id="pfTree">${esc(t("showTree"))}</button>`}${canEditP(p) && !circ ? `<button class="btn sm" id="pfLnk">🔗 ${esc(t("lnkBtn"))}</button>` : ""}${canEditP(p) ? `<button class="btn sm primary" id="pfEdit">${esc(t("edit"))}</button>` : ""}</div>
     <section class="pf-hero reveal"><div class="portrait big">${avatar(p)}</div><div class="pf-id"><h1>${esc(full(p))}</h1><div class="psub">${esc(yrs(p))}${age != null && !dead ? ` · ${age} ${esc(t("age"))}` : ""}</div>
       <div class="pf-tags">${tags.map(x => `<i class="ptag">${esc(x)}</i>`).join("")}</div>${quote ? `<blockquote>“${esc(quote)}”</blockquote>` : ""}</div></section>
     <div class="stabs pf-tabs" role="tablist">${tabs.map(([k, l]) => `<button role="tab" data-pt="${k}" aria-selected="${S.ptab === k}">${esc(t(l))}</button>`).join("")}</div>
@@ -2685,13 +2687,14 @@ function renderProfile(){
   $("pfShare").onclick = () => shareLink(p.id); $("pfPdf").onclick = () => { S.selId = p.id; openExport("pdf"); };
   if ($("pfTree")) $("pfTree").onclick = () => { S.selId = p.id; S.rootId = topOf(p.id); setView("tree"); };
   if ($("pfEdit")) $("pfEdit").onclick = () => openForm(p.id);
+  if ($("pfLnk")) $("pfLnk").onclick = () => openLink(p.id);
   reveal(root);
 }
 function openProfile(id){ S.selId = null; S.profId = id; S.ptab = "info"; if (S.view !== "profile") S.prevView = S.view; S.view = "profile"; render(true); }
 
 
 /* ================= Greetings: 30 templates, Telegram / Instagram / SMS / WhatsApp ================= */
-Object.assign(L, { pWall:"Devor (nafis, tavsiya)", setPubVc:"Saytni yopsangiz, havolani olgan odamlar ham shajarani ko'ra olmaydi — faqat login qilganlar kiradi. Davom etasizmi?", lockT:"Yopiq shajara", usersT:"Foydalanuvchilar", usersSub:"Yordamchi hisoblar: faqat o'z shoxi yoki faqat do'stlar bo'limiga kiradi.", usNew:"Yangi hisob", usName:"Ism", usLogin:"Login", usPass:"Parol", usPassKeep:"o'zgartirmaslik uchun bo'sh qoldiring", usFam:"Oila shajarasi", usCirc:"Do'stlar davrasi", usNone:"Ko'rmaydi", usView:"Faqat ko'radi", usEdit:"Tahrirlaydi", usAllBr:"Butun shajara", usSelBr:"Faqat tanlangan shoxlar (shu odam va avlodlari)", usPick:"Shox boshini qo'shing…", usOff:"Hisobni o'chirib qo'yish", usPre:"Tayyor variantlar", usPre1:"Faqat do'stlar davrasi", usPre2:"Shox yordamchisi", usPre3:"Kuzatuvchi", usDelC:"Ha, hisob o'chirilsin", usSaved:"Hisob saqlandi", usNoUsers:"Hozircha yordamchi hisob yo'q.", setPubV:"Havolani olgan har kim shajarani ko'ra olsin", setPubVh:"O'chiq bo'lsa, sayt yopiladi: faqat login qilganlar (egasi va yordamchilar) o'z ruxsati doirasida ko'radi.", loginL:"Login", loginHint2:"Egasi bo'lsangiz login maydonini bo'sh qoldiring. Yordamchi hisob uchun login va parolni kiriting.", dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grSchool:"Sinfdosh", grUni:"Kursdosh", grWork:"Hamkasb", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
+Object.assign(L, { unkName:"Noma'lum", lnkT:"Qarindosh sifatida bog'lash", lnkHint:"{n} bilan bir ota-onadan bo'lgan odamni tanlang (opa-singil, aka-uka). Ota-ona kiritilmagan bo'lsa, ular «Noma'lum» ota-ona orqali tutashtiriladi.", lnkMode:"Qanday qarindosh", lnkBoth:"Bir ota-onadan (to'liq)", lnkFa:"Faqat otasi bir", lnkMo:"Faqat onasi bir", lnkNote:"Keyin «Noma'lum» ota-onani tahrirlab, haqiqiy ism-familiyasini yozishingiz mumkin. Daraxtda, qarindoshlik atamalarida (opa-singil, xola, amakivachcha…) va hisoblarda avtomatik hisobga olinadi.", lnkGo:"Bog'lash", lnkDone:"Bog'landi", lnkSame:"Bir xil odam tanlandi", lnkConflict:"Ikkalasining ota yoki onasi allaqachon turlicha kiritilgan — avval birini tuzating.", lnkBtn:"Qarindosh bog'lash", pWall:"Devor (nafis, tavsiya)", setPubVc:"Saytni yopsangiz, havolani olgan odamlar ham shajarani ko'ra olmaydi — faqat login qilganlar kiradi. Davom etasizmi?", lockT:"Yopiq shajara", usersT:"Foydalanuvchilar", usersSub:"Yordamchi hisoblar: faqat o'z shoxi yoki faqat do'stlar bo'limiga kiradi.", usNew:"Yangi hisob", usName:"Ism", usLogin:"Login", usPass:"Parol", usPassKeep:"o'zgartirmaslik uchun bo'sh qoldiring", usFam:"Oila shajarasi", usCirc:"Do'stlar davrasi", usNone:"Ko'rmaydi", usView:"Faqat ko'radi", usEdit:"Tahrirlaydi", usAllBr:"Butun shajara", usSelBr:"Faqat tanlangan shoxlar (shu odam va avlodlari)", usPick:"Shox boshini qo'shing…", usOff:"Hisobni o'chirib qo'yish", usPre:"Tayyor variantlar", usPre1:"Faqat do'stlar davrasi", usPre2:"Shox yordamchisi", usPre3:"Kuzatuvchi", usDelC:"Ha, hisob o'chirilsin", usSaved:"Hisob saqlandi", usNoUsers:"Hozircha yordamchi hisob yo'q.", setPubV:"Havolani olgan har kim shajarani ko'ra olsin", setPubVh:"O'chiq bo'lsa, sayt yopiladi: faqat login qilganlar (egasi va yordamchilar) o'z ruxsati doirasida ko'radi.", loginL:"Login", loginHint2:"Egasi bo'lsangiz login maydonini bo'sh qoldiring. Yordamchi hisob uchun login va parolni kiriting.", dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grSchool:"Sinfdosh", grUni:"Kursdosh", grWork:"Hamkasb", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
   grTg:"Telegram", grIg:"Instagram", grSms:"SMS", grWa:"WhatsApp", grCopy:"Nusxalash", grCopied:"Matn nusxalandi", grPasteTg:"Matn nusxalandi — Telegram chatiga yopishtiring", grPasteIg:"Matn nusxalandi — Instagram chatiga yopishtiring",
   grDone:"Tabriklandi", grDoneL:"Tabriklangan sana belgilandi", grNoContact:"Aloqa ma'lumoti yo'q — avval telefon, Telegram yoki Instagram kiriting.", grMark:"Tabriklandi deb belgilash", grBtn:"Tabriklash", grToday:"Bugun tug'ilgan kun", tgL:"Telegram", igL:"Instagram", tgPh:"@username yoki telefon", igPh:"@username" });
 const GREET = [
@@ -2967,7 +2970,7 @@ function renderSheet(){
       ${!fa ? `<button class="btn sm" data-rel="father">+ ${esc(t("father"))}</button>` : ""}
       ${!mo ? `<button class="btn sm" data-rel="mother">+ ${esc(t("mother"))}</button>` : ""}
       <button class="btn sm" data-rel="spouse">+ ${esc(t("spouse"))}</button>
-      <button class="btn sm" data-rel="child">+ ${esc(t("child"))}</button></div>`}
+      <button class="btn sm" data-rel="child">+ ${esc(t("child"))}</button><button class="btn sm" id="lnkB">🔗 ${esc(t("lnkBtn"))}</button></div>`}
       <div><button class="btn danger sm" id="del">${esc(t("del"))}</button></div>`
       : `<p class="note">${esc(t("readonly"))}</p>`}
   </div>`;
@@ -2990,6 +2993,7 @@ function renderSheet(){
   if (!canEditP(p)) return;
   $("edit").onclick = () => openForm(p.id);
   sh.querySelectorAll("[data-rel]").forEach(b => b.onclick = () => addRelative(p.id, b.dataset.rel));
+  if ($("lnkB")) $("lnkB").onclick = () => openLink(p.id);
   const del = $("del");
   del.onclick = async () => {
     if (!del.classList.contains("armed")){ del.classList.add("armed"); del.textContent = t("delConfirm"); setTimeout(() => { if (del.isConnected){ del.classList.remove("armed"); del.textContent = t("del"); } }, 4000); return; }
@@ -3037,6 +3041,33 @@ async function removePerson(id){
   await ref(id).delete();
   if (victim?.photoId && S.assets) S.assets.delete(victim.photoId).catch(() => {});
   if (S.meId === id) setMe(null);
+}
+/* Link two people as siblings/cousins-by-parent when their shared parents are not in the tree: a placeholder parent ("Noma'lum") joins them,
+   so tree, relation terms (opa-singil, xola, amakivachcha…) and counts work with no special cases. */
+async function linkSiblings(aId, bId, mode){
+  const a = P(aId), b = P(bId); if (!a || !b || aId === bId) throw new Error(t("lnkSame"));
+  const mkUnknown = async (g, spouseId) => { const id = newId("people"); await S.db.collection("people").doc(id).set({ firstName:"", lastName:"", patronymic:"", gender:g, birthDate:"", birthPlace:"", deathDate:"", deceased:false, burialPlace:"", occupation:"", bio:"", photo:null, photoId:null, fatherId:null, motherId:null, spouses: spouseId ? [spouseId] : [], unknown:true, createdAt:Date.now() }); return id; };
+  let fa = a.fatherId || b.fatherId || null, mo = a.motherId || b.motherId || null;
+  if ((a.fatherId && b.fatherId && a.fatherId !== b.fatherId) || (a.motherId && b.motherId && a.motherId !== b.motherId)) throw new Error(t("lnkConflict"));
+  const wantF = mode !== "mother", wantM = mode !== "father";
+  if (wantF && !fa) fa = await mkUnknown("m", null);
+  if (wantM && !mo){ mo = await mkUnknown("f", wantF ? fa : null); if (wantF && fa && P(fa) && !(P(fa).spouses || []).includes(mo)) await S.db.collection("people").doc(fa).update({ spouses:[...(P(fa).spouses || []), mo] }); }
+  for (const x of [a, b]){ const patch = {}; if (wantF && fa && x.fatherId !== fa) patch.fatherId = fa; if (wantM && mo && x.motherId !== mo) patch.motherId = mo; if (Object.keys(patch).length) await S.db.collection("people").doc(x.id).update(patch); }
+}
+function openLink(id){
+  const p = P(id); if (!p) return; const m = $("modal"); m.hidden = false; let mode = "both", pick = null;
+  const cand = () => famVals().filter(q => q.id !== id && !(kidsOf(id).some(k => k.id === q.id))).sort((a, b) => short(a).localeCompare(short(b)));
+  m.innerHTML = `<div class="form" role="dialog" aria-modal="true"><div class="gh-top"><h2>${esc(t("lnkT"))}</h2><button class="icon-btn" id="lkX" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <p class="note">${esc(t("lnkHint", { n:short(p) }))}</p>
+    <input class="amq" id="lkQ" placeholder="${esc(t("amSearch"))}" autocomplete="off"><div class="amr" id="lkR" style="max-height:28vh"></div>
+    <div class="f-field"><span>${esc(t("lnkMode"))}</span><div class="pill-row"><label><input type="radio" name="lkm" value="both" checked>${esc(t("lnkBoth"))}</label><label><input type="radio" name="lkm" value="father">${esc(t("lnkFa"))}</label><label><input type="radio" name="lkm" value="mother">${esc(t("lnkMo"))}</label></div></div>
+    <p class="hint">${esc(t("lnkNote"))}</p><p class="err" id="lkE" hidden></p>
+    <div class="form-foot"><button class="btn" id="lkNo">${esc(t("cancel"))}</button><button class="btn primary" id="lkGo" disabled>${esc(t("lnkGo"))}</button></div></div>`;
+  const close = () => { m.hidden = true; m.innerHTML = ""; }; $("lkX").onclick = close; $("lkNo").onclick = close; m.onclick = e => { if (e.target === m) close(); };
+  const res = () => { const q = norm($("lkQ").value.trim()); $("lkR").innerHTML = cand().filter(x => !q || norm([x.firstName, x.lastName].join(" ")).includes(q)).slice(0, 40).map(x => `<label class="amp"><input type="radio" name="lkp" value="${esc(x.id)}"${pick === x.id ? " checked" : ""}>${avatar(x)}<span><b>${esc(short(x))}</b><small>${esc(yrs(x))}</small></span></label>`).join("");
+    $("lkR").querySelectorAll("input").forEach(r => r.onchange = () => { pick = r.value; $("lkGo").disabled = false; }); };
+  $("lkQ").oninput = res; res(); setTimeout(() => $("lkQ").focus(), 30);
+  $("lkGo").onclick = async () => { $("lkGo").disabled = true; try { await linkSiblings(id, pick, m.querySelector("[name=lkm]:checked").value); close(); toast(t("lnkDone")); S.rootId = topOf(id); render(true); } catch(e){ $("lkE").textContent = e.message || t("errSave"); $("lkE").hidden = false; $("lkGo").disabled = false; } };
 }
 const patrOf = (fa, g) => fa?.firstName ? fa.firstName + (g === "f" ? " qizi" : " o'g'li") : "";
 function addRelative(id, rel){
