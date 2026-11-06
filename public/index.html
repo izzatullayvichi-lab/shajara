@@ -2707,7 +2707,7 @@ function openProfile(id){ S.selId = null; S.profId = id; S.ptab = "info"; if (S.
 
 
 /* ================= Greetings: 30 templates, Telegram / Instagram / SMS / WhatsApp ================= */
-Object.assign(L, { pWall:"Devor (nafis, tavsiya)", setPubVc:"Saytni yopsangiz, havolani olgan odamlar ham shajarani ko'ra olmaydi — faqat login qilganlar kiradi. Davom etasizmi?", lockT:"Yopiq shajara", usersT:"Foydalanuvchilar", usersSub:"Yordamchi hisoblar: faqat o'z shoxi yoki faqat do'stlar bo'limiga kiradi.", usNew:"Yangi hisob", usName:"Ism", usLogin:"Login", usPass:"Parol", usPassKeep:"o'zgartirmaslik uchun bo'sh qoldiring", usFam:"Oila shajarasi", usCirc:"Do'stlar davrasi", usNone:"Ko'rmaydi", usView:"Faqat ko'radi", usEdit:"Tahrirlaydi", usAllBr:"Butun shajara", usSelBr:"Faqat tanlangan shoxlar (shu odam va avlodlari)", usPick:"Shox boshini qo'shing…", usOff:"Hisobni o'chirib qo'yish", usPre:"Tayyor variantlar", usPre1:"Faqat do'stlar davrasi", usPre2:"Shox yordamchisi", usPre3:"Kuzatuvchi", usDelC:"Ha, hisob o'chirilsin", usSaved:"Hisob saqlandi", usNoUsers:"Hozircha yordamchi hisob yo'q.", setPubV:"Havolani olgan har kim shajarani ko'ra olsin", setPubVh:"O'chiq bo'lsa, sayt yopiladi: faqat login qilganlar (egasi va yordamchilar) o'z ruxsati doirasida ko'radi.", loginL:"Login", loginHint2:"Egasi bo'lsangiz login maydonini bo'sh qoldiring. Yordamchi hisob uchun login va parolni kiriting.", dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
+Object.assign(L, { pWall:"Devor (nafis, tavsiya)", setPubVc:"Saytni yopsangiz, havolani olgan odamlar ham shajarani ko'ra olmaydi — faqat login qilganlar kiradi. Davom etasizmi?", lockT:"Yopiq shajara", usersT:"Foydalanuvchilar", usersSub:"Yordamchi hisoblar: faqat o'z shoxi yoki faqat do'stlar bo'limiga kiradi.", usNew:"Yangi hisob", usName:"Ism", usLogin:"Login", usPass:"Parol", usPassKeep:"o'zgartirmaslik uchun bo'sh qoldiring", usFam:"Oila shajarasi", usCirc:"Do'stlar davrasi", usNone:"Ko'rmaydi", usView:"Faqat ko'radi", usEdit:"Tahrirlaydi", usAllBr:"Butun shajara", usSelBr:"Faqat tanlangan shoxlar (shu odam va avlodlari)", usPick:"Shox boshini qo'shing…", usOff:"Hisobni o'chirib qo'yish", usPre:"Tayyor variantlar", usPre1:"Faqat do'stlar davrasi", usPre2:"Shox yordamchisi", usPre3:"Kuzatuvchi", usDelC:"Ha, hisob o'chirilsin", usSaved:"Hisob saqlandi", usNoUsers:"Hozircha yordamchi hisob yo'q.", setPubV:"Havolani olgan har kim shajarani ko'ra olsin", setPubVh:"O'chiq bo'lsa, sayt yopiladi: faqat login qilganlar (egasi va yordamchilar) o'z ruxsati doirasida ko'radi.", loginL:"Login", loginHint2:"Egasi bo'lsangiz login maydonini bo'sh qoldiring. Yordamchi hisob uchun login va parolni kiriting.", dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grSchool:"Sinfdosh", grUni:"Kursdosh", grWork:"Hamkasb", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
   grTg:"Telegram", grIg:"Instagram", grSms:"SMS", grWa:"WhatsApp", grCopy:"Nusxalash", grCopied:"Matn nusxalandi", grPasteTg:"Matn nusxalandi — Telegram chatiga yopishtiring", grPasteIg:"Matn nusxalandi — Instagram chatiga yopishtiring",
   grDone:"Tabriklandi", grDoneL:"Tabriklangan sana belgilandi", grNoContact:"Aloqa ma'lumoti yo'q — avval telefon, Telegram yoki Instagram kiriting.", grMark:"Tabriklandi deb belgilash", grBtn:"Tabriklash", grToday:"Bugun tug'ilgan kun", tgL:"Telegram", igL:"Instagram", tgPh:"@username yoki telefon", igPh:"@username" });
 const GREET = [
@@ -2739,12 +2739,33 @@ const GREET = [
   ["p","Yil o'tar, kunlar o'tar, mehr qolar,\nDo'stlik — eng aziz boylik, bu yodda qolar.\nSeni tug'ilgan kuning bilan tabriklayman, {ism}!"],
   ["p","Gullar ochilsin yo'llaringda har bahor,\nOrzularing bo'lsin oltin kabi benuqson.\nTug'ilgan kuning muborak, {ism}!"],
   ["p","Ona zamin kabi bag'ri keng bo'lsin,\nKo'ngling doim chiroyli va bahor bo'lsin.\nTavallud kuning bilan, {ism}!"],
+  ["s","{ism}, tug'ilgan kuning muborak! {guruh} yillari — eng go'zal damlar edi. Ko'rishmaganimizga ko'p bo'ldi, lekin seni doim iliq eslayman. Sog'-omon bo'l!"],
+  ["s","Sinfdoshim {ism}, tavallud kuning bilan! Partada birga o'tirgan kunlar, birga yig'lab-kulgan damlar yodimda. Baxtli bo'l, do'stim!"],
+  ["s","{ism}, bugun sening kuning! Maktab ostonasidan birga o'tganimizga shuncha yil bo'ldi — sening do'stligingni hali ham qadrlayman. Tug'ilgan kuning muborak!"],
+  ["s","Salom, {ism}! Tug'ilgan kuning bilan tabriklayman. {guruh} sinfdoshlari nomidan ham ezgu tilaklar: sog'lik, baxt va omad yor bo'lsin!"],
+  ["s","Aziz sinfdoshim {ism}! Yoshing ulg'ayib, mehring ham kengaydi degan umiddaman. Tug'ilgan kuning muborak, oilang bilan shod yasha!"],
+  ["s","{ism}, tug'ilgan kuning bilan! Maktab qo'ng'irog'i yana jaranglagandek bo'ldi — seni eslab, ko'nglim yorishdi. Yaqinda ko'rishsak, ajoyib bo'lardi!"],
+  ["s","{ism}, bugun sinfimizning eng yaxshi do'stlaridan birining kuni! Tavallud ayyoming muborak. Ustozlarimiz seni ko'rib faxrlanishardi, ishonaman!"],
+  ["s","Qadrdon sinfdoshim {ism}, {yosh} yoshing muborak! Hayotda hamma maqsadlaringga yet, birga o'qigan do'stlaring doim yoningda bo'lsin."],
+  ["k","{ism}, tug'ilgan kuning muborak! {guruh} yillarida birga o'qigan, imtihonlarga birga tayyorlangan kunlarimiz yodimda. Kasbingda yangi cho'qqilar tilayman!"],
+  ["k","Kursdoshim {ism}, tavallud kuning bilan! Talabalik — hayotning eng yorqin pallasi edi, sendek do'stlar bilan o'tgani uchun xursandman. Omading chopsin!"],
+  ["k","{ism}, tug'ilgan kuning bilan chin dildan tabriklayman! Diplom olgan kunimizdan beri qancha suv oqdi, lekin do'stlik qoldi. Sog'lik va ish yurishmasi tilayman!"],
+  ["k","Hurmatli kursdoshim {ism}! Tug'ilgan kuningiz muborak. Ilmingiz, mehnatingiz va kasbingiz ravnaq topsin, oilangizda tinchlik va baraka bo'lsin."],
+  ["k","{ism}, {guruh} kursdoshlari nomidan tabriklayman! Yangi yoshingda yangi marralar, katta yutuqlar va ko'p quvonchli kunlar tilayman."],
+  ["k","{ism}, bugun senga eng yaxshi tilaklarimni yo'llayman! Magistratura/bakalavr davrimiz hamisha yodimda — qiyin kunlarda ham birga bo'lgan do'stlarimizni unutmayman. Tug'ilgan kuning muborak!"],
+  ["k","Kursdoshim {ism}, tug'ilgan kuning bilan! Sening bilimli, saxiy tabiating hammamizga o'rnak edi. Hayotingda faqat oldinga, faqat yaxshilikka!"],
+  ["k","{ism}, {yosh} yoshing muborak! Kutubxonadagi tunlar, imtihon oldi hayajonlar endi xotira bo'lib qoldi, do'stligimiz esa bardavom. Doim omon bo'l!"],
+  ["c","Hurmatli {ism}! Tug'ilgan kuningiz bilan tabriklayman. Hamkorligimiz uchun rahmat — sizdek odam bilan ishlash men uchun sharaf. Yangi yilingiz muvaffaqiyatli bo'lsin!"],
+  ["c","{ism}, tavallud kuningiz muborak! Jamoamizning ruhi va tayanchi bo'lganingiz uchun minnatdorman. Sog'lik, baxt va katta yutuqlar tilayman!"],
   ["f","{ism}, bugun siz uchun alohida kun! Tug'ilgan kuningiz bilan chin yurakdan tabriklayman, ezgu tilaklarim sizga hamroh bo'lsin."],
   ["w","{ism}, {yosh} yoshing muborak bo'lsin! Sog'lik, omad va quvonch hamisha yoningda bo'lsin!"]
 ];
-const GTONES = [["a", "grAll"], ["f", "grFormal"], ["w", "grWarm"], ["h", "grFun"], ["p", "grPoem"]];
+const GTONES = [["a", "grAll"], ["s", "grSchool"], ["k", "grUni"], ["c", "grWork"], ["f", "grFormal"], ["w", "grWarm"], ["h", "grFun"], ["p", "grPoem"]];
 const hasAgeTok = x => x.includes("{yosh}");
-function fillGreet(tpl, p){ const age = ageAt(p); return dn(tpl.replace(/\{ism\}/g, first(p)).replace(/\{yosh\}/g, age != null ? String(age) : "")); }
+const hasGrp = x => x.includes("{guruh}");
+const grpFor = (p, kinds) => groupsOf(p.id).find(g => kinds.includes(g.kind));
+function grpLabel(p){ const g = grpFor(p, ["class", "course", "group", "work"]) || groupsOf(p.id)[0]; if (!g) return ""; return [g.inst, g.label].filter(Boolean).join(", ") + (g.to ? ` (${g.to})` : "") || grpTitle(g); }
+function fillGreet(tpl, p){ const age = ageAt(p); return dn(tpl.replace(/\{ism\}/g, first(p)).replace(/\{yosh\}/g, age != null ? String(age) : "").replace(/\{guruh\}/g, grpLabel(p))); }
 function ageAt(p){ const b = parseDate(p.birthDate); if (!b?.y) return null; const now = new Date(), cy = now.getFullYear(); let n = cy - b.y; if (b.m && b.d && new Date(cy, b.m - 1, b.d) < new Date(now.getFullYear(), now.getMonth(), now.getDate())) n += 1; return n; }
 const igUser = v => String(v || "").trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/^@/, "").replace(/[/?#].*$/, "");
 const tgUser = v => String(v || "").trim().replace(/^https?:\/\/(t|telegram)\.me\//i, "").replace(/^@/, "").replace(/[/?#].*$/, "");
@@ -2752,8 +2773,9 @@ const isIOS = () => /iPhone|iPad|iPod/i.test(navigator.userAgent);
 async function copyText(x){ try { await navigator.clipboard.writeText(x); return true; } catch(e){ const ta = document.createElement("textarea"); ta.value = x; ta.style.cssText = "position:fixed;opacity:0"; document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand("copy"); } catch(_){} ta.remove(); return ok; } }
 function openGreet(pid){
   const p = P(pid); if (!p) return; const m = $("modal"), ages = ageAt(p), ph = phoneList(p)[0] || "", tg = tgUser(p.tg), ig = igUser(p.ig);
-  let tone = store.get("shajara.gtone") || "a", idx = -1, text = "", touched = false;
-  const list = () => GREET.map((g, i) => ({ g, i })).filter(({ g }) => (tone === "a" || g[0] === tone) && (ages != null || !hasAgeTok(g[1])));
+  const gk = groupsOf(pid).map(g => g.kind), autoTone = gk.includes("class") ? "s" : gk.includes("course") ? "k" : gk.includes("work") ? "c" : null;
+  let tone = autoTone || store.get("shajara.gtone") || "a", idx = -1, text = "", touched = false;
+  const list = () => GREET.map((g, i) => ({ g, i })).filter(({ g }) => (tone === "a" || g[0] === tone) && (ages != null || !hasAgeTok(g[1])) && (!hasGrp(g[1]) || grpLabel(p)));
   const mark = async ch => { const y = String(new Date().getFullYear()); try { await S.db.collection("people").doc(pid).update({ greeted:{ ...(p.greeted || {}), [y]:ch } }); } catch(e){} };
   const draw = () => {
     const items = list(); if (idx < 0 || !items.some(x => x.i === idx)) idx = items.length ? items[Math.floor(Math.random() * items.length)].i : -1;
