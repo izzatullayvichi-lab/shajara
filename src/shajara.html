@@ -2570,10 +2570,16 @@ function wireCircTab(sh, p){
 function openSettings(){
   const m = $("modal"), sw = (id, on, lbl, hint) => `<label class="swrow"><input type="checkbox" id="${id}"${on ? " checked" : ""}><i class="sw"></i><span><b>${esc(t(lbl))}</b><small>${esc(t(hint))}</small></span></label>`;
   m.innerHTML = `<div class="form" role="dialog" aria-modal="true"><div class="gh-top"><h2>${esc(t("setT"))}</h2><button class="icon-btn" id="stX" aria-label="${esc(t("close"))}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
-    ${sw("stB", !!S.meta.birthPublic, "setPubB", "setPubBh")}${sw("stC", !!S.meta.circlesPublic, "setPubC", "setPubCh")}${sw("stP", !!S.meta.phonesPublic, "setPubP", "setPubPh")}</div>`;
+    ${sw("stB", !!S.meta.birthPublic, "setPubB", "setPubBh")}${sw("stC", !!S.meta.circlesPublic, "setPubC", "setPubCh")}${sw("stP", !!S.meta.phonesPublic, "setPubP", "setPubPh")}<div class="dbst" id="dbst"><p class="note">…</p></div></div>`;
   m.hidden = false; const close = () => { m.hidden = true; m.innerHTML = ""; }; $("stX").onclick = close; m.onclick = e => { if (e.target === m) close(); };
   const save = async () => { try { await S.db.doc("meta/info").set({ ...S.meta, birthPublic:$("stB").checked, circlesPublic:$("stC").checked, phonesPublic:$("stP").checked }); toast(t("setSaved")); } catch(e){ toast(t("errSave")); } };
   $("stB").onchange = save; $("stC").onchange = save; $("stP").onchange = save;
+  fetch("/api/stats", { cache:"no-store", credentials:"same-origin" }).then(r => r.ok ? r.json() : null).then(d => {
+    const el = $("dbst"); if (!el) return; if (!d){ el.innerHTML = ""; return; }
+    const mb = x => (x / 1048576).toFixed(x < 1048576 * 10 ? 2 : 1), pc = Math.max(0.5, d.totalBytes / d.limitBytes * 100);
+    el.innerHTML = `<h3 class="sec-t" style="margin:6px 0">${esc(t("dbT"))}</h3><div class="progress"><i style="width:${pc.toFixed(2)}%"></i></div>
+      <p class="note" style="margin:6px 0 2px"><b>${mb(d.totalBytes)} MB</b> / ${mb(d.limitBytes)} MB (${pc.toFixed(1)}%) · ${esc(t("dbLeft", { n:d.photosLeft.toLocaleString("en") }))}</p>
+      <p class="hint">${esc(t("dbDet", { p:d.people, g:d.groups, f:d.photos, fm:mb(d.photosBytes) }))}</p>`; }).catch(() => {});
 }
 
 /* ---------- Full profile page ---------- */
@@ -2634,7 +2640,7 @@ function openProfile(id){ S.selId = null; S.profId = id; S.ptab = "info"; if (S.
 
 
 /* ================= Greetings: 30 templates, Telegram / Instagram / SMS / WhatsApp ================= */
-Object.assign(L, { grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
+Object.assign(L, { dbT:"Ma'lumotlar bazasi hajmi", dbLeft:"taxminan yana {n} ta surat sig'adi", dbDet:"{p} odam · {g} davra · {f} surat ({fm} MB). Cloudflare D1 bepul tarifi: bitta baza 500 MB.", grTitle:"Tabriklash", grPick:"Tabrikni tanlang", grTone:"Uslub", grAll:"Hammasi", grFormal:"Rasmiy", grWarm:"Samimiy", grFun:"Hazil", grPoem:"She'riy", grRandom:"Tasodifiy", grText:"Matn (tahrirlash mumkin)",
   grTg:"Telegram", grIg:"Instagram", grSms:"SMS", grWa:"WhatsApp", grCopy:"Nusxalash", grCopied:"Matn nusxalandi", grPasteTg:"Matn nusxalandi — Telegram chatiga yopishtiring", grPasteIg:"Matn nusxalandi — Instagram chatiga yopishtiring",
   grDone:"Tabriklandi", grDoneL:"Tabriklangan sana belgilandi", grNoContact:"Aloqa ma'lumoti yo'q — avval telefon, Telegram yoki Instagram kiriting.", grMark:"Tabriklandi deb belgilash", grBtn:"Tabriklash", grToday:"Bugun tug'ilgan kun", tgL:"Telegram", igL:"Instagram", tgPh:"@username yoki telefon", igPh:"@username" });
 const GREET = [

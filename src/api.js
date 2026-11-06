@@ -130,6 +130,19 @@ export async function onRequest(ctx) {
       return json({ people, groups, meta, rev: upd + ":" + people.length + ":" + groups.length + ":" + JSON.stringify(meta).length, admin });
     }
 
+    // GET /api/stats — baza hajmi (faqat egasi). D1 bepul tarifi: bitta baza 500 MB, qator 2 MB, akkaunt bo'yicha 5 GB.
+    if (seg[0] === "stats" && method === "GET") {
+      if (!admin) return fail(403, "Ruxsat yo'q");
+      const one = async q => (await env.DB.prepare(q).first()) || {};
+      const pe = await one("SELECT COUNT(*) n, COALESCE(SUM(LENGTH(data)),0) b FROM people");
+      const gr = await one("SELECT COUNT(*) n, COALESCE(SUM(LENGTH(data)),0) b FROM groups");
+      const ph = await one("SELECT COUNT(*) n, COALESCE(SUM(LENGTH(b64)),0) b, COALESCE(MAX(LENGTH(b64)),0) mx FROM photos");
+      const me = await one("SELECT COALESCE(SUM(LENGTH(data)),0) b FROM meta");
+      const total = pe.b + gr.b + ph.b + me.b, LIMIT = 500 * 1024 * 1024;
+      return json({ people: pe.n, peopleBytes: pe.b, groups: gr.n, groupsBytes: gr.b, photos: ph.n, photosBytes: ph.b, photoMax: ph.mx, metaBytes: me.b,
+        totalBytes: total, limitBytes: LIMIT, avgPhoto: ph.n ? Math.round(ph.b / ph.n) : 0, photosLeft: Math.floor((LIMIT - total) / Math.max(150 * 1024, ph.n ? ph.b / ph.n : 0)) });
+    }
+
     // GET /api/backup — to'liq zaxira (GitHub Actions haftalik oladi). Authorization: Bearer <BACKUP_TOKEN>
     if (seg[0] === "backup" && method === "GET") {
       const auth = req.headers.get("authorization") || "";
